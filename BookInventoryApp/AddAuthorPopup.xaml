@@ -9,8 +9,6 @@
         <Entry Placeholder="Name" x:Name="Name"/>
         <Entry Placeholder="MiddleName" x:Name="MiddleName"/>
         <Entry Placeholder="LastName" x:Name="LastName"/>
-        <Picker x:Name="NationalityPicker"
-                Title="Select a nationality" />
         <Button Text="Save" Clicked="OnSaveClicked"/>
     </StackLayout>
 

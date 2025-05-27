@@ -17,6 +17,6 @@ public class Person
     [StringLength(200)]
     public string Address { get; set; }
 
-    public List<Book> BorrowedBooks { get; set; } = new List<Book>();
-    public List<Book> LendedBooks { get; set; } = new List<Book>();
+    //public List<Book> BorrowedBooks { get; set; } = new List<Book>();
+    //public List<Book> LendedBooks { get; set; } = new List<Book>();
 }
