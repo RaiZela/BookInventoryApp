@@ -1,0 +1,20 @@
+<toolkit:Popup
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+        x:Class="BookInventoryApp.AddBookPopup"
+    CanBeDismissedByTappingOutsideOfPopup="True">
+
+    <StackLayout Padding="20" BackgroundColor="White" WidthRequest="300">
+        <Entry Placeholder="Title" x:Name="TitleEntry"/>
+        <!--<Entry Placeholder="Author" x:Name="AuthorEntry"/>
+        <Entry Placeholder="Genre" x:Name="GenreEntry"/>-->
+        <Entry Placeholder="Year Published" Keyboard="Numeric" x:Name="YearEntry"/>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Read?" VerticalOptions="Center"/>
+            <Switch x:Name="IsReadSwitch" HorizontalOptions="Center"/>
+        </StackLayout>
+        <Button Text="Save" Clicked="OnSaveClicked"/>
+    </StackLayout>
+
+</toolkit:Popup>
