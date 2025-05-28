@@ -7,8 +7,7 @@
 
     <StackLayout Padding="20" BackgroundColor="White" WidthRequest="300">
         <Entry Placeholder="Title" x:Name="TitleEntry"/>
-        <!--<Entry Placeholder="Author" x:Name="AuthorEntry"/>
-        <Entry Placeholder="Genre" x:Name="GenreEntry"/>-->
+        
         <Entry Placeholder="Year Published" Keyboard="Numeric" x:Name="YearEntry"/>
         <StackLayout Orientation="Horizontal">
             <Label Text="Read?" VerticalOptions="Center"/>

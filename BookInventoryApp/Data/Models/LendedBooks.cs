@@ -2,6 +2,6 @@
 
 namespace BookInventoryApp.Data.Models;
 
-public class Category : MinimalConfig
+public class LendedBooks : ExchangedProperties
 {
 }

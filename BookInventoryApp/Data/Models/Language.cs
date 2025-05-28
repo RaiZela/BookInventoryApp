@@ -1,18 +1,7 @@
-﻿using SQLite;
-using System.ComponentModel.DataAnnotations;
+﻿using BookInventoryApp.Data.Models.Abstractions.Generic;
 
 namespace BookInventoryApp.Data.Models;
 
-public class Language
+public class Language : MinimalConfig
 {
-    [PrimaryKey]
-    public Guid Id { get; set; } = Guid.NewGuid();
-
-    [StringLength(4)]
-    public string Code { get; set; }
-
-    [StringLength(20)]
-    public string Name { get; set; }
-
-    //public List<Book> Books { get; set; } = new List<Book>();
 }

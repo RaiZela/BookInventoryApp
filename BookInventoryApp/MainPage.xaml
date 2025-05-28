@@ -2,17 +2,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="BookInventoryApp.MainPage"
-             Title="My Book Inventory">
-    <StackLayout Padding="20">
-        <Button Text="Add New Book" Clicked="OnAddBookClicked"/>
-        <CollectionView x:Name="BooksView">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Padding="10">
-                        <Label Text="{Binding Title}" FontAttributes="Bold"/>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </StackLayout>
+             Title="Lilith's Library">
+
+    <Grid>
+        <!-- Background image with opacity -->
+        <Image
+               Aspect="AspectFill"
+               Opacity="0.5"
+               IsEnabled="False">
+            <Image.Source>
+                <OnPlatform x:TypeArguments="ImageSource">
+                    <On Platform="Android" Value="background_image_library.jpg" />
+                    <On Platform="WinUI" Value="background_image_library.jpg" />
+                </OnPlatform>
+            </Image.Source>
+        </Image>
+
+        <!-- Your actual content -->
+        <StackLayout Padding="20">
+            <Button Text="Add New Book"
+                    Clicked="OnAddBookClicked"
+                    HorizontalOptions="End" />
+            <CollectionView x:Name="BooksView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="8" Margin="10">
+                            <StackLayout>
+                                <Label Text="{Binding Title}"
+                                        FontSize="18"
+                                        FontFamily="VictorMono-BoldItalic"></Label>
+                                <Label Text="{Binding Authors}"></Label>
+                            </StackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </Grid>
 </ContentPage>

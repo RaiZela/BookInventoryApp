@@ -1,15 +1,12 @@
-using BookInventoryApp.Data;
-using BookInventoryApp.Data.Models;
-using CommunityToolkit.Maui.Views;
 namespace BookInventoryApp;
 
 public partial class AddAuthorPopup : Popup
 {
-    BookDatabase _db;
-    public AddAuthorPopup(BookDatabase db)
+    IAuthorService _service;
+    public AddAuthorPopup(IAuthorService service)
     {
         InitializeComponent();
-        _db = db;
+        _service = service;
     }
 
     private async void OnSaveClicked(object sender, EventArgs e)
@@ -21,7 +18,7 @@ public partial class AddAuthorPopup : Popup
             LastName = LastName.Text,
         };
 
-        await _db.SaveAuthorAsync(author);
+        await _service.SaveAuthorAsync(author);
         Close();
     }
 }

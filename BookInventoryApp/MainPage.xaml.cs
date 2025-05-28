@@ -1,27 +1,25 @@
-﻿using BookInventoryApp.Data;
-using CommunityToolkit.Maui.Views;
-
-namespace BookInventoryApp;
+﻿namespace BookInventoryApp;
 
 public partial class MainPage : ContentPage
 {
-    BookDatabase _db;
+    IBookService _service;
 
-    public MainPage(BookDatabase db)
+    public MainPage(IBookService service)
     {
         InitializeComponent();
-        _db = db;
+        _service = service;
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        BooksView.ItemsSource = await _db.GetBooksAsync();
+        BooksView.ItemsSource = await _service.GetBooksAsync();
     }
 
     private async void OnAddBookClicked(object sender, EventArgs e)
     {
-        var popup = new AddBookPopup(_db);
+        var popup = new AddBookPopup(_service);
         await this.ShowPopupAsync(popup);
+        BooksView.ItemsSource = await _service.GetBooksAsync();
     }
 }

@@ -1,12 +1,9 @@
-﻿using SQLite;
-using System.ComponentModel.DataAnnotations;
+﻿using BookInventoryApp.Data.Models.Abstractions.Generic;
 
 namespace BookInventoryApp.Data.Models;
 
-public class Person
+public class Person : Entity
 {
-    [PrimaryKey]
-    public Guid Id { get; set; } = Guid.NewGuid();
 
     [StringLength(20)]
     public string Name { get; set; }
@@ -16,7 +13,4 @@ public class Person
 
     [StringLength(200)]
     public string Address { get; set; }
-
-    //public List<Book> BorrowedBooks { get; set; } = new List<Book>();
-    //public List<Book> LendedBooks { get; set; } = new List<Book>();
 }

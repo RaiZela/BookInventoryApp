@@ -1,32 +1,26 @@
-using BookInventoryApp.Data;
-using BookInventoryApp.Data.Models;
-using CommunityToolkit.Maui.Views;
-
 namespace BookInventoryApp;
 
 public partial class AddBookPopup : Popup
 {
-    BookDatabase _db;
+    IBookService _service;
 
-    public AddBookPopup(BookDatabase db)
+    public AddBookPopup(IBookService service)
     {
         InitializeComponent();
-        _db = db;
+        _service = service;
     }
 
     private async void OnSaveClicked(object sender, EventArgs e)
     {
-        var book = new Book
+        var book = new BookDTO
         {
             Title = TitleEntry.Text,
-            //Author = AuthorEntry.Text,
-            //Genre = GenreEntry.Text,
             YearPublished = int.Parse(YearEntry.Text),
             IsRead = IsReadSwitch.IsToggled
         };
 
-        await _db.SaveBookAsync(book);
-        //await Navigation.PopAsync(); // return to MainPage
+        await _service.SaveBookAsync(book);
+
         Close();
     }
 }

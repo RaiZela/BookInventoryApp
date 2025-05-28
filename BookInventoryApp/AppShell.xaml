@@ -17,5 +17,19 @@
     ContentTemplate="{DataTemplate local:AuthorPage}"
     Route="AuthorPage" />
 
+    <ShellContent
+   Title="Categories"
+   ContentTemplate="{DataTemplate local:CategoryPage}"
+   Route="CategoryPage" />
+
+    <ShellContent
+   Title="Languages"
+   ContentTemplate="{DataTemplate local:LanguagePage}"
+   Route="LanguagePage" />
+
+    <ShellContent
+   Title="Persons"
+   ContentTemplate="{DataTemplate local:PersonsPage}"
+   Route="PersonsPage" />
 
 </Shell>
