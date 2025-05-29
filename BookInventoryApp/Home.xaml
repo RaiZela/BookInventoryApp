@@ -7,7 +7,7 @@
     <Grid>
         <Image
            Aspect="AspectFill"
-           Opacity="0.4"
+           Opacity="0.3"
            IsEnabled="False">
             <Image.Source>
                 <OnPlatform x:TypeArguments="ImageSource">
@@ -31,8 +31,8 @@
                    TextChanged="OnSearchTextChanged" 
                        TextColor="Black" 
                        PlaceholderColor="Black"
-                       BackgroundColor="White" Opacity="0.6" 
-                       MaximumHeightRequest="50"/>
+                       BackgroundColor="White" Opacity="0.5" 
+                       MinimumHeightRequest="50" Margin="60, 60, 60, 60"/>
 
             <CollectionView x:Name="ResultsCollectionView">
                 <CollectionView.ItemTemplate>

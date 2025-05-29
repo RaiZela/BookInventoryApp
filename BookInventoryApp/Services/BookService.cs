@@ -39,14 +39,14 @@ public class BookService : IBookService
         {
             Id = id,
             Title = book.Title,
-            YearPublished = book.YearPublished,
-            IsBorrowed = book.IsBorrowed,
-            IsOwned = book.IsOwned,
+            //YearPublished = book.YearPublished,
+            //IsBorrowed = book.IsBorrowed,
+            //IsOwned = book.IsOwned,
             Status = book.Status,
             Type = book.Type,
-            IsLended = book.IsLended,
-            LendedTo = book.IsLended ? await GetPresentBookHolder(id) : null,
-            BorrowedBy = book.IsBorrowed ? await GetBorrowedBookOwner(id) : null,
+            //IsLended = book.IsLended,
+            //LendedTo = book.IsLended ? await GetPresentBookHolder(id) : null,
+            //BorrowedBy = book.IsBorrowed ? await GetBorrowedBookOwner(id) : null,
             AuthorIds = await GetBookAuthorIds(id),
             CategoriesIds = await GetBookCategorysIds(id),
             LanguageIds = await GetBookLanguageIds(id)
@@ -59,13 +59,12 @@ public class BookService : IBookService
         var book = new Book
         {
             Title = bookObj.Title,
-            YearPublished = bookObj.YearPublished,
-            IsBorrowed = bookObj.IsBorrowed,
-            IsOwned = bookObj.IsOwned,
+            //YearPublished = bookObj.YearPublished,
+            //IsBorrowed = bookObj.IsBorrowed,
+            //IsOwned = bookObj.IsOwned,
             Status = bookObj.Status,
             Type = bookObj.Type,
-            IsLended = bookObj.IsLended,
-            IsRead = bookObj.IsRead
+            //IsLended = bookObj.IsLended,
         };
 
         var bookAuthors = bookObj.AuthorIds.Select(authorId => new BookAuthor
