@@ -1,4 +1,6 @@
-﻿namespace BookInventoryApp;
+﻿using BookInventoryApp.Services;
+
+namespace BookInventoryApp;
 
 public partial class MainPage : ContentPage
 {

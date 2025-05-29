@@ -1,4 +1,4 @@
-﻿namespace BookInventoryApp.Data.Services;
+﻿namespace BookInventoryApp.Services;
 
 public interface ICategoriesService
 {

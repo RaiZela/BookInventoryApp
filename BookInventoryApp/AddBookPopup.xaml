@@ -3,13 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
         x:Class="BookInventoryApp.AddBookPopup"
-    CanBeDismissedByTappingOutsideOfPopup="True">
+    CanBeDismissedByTappingOutsideOfPopup="True" HorizontalOptions="Center">
 
-    <StackLayout Padding="20" BackgroundColor="White" WidthRequest="300">
-        <Entry Placeholder="Title" x:Name="TitleEntry"/>
-        
+    <StackLayout BackgroundColor="White" 
+                 HorizontalOptions="Center" 
+                 Padding="10" 
+                 MinimumHeightRequest="50" 
+                 MinimumWidthRequest="50">
+        <Entry Placeholder="Title" x:Name="TitleEntry" />
         <Entry Placeholder="Year Published" Keyboard="Numeric" x:Name="YearEntry"/>
-        <StackLayout Orientation="Horizontal">
+        <StackLayout Orientation="Horizontal" HorizontalOptions="End">
             <Label Text="Read?" VerticalOptions="Center"/>
             <Switch x:Name="IsReadSwitch" HorizontalOptions="Center"/>
         </StackLayout>

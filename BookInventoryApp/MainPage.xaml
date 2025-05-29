@@ -5,7 +5,6 @@
              Title="Lilith's Library">
 
     <Grid>
-        <!-- Background image with opacity -->
         <Image
                Aspect="AspectFill"
                Opacity="0.5"
@@ -18,7 +17,6 @@
             </Image.Source>
         </Image>
 
-        <!-- Your actual content -->
         <StackLayout Padding="20">
             <Button Text="Add New Book"
                     Clicked="OnAddBookClicked"

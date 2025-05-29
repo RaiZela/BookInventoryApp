@@ -1,9 +1,10 @@
-﻿namespace BookInventoryApp.Data.Services;
+﻿namespace BookInventoryApp.Services;
 
 public interface IBookService
 {
     Task<List<BooksDTO>> GetBooksAsync();
     Task<BookDTO> GetBookAsync(Guid id);
+    Task<IEnumerable<BooksDTO>> GetFilteredBooksAsync(string query);
     Task<int> SaveBookAsync(BookDTO book);
     Task<int> DeleteBookAsync(Book book);
 }
@@ -24,7 +25,7 @@ public class BookService : IBookService
             booksList.Add(new BooksDTO
             {
                 Title = book.Title,
-                Authors = string.Join(',', (await GetBookAuthorNames(book.Id)))
+                Authors = string.Join(',', await GetBookAuthorNames(book.Id))
             });
         }
 
@@ -44,11 +45,11 @@ public class BookService : IBookService
             Status = book.Status,
             Type = book.Type,
             IsLended = book.IsLended,
-            LendedTo = book.IsLended ? (await GetPresentBookHolder(id)) : null,
-            BorrowedBy = book.IsBorrowed ? (await GetBorrowedBookOwner(id)) : null,
-            Authors = string.Join(',', await GetBookAuthorNames(id)),
-            Categories = await GetBookCategories(id),
-            Languages = await GetBookLanguages(id)
+            LendedTo = book.IsLended ? await GetPresentBookHolder(id) : null,
+            BorrowedBy = book.IsBorrowed ? await GetBorrowedBookOwner(id) : null,
+            AuthorIds = await GetBookAuthorIds(id),
+            CategoriesIds = await GetBookCategorysIds(id),
+            LanguageIds = await GetBookLanguageIds(id)
         };
     }
 
@@ -67,25 +68,25 @@ public class BookService : IBookService
             IsRead = bookObj.IsRead
         };
 
-        //var bookAuthors = bookObj.Authors.Select(authorId => new BookAuthor
-        //{
-        //    BookId = book.Id,
-        //    AuthorId = authorId
-        //});
+        var bookAuthors = bookObj.AuthorIds.Select(authorId => new BookAuthor
+        {
+            BookId = book.Id,
+            AuthorId = authorId
+        });
 
-        var bookCategories = bookObj.Categories.Select(categoryId => new BookCategory
+        var bookCategories = bookObj.CategoriesIds.Select(categoryId => new BookCategory
         {
             BookId = book.Id,
             CategoryId = categoryId
         });
 
-        var bookLanguages = bookObj.Languages.Select(languageId => new BookLanguage
+        var bookLanguages = bookObj.LanguageIds.Select(languageId => new BookLanguage
         {
             BookId = book.Id,
             LanguageId = languageId
         });
 
-        //_connection.InsertOrReplaceAsync(bookAuthors);
+        _connection.InsertOrReplaceAsync(bookAuthors);
         _connection.InsertOrReplaceAsync(bookCategories);
         _connection.InsertOrReplaceAsync(bookLanguages);
         return _connection.InsertOrReplaceAsync(book);
@@ -94,21 +95,44 @@ public class BookService : IBookService
     public Task<int> DeleteBookAsync(Book Book) =>
         _connection.DeleteAsync(Book);
 
+    public async Task<IEnumerable<BooksDTO>> GetFilteredBooksAsync(string query)
+    {
+        var books = await _connection.Table<Book>()
+            .Where(b => b.Title.Contains(query)
+            || (GetBookAuthorNames(b.Id).Result ?? new List<string>()).Any(a => a.Contains(query))
+            )
+            .ToListAsync();
+
+        return books.Select(b => new BooksDTO
+        {
+            Title = b.Title,
+            Authors = string.Join(',', GetBookAuthorNames(b.Id).Result)
+        });
+    }
+
+
     #region Helpers
     private async Task<IEnumerable<string>> GetBookAuthorNames(Guid bookId)
     {
-        var authors = (await _connection.Table<BookAuthor>()
-                .Where(x => x.BookId == bookId)
-                .ToListAsync()).Select(x => x.AuthorId);
-
-        var authorNames = (await _connection.Table<Author>()
-            .Where(x => authors.Contains(x.Id))
-            .ToListAsync()).Select(x => string.Join(' ', x.Name, x.MiddleName, x.LastName));
+        var authorNames = (from bookAuthor in await _connection.Table<BookAuthor>().Where(x => x.BookId == bookId).ToListAsync()
+                           join author in await _connection.Table<Author>().ToListAsync()
+                           on bookAuthor.AuthorId equals author.Id
+                           select string.Join(' ', author.Name, author.MiddleName, author.LastName)).ToList();
 
         return authorNames;
     }
 
-    private async Task<List<Guid>> GetBookCategories(Guid bookId)
+    private async Task<IEnumerable<Guid>> GetBookAuthorIds(Guid bookId)
+    {
+        var authors = (await _connection.Table<BookAuthor>()
+                  .Where(x => x.BookId == bookId)
+                  .ToListAsync()).Select(x => x.AuthorId);
+
+
+        return authors;
+    }
+
+    private async Task<List<Guid>> GetBookCategorysIds(Guid bookId)
     {
         var bookCategories = await _connection.Table<BookCategory>()
                 .Where(x => x.BookId == bookId)
@@ -117,7 +141,7 @@ public class BookService : IBookService
         return bookCategories.Select(x => x.CategoryId).ToList();
     }
 
-    private async Task<IEnumerable<Guid>> GetBookLanguages(Guid bookId)
+    private async Task<IEnumerable<Guid>> GetBookLanguageIds(Guid bookId)
     {
         var bookLanguages = await _connection.Table<BookLanguage>()
                 .Where(x => x.BookId == bookId)

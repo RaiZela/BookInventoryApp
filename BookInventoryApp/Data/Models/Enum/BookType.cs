@@ -1,6 +1,6 @@
 ﻿namespace BookInventoryApp.Data.Models.Enum;
 
-public enum Type
+public enum BookType
 {
     Hardcover,
     Paperback,

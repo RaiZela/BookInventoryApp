@@ -8,6 +8,11 @@
     Title="BookInventoryApp">
 
     <ShellContent
+        Title="Search"
+        ContentTemplate="{DataTemplate local:Home}"
+        Route="Home" />
+    
+    <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
