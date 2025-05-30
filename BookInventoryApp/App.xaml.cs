@@ -10,11 +10,11 @@ namespace BookInventoryApp
             InitializeComponent();
             _serviceProvider = serviceProvider;
             var connection = _serviceProvider.GetRequiredService<SQLiteAsyncConnection>();
-            //connection.DeleteAllAsync<Book>().Wait();
-            //connection.DeleteAllAsync<Author>().Wait();
-            //connection.DeleteAllAsync<Category>().Wait();
-            //connection.DeleteAllAsync<Person>().Wait();
-            //connection.DeleteAllAsync<Language>().Wait();
+            connection.DeleteAllAsync<Book>().Wait();
+            connection.DeleteAllAsync<Author>().Wait();
+            connection.DeleteAllAsync<Category>().Wait();
+            connection.DeleteAllAsync<Person>().Wait();
+            connection.DeleteAllAsync<Language>().Wait();
 
             if (connection.Table<Author>().CountAsync().Result == 0)
                 SeedAuthors.SeedAuthorsAsync(connection);

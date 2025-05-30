@@ -2,9 +2,9 @@
 
 public enum BookType
 {
-    Hardcover,
     Paperback,
     Ebook,
+    Hardcover,
     Audiobook,
     Magazine,
     Photocopy

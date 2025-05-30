@@ -3,13 +3,93 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
         x:Class="BookInventoryApp.AddBookPopup"
-    CanBeDismissedByTappingOutsideOfPopup="True" Color="Black">
+        CanBeDismissedByTappingOutsideOfPopup="True" Color="Black">
 
-    <StackLayout BackgroundColor="Black" 
-                 HorizontalOptions="Center" WidthRequest="250">
-        <Entry Placeholder="Title" x:Name="TitleEntry" TextColor="White" />
-        <Picker x:Name="TypeEntry" SelectedIndex="{Binding Type}" ItemsSource="{Binding }"></Picker>
-        <Button Text="Save" Clicked="OnSaveClicked"/>
-    </StackLayout>
+    <VerticalStackLayout BackgroundColor="GhostWhite" 
+                 HorizontalOptions="Center" 
+                 VerticalOptions="Start"
+                 WidthRequest="{OnPlatform 500, iOS=200, Android=300}"
+                 HeightRequest="{OnPlatform 1000, iOS=200, Android=300}"
+                 Opacity="1" >
+
+        <Entry Placeholder="Title" 
+               x:Name="TitleEntry"    
+               Margin="5,5,5,5"
+               TextColor="Black" 
+               PlaceholderColor="Black"
+               BackgroundColor="GhostWhite"
+               Opacity="0.8" 
+               WidthRequest="{OnPlatform 400, iOS=100, Android=100}"
+               HeightRequest="{OnPlatform 50, iOS=100, Android=100}"
+               FontAttributes="Bold"
+               FontFamily="VictorMono-LightItalic"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"/>
+
+        <Picker x:Name="TypeEntry" 
+                SelectedIndex="{Binding Type}"  
+                TextColor="White" 
+                BackgroundColor="GhostWhite"
+                Opacity="1" 
+                FontAttributes="Bold"
+                FontFamily="VictorMono-LightItalic"
+                Title="Select book type..."
+                WidthRequest="{OnPlatform 400, iOS=100, Android=100}"
+                HeightRequest="{OnPlatform 60, iOS=100, Android=100}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Margin="5">
+        </Picker>
+
+        <Picker x:Name="StatusEntry" 
+                SelectedIndex="{Binding Status}"  
+                TextColor="Black" 
+                BackgroundColor="GhostWhite"
+                Opacity="1" 
+                FontAttributes="Bold"
+                FontFamily="VictorMono-LightItalic"
+                Title="Select status..."
+                WidthRequest="{OnPlatform 400, iOS=100, Android=100}"
+                HeightRequest="{OnPlatform 60, iOS=100, Android=100}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Margin="10,5,10,5">
+        </Picker>
+
+        <SearchBar x:Name="AuthorsSearch" TextC`hanged="OnSearchTextChanged">
+        </SearchBar>
+
+        <ListView x:Name="FilteredAuthorsView"
+                  ItemsSource="{Binding FilteredAuthors}"
+                  ItemSelected="Authors_ItemSelected" 
+                  IsVisible="False" 
+                  BackgroundColor="MediumPurple" 
+                  RefreshControlColor="MediumPurple" VerticalOptions="Center" RowHeight="200">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Label FontSize="Body" Opacity="1"  Text="{Binding FullName}" Padding="5" TextColor="Red" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <CollectionView
+        x:Name="SelectedAuthorsView"
+        ItemsSource="{Binding FilteredAuthors}"
+        HeightRequest="150"
+        SelectionMode="Single" >
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Label Text="{Binding FullName}" Padding="5" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Text="Save" 
+                Clicked="OnSaveClicked" 
+                WidthRequest="100" 
+                TextColor="White" 
+                BackgroundColor="MediumPurple"
+                Margin="20"/>
+    </VerticalStackLayout>
 
 </toolkit:Popup>

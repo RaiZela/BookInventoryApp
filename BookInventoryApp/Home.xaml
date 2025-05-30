@@ -37,7 +37,7 @@
             <CollectionView x:Name="ResultsCollectionView">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Border Padding="10" Margin="5" BackgroundColor="MediumPurple" Opacity="01">
+                        <Border Padding="10" Margin="5" BackgroundColor="MediumPurple" Opacity="1">
                             <Label Text="{Binding Title}" TextColor="White"/>
                         </Border>
                     </DataTemplate>
