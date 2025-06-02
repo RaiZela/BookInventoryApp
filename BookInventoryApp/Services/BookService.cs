@@ -99,7 +99,7 @@ public class BookService : IBookService
     {
         var books = await _connection.Table<Book>()
             .Where(b => b.Title.Contains(query)
-            || (_authorService.GetBookAuthorNames(b.Id).Result ?? new List<string>()).Any(a => a.Contains(query))
+            // || (await _authorService.GetBookAuthorNames(b.Id) ?? new List<string>()).Any(a => a.Contains(query))
             )
             .ToListAsync();
 

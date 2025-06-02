@@ -29,12 +29,26 @@
                                 <Label Text="{Binding Title}"
                                         FontSize="18"
                                         FontFamily="VictorMono-BoldItalic"></Label>
-                                <Label Text="{Binding Authors}"></Label>
+                                <Label Text="{Binding Authors}"  
+                                       FontSize="18" 
+                                       FontFamily="VictorMono-BoldItalic"
+                                       TextColor="White" 
+                                       BackgroundColor="Red" 
+                                       IsVisible="True" Opacity="1" LineHeight="2"></Label>
+                              
                             </StackLayout>
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Previous"
+           Clicked="OnAddBookClicked"
+           HorizontalOptions="Start" />
+                <Button Text="Next"
+           Clicked="OnAddBookClicked"
+           HorizontalOptions="End" />
+            </StackLayout>
         </StackLayout>
     </Grid>
 </ContentPage>
