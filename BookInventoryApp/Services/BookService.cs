@@ -3,6 +3,7 @@
 public interface IBookService
 {
     Task<List<BooksDTO>> GetBooksAsync();
+    Task<List<BooksDTO>> GetPaginatedBooks(int pageNumber, int numberOfBooks);
     Task<BookDTO> GetBookAsync(Guid id);
     Task<IEnumerable<BooksDTO>> GetFilteredBooksAsync(string query);
     Task<int> SaveBookAsync(BookDTO book);
@@ -23,10 +24,11 @@ public class BookService : IBookService
         var books = await _connection.Table<Book>().ToListAsync();
         foreach (var book in books)
         {
+            var authors = await _authorService.GetBookAuthorNames(book.Id);
             booksList.Add(new BooksDTO
             {
                 Title = book.Title,
-                Authors = string.Join(',', await _authorService.GetBookAuthorNames(book.Id))
+                Authors = string.Join(',', authors)
             });
         }
 
@@ -54,9 +56,9 @@ public class BookService : IBookService
         };
     }
 
-    public Task<int> SaveBookAsync(BookDTO bookObj)
+    public async Task<int> SaveBookAsync(BookDTO bookObj)
     {
-        var existingBook = _connection.Table<Book>().FirstOrDefaultAsync(b => b.Id == bookObj.Id);
+        var existingBook = await _connection.Table<Book>().FirstOrDefaultAsync(b => b.Id == bookObj.Id);
         var book = new Book
         {
             Title = bookObj.Title,
@@ -72,24 +74,46 @@ public class BookService : IBookService
         {
             BookId = book.Id,
             AuthorId = authorId
-        });
+        }).ToList();
 
         var bookCategories = bookObj.CategoriesIds.Select(categoryId => new BookCategory
         {
             BookId = book.Id,
             CategoryId = categoryId
-        });
+        }).ToList();
 
         var bookLanguages = bookObj.LanguageIds.Select(languageId => new BookLanguage
         {
             BookId = book.Id,
             LanguageId = languageId
-        });
+        }).ToList();
 
-        _connection.InsertOrReplaceAsync(bookAuthors);
-        _connection.InsertOrReplaceAsync(bookCategories);
-        _connection.InsertOrReplaceAsync(bookLanguages);
-        return _connection.InsertOrReplaceAsync(book);
+        var test = await _connection.Table<BookAuthor>().ToListAsync();
+        try
+        {
+            foreach (var author in bookAuthors)
+            {
+                await _connection.InsertOrReplaceAsync(author);
+            }
+
+            foreach (var category in bookCategories)
+            {
+                await _connection.InsertOrReplaceAsync(category);
+            }
+
+            foreach (var language in bookLanguages)
+            {
+                await _connection.InsertOrReplaceAsync(language);
+            }
+
+            return await _connection.InsertOrReplaceAsync(book);
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
     }
 
     public Task<int> DeleteBookAsync(Book Book) =>
@@ -98,16 +122,51 @@ public class BookService : IBookService
     public async Task<IEnumerable<BooksDTO>> GetFilteredBooksAsync(string query)
     {
         var books = await _connection.Table<Book>()
-            .Where(b => b.Title.Contains(query)
-            // || (await _authorService.GetBookAuthorNames(b.Id) ?? new List<string>()).Any(a => a.Contains(query))
-            )
+            .Where(b => b.Title.Contains(query))
             .ToListAsync();
 
-        return books.Select(b => new BooksDTO
+        var booksDTOs = new List<BooksDTO>();
+        foreach (var book in books)
         {
-            Title = b.Title,
-            Authors = string.Join(',', _authorService.GetBookAuthorNames(b.Id).Result)
-        });
+            var authors = await _authorService.GetBookAuthorNames(book.Id);
+            booksDTOs.Add(new BooksDTO
+            {
+                Title = book.Title,
+                Authors = string.Join(',', authors)
+            });
+        }
+        return booksDTOs;
+    }
+
+    public async Task<List<BooksDTO>> GetPaginatedBooks(int pageNumber, int numberOfBooks)
+    {
+        var booksList = new List<BooksDTO>();
+
+        List<Book> books = new();
+
+        if (pageNumber == 1)
+        {
+            books = await _connection.Table<Book>()
+               .Take(numberOfBooks)
+               .ToListAsync();
+        }
+        else
+            books = await _connection.Table<Book>()
+                 .Skip((pageNumber - 1) * numberOfBooks)
+                 .Take(numberOfBooks)
+                 .ToListAsync();
+
+        foreach (var book in books)
+        {
+            var authors = await _authorService.GetBookAuthorNames(book.Id);
+            booksList.Add(new BooksDTO
+            {
+                Title = book.Title,
+                Authors = string.Join(',', authors)
+            });
+        }
+
+        return booksList;
     }
 
 

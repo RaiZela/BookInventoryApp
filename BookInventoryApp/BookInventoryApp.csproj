@@ -115,6 +115,7 @@
 
 	<ItemGroup>
 	  <MauiImage Include="Platforms\Windows\background_image_library.jpg" />
+	  <MauiImage Include="Platforms\Windows\background_author.jpg" />
 	</ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@
     <Grid>
         <Image
                Aspect="AspectFill"
-               Opacity="0.5"
+               Opacity="0.3"
                IsEnabled="False">
             <Image.Source>
                 <OnPlatform x:TypeArguments="ImageSource">
@@ -20,34 +20,54 @@
         <StackLayout Padding="20">
             <Button Text="Add New Book"
                     Clicked="OnAddBookClicked"
-                    HorizontalOptions="End" />
-            <CollectionView x:Name="BooksView">
-                <CollectionView.ItemTemplate>
+                    HorizontalOptions="End" BackgroundColor="MediumPurple" />
+
+            <Grid ColumnDefinitions="*" Padding="10" Margin="10" BackgroundColor="#362b7d" Opacity="0.7">
+                <Label Text="Title" TextColor="White" FontAttributes="Bold" Margin="10,10,10,10"/>
+                <Label Text="Author" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" Margin="10,10,10,10"/>
+                <Label Text="Category" TextColor="White" FontAttributes="Bold" HorizontalOptions="End" Margin="10,10,10,10"/>
+            </Grid>
+
+            <ListView x:Name="BooksView" 
+                      SelectionMode="Single" >
+                <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Border Padding="8" Margin="10">
-                            <StackLayout>
-                                <Label Text="{Binding Title}"
-                                        FontSize="18"
-                                        FontFamily="VictorMono-BoldItalic"></Label>
-                                <Label Text="{Binding Authors}"  
-                                       FontSize="18" 
-                                       FontFamily="VictorMono-BoldItalic"
-                                       TextColor="White" 
-                                       BackgroundColor="Red" 
-                                       IsVisible="True" Opacity="1" LineHeight="2"></Label>
-                              
-                            </StackLayout>
-                        </Border>
+                        <Grid 
+                            BackgroundColor="Black"
+                            Opacity="1"
+                            Margin="10" 
+                            IsVisible="True"
+                            ColumnDefinitions="2*,2*,*"
+                            Padding="10">
+                            <Label 
+                                Grid.Column="0"
+                                Text="{Binding Title}"
+                                FontSize="14"
+                                FontFamily="VictorMono-BoldItalic"
+                                TextColor="White" 
+                                VerticalOptions="Center" />
+
+                            <Label 
+                                Grid.Column="1"
+                                Text="{Binding Authors}"
+                                FontSize="14"
+                                FontFamily="VictorMono-Bold"
+                                TextColor="White"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />     
+                        </Grid>
                     </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <StackLayout Orientation="Horizontal">
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
                 <Button Text="Previous"
-           Clicked="OnAddBookClicked"
-           HorizontalOptions="Start" />
+                       Clicked="OnPreviusClicked"
+                       HorizontalOptions="Start" />
                 <Button Text="Next"
-           Clicked="OnAddBookClicked"
-           HorizontalOptions="End" />
+                       Clicked="OnNextClicked"
+                       HorizontalOptions="End" />
             </StackLayout>
         </StackLayout>
     </Grid>

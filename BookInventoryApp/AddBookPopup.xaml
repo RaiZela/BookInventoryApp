@@ -2,8 +2,9 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-        x:Class="BookInventoryApp.AddBookPopup"
-        CanBeDismissedByTappingOutsideOfPopup="True" Color="Black" >
+             x:Class="BookInventoryApp.AddBookPopup"
+             CanBeDismissedByTappingOutsideOfPopup="True" 
+             Color="Black" >
 
     <VerticalStackLayout BackgroundColor="GhostWhite"
                  HorizontalOptions="Center" 
@@ -11,6 +12,15 @@
                  WidthRequest="{OnPlatform 500, iOS=200, Android=300}"
                  HeightRequest="{OnPlatform 1000, iOS=200, Android=300}"
                  Opacity="1">
+
+        <Label Text="Book"
+               FontSize="Header" 
+               HorizontalOptions="Center"
+               FontAttributes="Bold"
+               FontFamily="VictorMono-Bold" 
+               TextColor="White"
+               Background="Black" 
+               Opacity="1"></Label>
 
         <Entry Placeholder="Title" 
                x:Name="TitleEntry"    

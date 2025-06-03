@@ -3,32 +3,56 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="BookInventoryApp.AuthorPage"
              Title="Author">
+    
     <Grid>
         <Image
-        Aspect="AspectFill"
-        Opacity="0.5"
-        IsEnabled="False">
+            Aspect="AspectFill"
+            Opacity="0.3">
             <Image.Source>
                 <OnPlatform x:TypeArguments="ImageSource">
                     <On Platform="Android" Value="background_image_library_author.jpg" />
-                    <On Platform="WinUI" Value="background_image_library_author.jpg" />
+                    <On Platform="WinUI" Value="background_author.jpg" />
                 </OnPlatform>
             </Image.Source>
         </Image>
-        <StackLayout Padding="20">
-            <Button Text="Add New Author" Clicked="OnAddAuthorClicked" HorizontalOptions="End"/>
-            <CollectionView x:Name="AuthorsView" VerticalScrollBarVisibility="Always">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <HorizontalStackLayout  Padding="10">
-                            <Label Text="{Binding Name}" FontAttributes="Bold" Padding="10"/>
-                            <Label Text="{Binding MiddleName}" FontAttributes="Bold" Padding="10"/>
-                            <Label Text="{Binding LastName}" FontAttributes="Bold" Padding="10"/>
-                        </HorizontalStackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </StackLayout>
+        
+        <VerticalStackLayout 
+            Padding="20"
+            Opacity="1">
+
+            <Button Text="Add New Author" 
+                    Clicked="OnAddAuthorClicked" 
+                    HorizontalOptions="End"/>
+
+            <Label Text="Search Author" 
+                   FontSize="Header" 
+                   HorizontalOptions="Center"
+                   FontAttributes="Bold"
+                   FontFamily="VictorMono-Bold" 
+                   TextColor="White"
+                   Margin="50" 
+                   Padding="20" 
+                   Background="Black" 
+                   Opacity="1"></Label>  
+
+            <SearchBar x:Name="SearchBar"
+              Placeholder="Search author..."
+              TextChanged="OnSearchTextChanged" 
+              TextColor="Black" 
+              PlaceholderColor="Black"
+              BackgroundColor="White" 
+              Opacity="0.5" 
+              MinimumHeightRequest="50" 
+              Margin="60, 40, 60, 20"/>
+
+            <ListView x:Name="ResultsCollectionView" 
+                      Opacity="0.7" 
+                      BackgroundColor="#362b7d" 
+                      RowHeight="50" 
+                      IsVisible="False" 
+                      Margin="0,0,0,0">
+            </ListView>
+        </VerticalStackLayout>
 
     </Grid>
 </ContentPage>

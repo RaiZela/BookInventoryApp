@@ -1,6 +1,4 @@
-﻿using BookInventoryApp.Data.Models.Abstractions.Generic;
-
-namespace BookInventoryApp.Data.Models;
+﻿namespace BookInventoryApp.Data.Models;
 
 public class Author : Entity
 {
@@ -14,5 +12,8 @@ public class Author : Entity
     [StringLength(20)]
     public string LastName { get; set; }
 
-    public Guid NationalityId { get; set; }
+    [Ignore]
+    public string FullName => $"{Name} {MiddleName} {LastName}".Trim();
+
+
 }

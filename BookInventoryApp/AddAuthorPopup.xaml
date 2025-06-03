@@ -1,15 +1,75 @@
 <toolkit:Popup
-             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                x:Class="BookInventoryApp.AddAuthorPopup"
-               CanBeDismissedByTappingOutsideOfPopup="True">
+               CanBeDismissedByTappingOutsideOfPopup="True" 
+               Color="Black">
 
-    <StackLayout Padding="20" BackgroundColor="White" WidthRequest="300">
-        <Entry Placeholder="Name" x:Name="Name"/>
-        <Entry Placeholder="MiddleName" x:Name="MiddleName"/>
-        <Entry Placeholder="LastName" x:Name="LastName"/>
-        <Button Text="Save" Clicked="OnSaveClicked"/>
-    </StackLayout>
+    <VerticalStackLayout 
+                 BackgroundColor="GhostWhite"
+                 HorizontalOptions="Center" 
+                 VerticalOptions="Start"
+                 WidthRequest="{OnPlatform 500, iOS=200, Android=300}"
+                 HeightRequest="{OnPlatform 1000, iOS=200, Android=300}"
+                 Opacity="1">
+
+        <Label Text="Author"
+               FontSize="Header" 
+               HorizontalOptions="Center"
+               FontAttributes="Bold"
+               FontFamily="VictorMono-Bold" 
+               TextColor="White"
+               Background="Black" 
+               Opacity="1"></Label>
+        <Entry 
+                 Placeholder="Name" 
+                 x:Name="Name"
+                 Margin="5,40,5,5"
+                 TextColor="Black" 
+                 PlaceholderColor="Black"
+                 BackgroundColor="GhostWhite"
+                 Opacity="0.8" 
+                 WidthRequest="{OnPlatform 400, iOS=100, Android=100}"
+                 HeightRequest="{OnPlatform 50, iOS=100, Android=100}"
+                 FontFamily="VictorMono-LightItalic"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Center"/>     
+        <Entry
+             Placeholder="MiddleName" 
+             x:Name="MiddleName"
+             Margin="5,5,5,5"
+             TextColor="Black" 
+             PlaceholderColor="Black"
+             BackgroundColor="GhostWhite"
+             Opacity="0.8" 
+             WidthRequest="{OnPlatform 400, iOS=100, Android=100}"
+             HeightRequest="{OnPlatform 50, iOS=100, Android=100}"
+             FontFamily="VictorMono-LightItalic"
+             HorizontalOptions="Center"
+             VerticalOptions="Center"/>
+        
+        <Entry 
+             Placeholder="LastName" 
+             x:Name="LastName"
+             Margin="5,5,5,5"
+             TextColor="Black" 
+             PlaceholderColor="Black"
+             BackgroundColor="GhostWhite"
+             Opacity="0.8" 
+             WidthRequest="{OnPlatform 400, iOS=100, Android=100}"
+             HeightRequest="{OnPlatform 50, iOS=100, Android=100}"
+             FontFamily="VictorMono-LightItalic"
+             HorizontalOptions="Center"
+             VerticalOptions="Center"/>
+
+        <Button Text="Save" 
+                Clicked="OnSaveClicked"
+                WidthRequest="100" 
+                TextColor="White" 
+                BackgroundColor="MediumPurple"
+                VerticalOptions="Center" 
+                Margin="20"/>      
+    </VerticalStackLayout>
 
 </toolkit:Popup>

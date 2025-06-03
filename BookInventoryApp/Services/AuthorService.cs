@@ -20,7 +20,7 @@ public class AuthorService : IAuthorService
     }
 
     public Task<List<Author>> GetAuthorsAsync() =>
-   _connection.Table<Author>().ToListAsync();
+   _connection.Table<Author>().Take(10).ToListAsync();
 
     public Task<Author> GetAuthorAsync(Guid id) =>
          _connection.Table<Author>().FirstOrDefaultAsync(b => b.Id == id);
@@ -38,6 +38,8 @@ public class AuthorService : IAuthorService
                            join author in await _connection.Table<Author>().ToListAsync()
                            on bookAuthor.AuthorId equals author.Id
                            select string.Join(' ', author.Name, author.MiddleName, author.LastName)).ToList();
+        if (authorNames == null)
+            return new List<string>();
 
         return authorNames;
     }
@@ -56,13 +58,13 @@ public class AuthorService : IAuthorService
     {
         var authors = await _connection.Table<Author>()
             .Where(a => a.Name.ToLower().Contains(query.ToLower()) || a.LastName.ToLower().Contains(query.ToLower()))
-            .Take(5)
+            .Take(10)
             .ToListAsync();
 
         return authors.Select(a => new AuthorDTO
         {
             Id = a.Id,
-            FullName = $"{a.Name} {a.MiddleName} {a.LastName}".Trim()
-        });
+            FullName = a.FullName
+        }).ToList();
     }
 }
