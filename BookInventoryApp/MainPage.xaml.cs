@@ -15,7 +15,6 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         _service = service;
         _authorService = authorService;
-        BooksView.ItemsSource = Books;
     }
 
     protected override async void OnAppearing()
@@ -26,7 +25,57 @@ public partial class MainPage : ContentPage
         {
             Books.Add(book);
         }
+        BooksView.IsVisible = true;
+        BooksView.ItemsSource = Books;
         BooksView.IsRefreshing = true;
+        BooksView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
+        BooksView.BackgroundColor = Color.FromHex("#362b7d");
+        BooksView.Opacity = 0.7;
+        BooksView.Margin = 10;
+
+        BooksView.ItemTemplate = new DataTemplate(() =>
+        {
+            var titleLabel = new Label
+            {
+                FontSize = 18,
+                VerticalOptions = LayoutOptions.Center,
+                Margin = 10,
+                Padding = 5,
+                TextColor = Colors.GhostWhite,
+                FontAttributes = FontAttributes.Bold,
+                FontFamily = "VictorMono-LightItalic"
+            };
+            titleLabel.SetBinding(Label.TextProperty, "Title");
+
+            var authorLabel = new Label
+            {
+                FontSize = 14,
+                VerticalOptions = LayoutOptions.Center,
+                Margin = new Thickness(10, 0, 10, 5),
+                Padding = 5,
+                TextColor = Colors.LightGray,
+                FontAttributes = FontAttributes.Bold,
+                FontFamily = "VictorMono-Light"
+            };
+            authorLabel.SetBinding(Label.TextProperty, "Authors");
+
+            var divider = new BoxView
+            {
+                HeightRequest = 1,
+                Color = Colors.Gray,
+                HorizontalOptions = LayoutOptions.Fill,
+                Margin = new Thickness(10, 5, 10, 0)
+            };
+
+            var stackLayout = new StackLayout
+            {
+                Orientation = StackOrientation.Vertical,
+                Children = { titleLabel, authorLabel, divider }
+            };
+
+            var viewCell = new ViewCell { View = stackLayout };
+            return viewCell;
+        });
     }
 
     private async Task UpdateBooksView()
@@ -35,8 +84,6 @@ public partial class MainPage : ContentPage
         var results = await _service.GetPaginatedBooks(PageNumber, 10);
         foreach (var item in results)
             Books.Add(item);
-
-        BooksView.ItemsSource = Books;
     }
 
     private async void OnAddBookClicked(object sender, EventArgs e)

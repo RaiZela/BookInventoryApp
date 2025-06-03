@@ -50,7 +50,7 @@
                       BackgroundColor="#362b7d" 
                       RowHeight="50" 
                       IsVisible="False" 
-                      Margin="0,0,0,0">
+                      Margin="0,0,0,0" >
             </ListView>
         </VerticalStackLayout>
 
