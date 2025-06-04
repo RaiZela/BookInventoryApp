@@ -7,7 +7,7 @@ public interface IBookService
     Task<BookDTO> GetBookAsync(Guid id);
     Task<IEnumerable<BooksDTO>> GetFilteredBooksAsync(string query);
     Task<int> SaveBookAsync(BookDTO book);
-    Task<int> DeleteBookAsync(Book book);
+    Task<int> DeleteBookAsync(Guid id);
 }
 public class BookService : IBookService
 {
@@ -33,6 +33,7 @@ public class BookService : IBookService
             var languages = await _languagesService.GetBookLanguagesAsync(book.Id);
             booksList.Add(new BooksDTO
             {
+                Id = book.Id,
                 Title = book.Title,
                 Authors = string.Join(',', authors),
                 Categories = string.Join(',', categories),
@@ -49,19 +50,19 @@ public class BookService : IBookService
         return new BookDTO
         {
             Id = id,
-            Title = book.Title,
-            //YearPublished = book.YearPublished,
-            //IsBorrowed = book.IsBorrowed,
-            //IsOwned = book.IsOwned,
+            Title = book.Title.ToUpper(),
             Status = book.Status,
             Type = book.Type,
-            //IsLended = book.IsLended,
-            //LendedTo = book.IsLended ? await GetPresentBookHolder(id) : null,
-            //BorrowedBy = book.IsBorrowed ? await GetBorrowedBookOwner(id) : null,
             AuthorIds = await _authorService.GetBookAuthorIds(id),
             CategoriesIds = await GetBookCategorysIds(id),
             LanguageIds = await GetBookLanguageIds(id)
         };
+    }
+
+    public async Task<Book> GetBookRecordAsync(Guid id)
+    {
+        var book = await _connection.Table<Book>().FirstOrDefaultAsync(b => b.Id == id);
+        return book;
     }
 
     public async Task<int> SaveBookAsync(BookDTO bookObj)
@@ -70,12 +71,8 @@ public class BookService : IBookService
         var book = new Book
         {
             Title = bookObj.Title,
-            //YearPublished = bookObj.YearPublished,
-            //IsBorrowed = bookObj.IsBorrowed,
-            //IsOwned = bookObj.IsOwned,
             Status = bookObj.Status,
             Type = bookObj.Type,
-            //IsLended = bookObj.IsLended,
         };
 
         var bookAuthors = bookObj.AuthorIds.Select(authorId => new BookAuthor
@@ -124,8 +121,11 @@ public class BookService : IBookService
         }
     }
 
-    public Task<int> DeleteBookAsync(Book Book) =>
-        _connection.DeleteAsync(Book);
+    public async Task<int> DeleteBookAsync(Guid id)
+    {
+        var book = await GetBookRecordAsync(id);
+        return await _connection.DeleteAsync(book);
+    }
 
     public async Task<IEnumerable<BooksDTO>> GetFilteredBooksAsync(string query)
     {
@@ -137,10 +137,15 @@ public class BookService : IBookService
         foreach (var book in books)
         {
             var authors = await _authorService.GetBookAuthorNames(book.Id);
+            var categories = await _categoriesService.GetBookCategoriesAsync(book.Id);
+            var languages = await _languagesService.GetBookLanguagesAsync(book.Id);
             booksDTOs.Add(new BooksDTO
             {
-                Title = book.Title,
-                Authors = string.Join(',', authors)
+                Id = book.Id,
+                Title = book.Title.ToUpper(),
+                Authors = string.Join(',', authors),
+                Categories = string.Join(',', categories),
+                Languages = string.Join(',', categories)
             });
         }
         return booksDTOs;
@@ -169,23 +174,16 @@ public class BookService : IBookService
             var authors = await _authorService.GetBookAuthorNames(book.Id);
             var categories = await _categoriesService.GetBookCategoriesAsync(book.Id);
 
-            try
+            var languages = await _languagesService.GetBookLanguagesAsync(book.Id);
+            booksList.Add(new BooksDTO
             {
-                var languages = await _languagesService.GetBookLanguagesAsync(book.Id);
-                booksList.Add(new BooksDTO
-                {
-                    Title = book.Title,
-                    Authors = string.Join(Environment.NewLine, authors),
-                    Categories = string.Join(Environment.NewLine, categories),
-                    Languages = string.Join(Environment.NewLine, languages)
-                });
+                Id = book.Id,
+                Title = book.Title.ToUpper(),
+                Authors = string.Join(Environment.NewLine, authors),
+                Categories = string.Join(Environment.NewLine, categories),
+                Languages = string.Join(Environment.NewLine, languages)
+            });
 
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
         }
 
         return booksList;

@@ -89,6 +89,9 @@
 		<MauiXaml Update="AddAuthorPopup.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="BookDetailsPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="CategoryPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>

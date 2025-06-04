@@ -28,5 +28,17 @@ public partial class Home : ContentPage
             foreach (var item in results)
                 _filteredItems.Add(item);
         }
+        ResultsCollectionView.IsVisible = true;
+    }
+
+    private async void ResultsCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var book = e.CurrentSelection.FirstOrDefault() as BooksDTO;
+        ResultsCollectionView.SelectedItem = null;
+        ResultsCollectionView.IsVisible = false;
+        SearchBar.Text = null;
+        if (book is not null && book.Id != Guid.Empty)
+            await Shell.Current.GoToAsync($"{nameof(BookDetailsPage)}?bookId={book.Id}");
+
     }
 }

@@ -4,7 +4,6 @@ public class BookDTO
 {
     public Guid Id { get; set; }
     public string Title { get; set; }
-    public int YearPublished { get; set; }
     public bool IsRead { get; set; } = false;
     public Status Status { get; set; }
     public BookType Type { get; set; }

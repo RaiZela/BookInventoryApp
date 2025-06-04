@@ -121,7 +121,7 @@ public partial class MainPage : ContentPage
 
     private async void OnAddBookClicked(object sender, EventArgs e)
     {
-        var popup = new AddBookPopup(_service, _authorService, _categoriesService, _languagesService);
+        var popup = new AddBookPopup(_service, _authorService, _categoriesService, _languagesService, new BookDTO());
         await this.ShowPopupAsync(popup);
         await UpdateBooksView();
     }
@@ -137,5 +137,11 @@ public partial class MainPage : ContentPage
         Books.Clear();
         PageNumber--;
         await UpdateBooksView();
+    }
+
+    private async void BooksView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+    {
+        var book = e.SelectedItem as BooksDTO;
+        await Shell.Current.GoToAsync($"{nameof(BookDetailsPage)}?bookId={book.Id}");
     }
 }

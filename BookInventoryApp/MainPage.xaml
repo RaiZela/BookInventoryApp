@@ -51,7 +51,7 @@
 
             <ListView x:Name="BooksView" 
                       SelectionMode="Single" 
-                      RowHeight="100">
+                      RowHeight="100" ItemSelected="BooksView_ItemSelected">
             </ListView>
 
 

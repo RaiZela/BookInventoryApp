@@ -15,8 +15,9 @@ public partial class AddBookPopup : Popup
     public ObservableCollection<CategoryDTO> SelectedCategories { get; set; } = new();
     public ObservableCollection<LanguageDTO> FilteredLanguages { get; set; } = new();
     public ObservableCollection<LanguageDTO> SelectedLanguages { get; set; } = new();
+    private BookDTO Book { get; set; }
 
-    public AddBookPopup(IBookService service, IAuthorService authorService, ICategoriesService categoriesService, ILanguagesService languagesService)
+    public AddBookPopup(IBookService service, IAuthorService authorService, ICategoriesService categoriesService, ILanguagesService languagesService, BookDTO book)
     {
         InitializeComponent();
         _service = service;
@@ -25,11 +26,12 @@ public partial class AddBookPopup : Popup
         _languagesService = languagesService;
         TypeEntry.ItemsSource = Enum.GetValues(typeof(BookType));
         StatusEntry.ItemsSource = Enum.GetValues(typeof(Status));
+        Book = book ?? new();
     }
 
     private async void OnSaveClicked(object sender, EventArgs e)
     {
-        var book = new BookDTO
+        Book = new BookDTO
         {
             Title = TitleEntry.Text,
             AuthorIds = SelectedAuthors == null ? new() : SelectedAuthors.Select(a => a.Id).ToList(),
@@ -39,7 +41,7 @@ public partial class AddBookPopup : Popup
             Type = TypeEntry.SelectedItem is null ? BookType.Paperback : (BookType)TypeEntry.SelectedItem,
         };
 
-        await _service.SaveBookAsync(book);
+        await _service.SaveBookAsync(Book);
 
         Close();
     }
