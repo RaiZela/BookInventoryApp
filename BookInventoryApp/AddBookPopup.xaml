@@ -6,14 +6,14 @@
     x:Class="BookInventoryApp.AddBookPopup"
     Color="Black">
 
-    <ScrollView>
+    <ScrollView VerticalScrollBarVisibility="Always">
         <VerticalStackLayout
             BackgroundColor="Black" 
             Padding="25"
             Spacing="14"
             HorizontalOptions="Center"
             WidthRequest="{OnIdiom Phone=350, Tablet=500, Desktop=600}"
-            HeightRequest="{OnIdiom Phone=350, Tablet=500, Desktop=650}" >
+            HeightRequest="{OnIdiom Phone=350, Tablet=500, Desktop=650}">
 
             <!-- Header -->
             <Label Text="Add Book"
@@ -43,7 +43,7 @@
                     TextColor="Black"
                     FontFamily="VictorMono-LightItalic"
                     BackgroundColor="#F5F5F5"
-                    HeightRequest="45" 
+                    HeightRequest="60" 
                     HorizontalOptions="Start"
                     WidthRequest="{OnIdiom Phone=250, Tablet=400, Desktop=500}"
                     Margin="5,10,10,10"/>
@@ -54,7 +54,7 @@
                     TextColor="Black"
                     FontFamily="VictorMono-LightItalic"
                     BackgroundColor="#F5F5F5"
-                    HeightRequest="45" 
+                    HeightRequest="60" 
                     HorizontalOptions="Start"
                     WidthRequest="{OnIdiom Phone=250, Tablet=400, Desktop=500}"
                     Margin="5,10,10,10"/>       
@@ -77,6 +77,7 @@
                       ItemSelected="Authors_ItemSelected"
                       BackgroundColor="#DCD3FF"
                       RowHeight="50"
+                      HeightRequest="100"
                       SeparatorVisibility="None" 
                       HorizontalOptions="Start"
                       WidthRequest="{OnIdiom Phone=250, Tablet=400, Desktop=500}"
@@ -86,7 +87,7 @@
                       IsVisible="False"
                       SelectionMode="None"
                       BackgroundColor="#9370DB"
-                      RowHeight="40"
+                      RowHeight="50"
                       HeightRequest="100"
                       SeparatorVisibility="None"
                       HorizontalOptions="Start"
