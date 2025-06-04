@@ -6,6 +6,8 @@ public interface ILanguagesService
     Task<Language> GetLanguageAsync(Guid id);
     Task<int> SaveLanguageAsync(Language Language);
     Task<int> DeleteLanguageAsync(Language Language);
+    Task<IEnumerable<LanguageDTO>> GetFilteredLanguagesAsync(string query);
+    Task<IEnumerable<string>> GetBookLanguagesAsync(Guid bookId);
 }
 public class LanguagesService : ILanguagesService
 {
@@ -25,4 +27,31 @@ public class LanguagesService : ILanguagesService
 
     public Task<int> DeleteLanguageAsync(Language Language) =>
         _connection.DeleteAsync(Language);
+
+    public async Task<IEnumerable<LanguageDTO>> GetFilteredLanguagesAsync(string query)
+    {
+        var languages = await _connection.Table<Language>()
+            .Where(c => c.Name.ToLower().Contains(query) || c.Code.ToLower().Contains(query))
+            .ToListAsync();
+
+        return languages.Select(c => new LanguageDTO
+        {
+            Id = c.Id,
+            Name = c.Name,
+            Code = c.Code
+        }).ToList();
+    }
+
+    public async Task<IEnumerable<string>> GetBookLanguagesAsync(Guid bookId)
+    {
+        var languages = (from bookLanguage in await _connection.Table<BookLanguage>().Where(x => x.BookId == bookId).ToListAsync()
+                         join language in await _connection.Table<Language>().ToListAsync()
+                         on bookLanguage.LanguageId equals language.Id
+                         select language.Name).ToList();
+
+        if (languages == null)
+            return new List<string>();
+
+        return languages;
+    }
 }

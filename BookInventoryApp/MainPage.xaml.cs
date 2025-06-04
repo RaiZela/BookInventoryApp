@@ -7,19 +7,24 @@ public partial class MainPage : ContentPage
 {
     IBookService _service;
     IAuthorService _authorService;
+    ICategoriesService _categoriesService;
+    ILanguagesService _languagesService;
     private ObservableCollection<BooksDTO> Books = new ObservableCollection<BooksDTO>();
     private int PageNumber = 1;
 
-    public MainPage(IBookService service, IAuthorService authorService)
+    public MainPage(IBookService service, IAuthorService authorService, ICategoriesService categoriesService, ILanguagesService languagesService)
     {
         InitializeComponent();
         _service = service;
         _authorService = authorService;
+        _categoriesService = categoriesService;
+        _languagesService = languagesService;
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        Books.Clear();
         var books = await _service.GetPaginatedBooks(PageNumber, 10);
         foreach (var book in books)
         {
@@ -32,49 +37,77 @@ public partial class MainPage : ContentPage
         BooksView.BackgroundColor = Color.FromHex("#362b7d");
         BooksView.Opacity = 0.7;
         BooksView.Margin = 10;
-
         BooksView.ItemTemplate = new DataTemplate(() =>
         {
             var titleLabel = new Label
             {
                 FontSize = 18,
-                VerticalOptions = LayoutOptions.Center,
-                Margin = 10,
-                Padding = 5,
-                TextColor = Colors.GhostWhite,
-                FontAttributes = FontAttributes.Bold,
-                FontFamily = "VictorMono-LightItalic"
+                TextColor = Colors.White,
+                FontFamily = "VictorMono-BoldItalic",
+                Margin = new Thickness(5, 2),
             };
             titleLabel.SetBinding(Label.TextProperty, "Title");
 
             var authorLabel = new Label
             {
                 FontSize = 14,
-                VerticalOptions = LayoutOptions.Center,
-                Margin = new Thickness(10, 0, 10, 5),
-                Padding = 5,
                 TextColor = Colors.LightGray,
-                FontAttributes = FontAttributes.Bold,
-                FontFamily = "VictorMono-Light"
+                FontFamily = "VictorMono-Light",
+                Margin = new Thickness(5, 0, 5, 5)
             };
             authorLabel.SetBinding(Label.TextProperty, "Authors");
 
-            var divider = new BoxView
+            var categoryLabel = new Label
             {
-                HeightRequest = 1,
-                Color = Colors.Gray,
-                HorizontalOptions = LayoutOptions.Fill,
-                Margin = new Thickness(10, 5, 10, 0)
+                FontSize = 14,
+                TextColor = Colors.MediumPurple,
+                FontFamily = "VictorMono-LightItalic",
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center
             };
+            categoryLabel.SetBinding(Label.TextProperty, "Categories");
 
-            var stackLayout = new StackLayout
+            var languageLabel = new Label
+            {
+                FontSize = 14,
+                TextColor = Colors.MediumPurple,
+                FontFamily = "VictorMono-LightItalic",
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center
+            };
+            languageLabel.SetBinding(Label.TextProperty, "Languages");
+
+            var leftColumn = new StackLayout
             {
                 Orientation = StackOrientation.Vertical,
-                Children = { titleLabel, authorLabel, divider }
+                Children = { titleLabel, authorLabel }
             };
 
-            var viewCell = new ViewCell { View = stackLayout };
-            return viewCell;
+            var grid = new Grid
+            {
+                ColumnDefinitions =
+                                {
+                                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                                    new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) },
+                                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                                },
+                Padding = 10,
+                BackgroundColor = Colors.Black,
+                Opacity = 0.8,
+                Margin = new Thickness(10, 5)
+            };
+
+            grid.Children.Add(leftColumn);
+            Grid.SetColumn(leftColumn, 0);
+
+            grid.Children.Add(categoryLabel);
+            Grid.SetColumn(categoryLabel, 1);
+
+
+            grid.Children.Add(languageLabel);
+            Grid.SetColumn(languageLabel, 2);
+
+            return new ViewCell { View = grid };
         });
     }
 
@@ -88,7 +121,7 @@ public partial class MainPage : ContentPage
 
     private async void OnAddBookClicked(object sender, EventArgs e)
     {
-        var popup = new AddBookPopup(_service, _authorService);
+        var popup = new AddBookPopup(_service, _authorService, _categoriesService, _languagesService);
         await this.ShowPopupAsync(popup);
         await UpdateBooksView();
     }

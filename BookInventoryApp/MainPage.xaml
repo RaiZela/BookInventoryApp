@@ -17,21 +17,41 @@
             </Image.Source>
         </Image>
 
-        <StackLayout Padding="20">
+        <StackLayout Padding="20,20,20,20">
             <Button Text="Add New Book"
                     Clicked="OnAddBookClicked"
                     HorizontalOptions="End" BackgroundColor="MediumPurple" />
 
-            <Grid ColumnDefinitions="*" Padding="10" Margin="10" BackgroundColor="#362b7d" Opacity="0.7">
-                <Label Text="Title" TextColor="White" FontAttributes="Bold" Margin="10,10,10,10"/>
-                <!--<Label Text="Author" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" Margin="10,10,10,10"/>
-                <Label Text="Category" TextColor="White" FontAttributes="Bold" HorizontalOptions="End" Margin="10,10,10,10"/>-->
+            <Grid ColumnDefinitions="*,*, *" Padding="10" Margin="10,5,5,5" BackgroundColor="#362b7d" Opacity="1">
+                <Label Text="Title" 
+                       TextColor="White" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Start" 
+                       Margin="10,10,10,10"
+                       Grid.Column="0"/>
+
+
+                <Label Text="Category" 
+                       TextColor="White" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Margin="10,10,10,10"
+                       Grid.Column="1"/>
+
+                <Label Text="Language" 
+                        TextColor="White" 
+                        FontAttributes="Bold" 
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Margin="70,10,10,10"
+                        Grid.Column="2"/>   
             </Grid>
+
 
             <ListView x:Name="BooksView" 
                       SelectionMode="Single" 
                       RowHeight="100">
-
             </ListView>
 
 

@@ -13,10 +13,14 @@ public class BookService : IBookService
 {
     private readonly SQLiteAsyncConnection _connection;
     private readonly IAuthorService _authorService;
-    public BookService(SQLiteAsyncConnection connection, IAuthorService authorService)
+    private readonly ICategoriesService _categoriesService;
+    private readonly ILanguagesService _languagesService;
+    public BookService(SQLiteAsyncConnection connection, IAuthorService authorService, ICategoriesService categoriesService, ILanguagesService languagesService)
     {
         _connection = connection;
         _authorService = authorService;
+        _categoriesService = categoriesService;
+        _languagesService = languagesService;
     }
     public async Task<List<BooksDTO>> GetBooksAsync()
     {
@@ -25,10 +29,14 @@ public class BookService : IBookService
         foreach (var book in books)
         {
             var authors = await _authorService.GetBookAuthorNames(book.Id);
+            var categories = await _categoriesService.GetBookCategoriesAsync(book.Id);
+            var languages = await _languagesService.GetBookLanguagesAsync(book.Id);
             booksList.Add(new BooksDTO
             {
                 Title = book.Title,
-                Authors = string.Join(',', authors)
+                Authors = string.Join(',', authors),
+                Categories = string.Join(',', categories),
+                Languages = string.Join(',', categories)
             });
         }
 
@@ -159,11 +167,25 @@ public class BookService : IBookService
         foreach (var book in books)
         {
             var authors = await _authorService.GetBookAuthorNames(book.Id);
-            booksList.Add(new BooksDTO
+            var categories = await _categoriesService.GetBookCategoriesAsync(book.Id);
+
+            try
             {
-                Title = book.Title,
-                Authors = string.Join(',', authors)
-            });
+                var languages = await _languagesService.GetBookLanguagesAsync(book.Id);
+                booksList.Add(new BooksDTO
+                {
+                    Title = book.Title,
+                    Authors = string.Join(Environment.NewLine, authors),
+                    Categories = string.Join(Environment.NewLine, categories),
+                    Languages = string.Join(Environment.NewLine, languages)
+                });
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         return booksList;

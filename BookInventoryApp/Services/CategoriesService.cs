@@ -6,6 +6,8 @@ public interface ICategoriesService
     Task<Category> GetCategoryAsync(Guid id);
     Task<int> SaveCategoryAsync(Category category);
     Task<int> DeleteCategoryAsync(Category category);
+    Task<IEnumerable<CategoryDTO>> GetFilteredCategoriesAsync(string query);
+    Task<IEnumerable<string>> GetBookCategoriesAsync(Guid bookId);
 }
 public class CategoriesService : ICategoriesService
 {
@@ -25,4 +27,31 @@ public class CategoriesService : ICategoriesService
 
     public Task<int> DeleteCategoryAsync(Category category) =>
         _connection.DeleteAsync(category);
+
+    public async Task<IEnumerable<CategoryDTO>> GetFilteredCategoriesAsync(string query)
+    {
+        var categories = await _connection.Table<Category>()
+            .Where(c => c.Name.ToLower().Contains(query) || c.Code.ToLower().Contains(query))
+            .ToListAsync();
+
+        return categories.Select(c => new CategoryDTO
+        {
+            Id = c.Id,
+            Name = c.Name,
+            Code = c.Code
+        }).ToList();
+    }
+
+    public async Task<IEnumerable<string>> GetBookCategoriesAsync(Guid bookId)
+    {
+        var categories = (from bookCategory in await _connection.Table<BookCategory>().Where(x => x.BookId == bookId).ToListAsync()
+                          join category in await _connection.Table<Category>().ToListAsync()
+                          on bookCategory.CategoryId equals category.Id
+                          select category.Name).ToList();
+
+        if (categories == null)
+            return new List<string>();
+
+        return categories;
+    }
 }
