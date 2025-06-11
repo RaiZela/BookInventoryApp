@@ -64,12 +64,12 @@ public partial class BookDetailsPage : ContentPage, IQueryAttributable
         if (Guid.TryParse(BookId, out Guid id))
             await _bookService.DeleteBookAsync(id);
 
-        await Shell.Current.GoToAsync($"{nameof(MainPage)}");
+        await Shell.Current.GoToAsync($"///{nameof(MainPage)}");
     }
 
     private async void EditButtonClicked(object sender, EventArgs e)
     {
-        var popup = new AddBookPopup(_bookService, _authorService, _categoriesService, _languagesService, Book);
+        var popup = new BookPopup(_bookService, _authorService, _categoriesService, _languagesService, Book);
         await this.ShowPopupAsync(popup);
     }
 }

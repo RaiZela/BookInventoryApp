@@ -121,7 +121,7 @@ public partial class MainPage : ContentPage
 
     private async void OnAddBookClicked(object sender, EventArgs e)
     {
-        var popup = new AddBookPopup(_service, _authorService, _categoriesService, _languagesService, new BookDTO());
+        var popup = new BookPopup(_service, _authorService, _categoriesService, _languagesService, new BookDTO());
         await this.ShowPopupAsync(popup);
         await UpdateBooksView();
     }

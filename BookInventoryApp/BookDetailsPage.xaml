@@ -54,7 +54,8 @@
                         Text="Edit"
                         MaximumWidthRequest="100"
                         MaximumHeightRequest="30"
-                        HorizontalOptions="End"/>
+                        HorizontalOptions="End"
+                        Clicked="EditButtonClicked"/>
 
                 <Button x:Name="DeleteButton"
                         BackgroundColor="red"

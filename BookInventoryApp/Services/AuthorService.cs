@@ -9,6 +9,7 @@ public interface IAuthorService
     Task<IEnumerable<string>> GetBookAuthorNames(Guid bookId);
     Task<IEnumerable<Guid>> GetBookAuthorIds(Guid bookId);
     Task<IEnumerable<AuthorDTO>> GetFilteredAuthorsAsync(string query);
+    IEnumerable<AuthorDTO> GetAuthorsById(List<Guid> ids);
 }
 
 public class AuthorService : IAuthorService
@@ -54,6 +55,18 @@ public class AuthorService : IAuthorService
         return authors;
     }
 
+
+    public IEnumerable<AuthorDTO> GetAuthorsById(List<Guid> ids)
+    {
+        var authors = _connection.Table<Author>()
+            .Where(x => ids.Contains(x.Id)).ToListAsync();
+
+        return authors.Result.Select(a => new AuthorDTO
+        {
+            Id = a.Id,
+            FullName = a.FullName
+        }).ToList();
+    }
     public async Task<IEnumerable<AuthorDTO>> GetFilteredAuthorsAsync(string query)
     {
         var authors = await _connection.Table<Author>()

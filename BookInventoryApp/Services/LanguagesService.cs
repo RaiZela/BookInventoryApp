@@ -8,6 +8,7 @@ public interface ILanguagesService
     Task<int> DeleteLanguageAsync(Language Language);
     Task<IEnumerable<LanguageDTO>> GetFilteredLanguagesAsync(string query);
     Task<IEnumerable<string>> GetBookLanguagesAsync(Guid bookId);
+    IEnumerable<LanguageDTO> GetLanguagesById(List<Guid> ids);
 }
 public class LanguagesService : ILanguagesService
 {
@@ -53,5 +54,17 @@ public class LanguagesService : ILanguagesService
             return new List<string>();
 
         return languages;
+    }
+
+    public IEnumerable<LanguageDTO> GetLanguagesById(List<Guid> ids)
+    {
+        var languages = _connection.Table<Language>()
+     .Where(x => ids.Contains(x.Id)).ToListAsync();
+
+        return languages.Result.Select(a => new LanguageDTO
+        {
+            Id = a.Id,
+            Name = a.Name
+        }).ToList();
     }
 }

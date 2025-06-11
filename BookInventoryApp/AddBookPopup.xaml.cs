@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace BookInventoryApp;
 
-public partial class AddBookPopup : Popup
+public partial class BookPopup : Popup
 {
     IBookService _service;
     IAuthorService _authorService;
@@ -15,9 +15,9 @@ public partial class AddBookPopup : Popup
     public ObservableCollection<CategoryDTO> SelectedCategories { get; set; } = new();
     public ObservableCollection<LanguageDTO> FilteredLanguages { get; set; } = new();
     public ObservableCollection<LanguageDTO> SelectedLanguages { get; set; } = new();
-    private BookDTO Book { get; set; }
-
-    public AddBookPopup(IBookService service, IAuthorService authorService, ICategoriesService categoriesService, ILanguagesService languagesService, BookDTO book)
+    private BookDTO BookRecord { get; set; }
+    private bool _isUpdate = false;
+    public BookPopup(IBookService service, IAuthorService authorService, ICategoriesService categoriesService, ILanguagesService languagesService, BookDTO book)
     {
         InitializeComponent();
         _service = service;
@@ -26,12 +26,42 @@ public partial class AddBookPopup : Popup
         _languagesService = languagesService;
         TypeEntry.ItemsSource = Enum.GetValues(typeof(BookType));
         StatusEntry.ItemsSource = Enum.GetValues(typeof(Status));
-        Book = book ?? new();
+        BookRecord = book;
+        if (BookRecord != null && !string.IsNullOrEmpty(BookRecord.Title))
+        {
+            _isUpdate = true;
+            FormUpdate();
+        }
+        else
+            BookRecord = book ?? new BookDTO();
+    }
+
+    private void FormUpdate()
+    {
+        var authors = _authorService.GetAuthorsById(BookRecord.AuthorIds.ToList());
+        foreach (var author in authors)
+            SelectedAuthorsTemplate(author);
+
+        var categories = _categoriesService.GetCategoriesById(BookRecord.CategoriesIds.ToList());
+        foreach (var category in categories)
+            SelectedCategoriesTemplate(category);
+
+        var languages = _languagesService.GetLanguagesById(BookRecord.LanguageIds.ToList());
+        foreach (var language in languages)
+            LanguageSelectedTemplate(language);
+
+        SelectedLanguagesView.ItemsSource = SelectedLanguages;
+        SelectedLanguagesView.IsVisible = true;
+
+        TypeEntry.SelectedItem = BookRecord.Type;
+        StatusEntry.SelectedItem = BookRecord.Status;
+        TitleEntry.Text = BookRecord.Title;
+
     }
 
     private async void OnSaveClicked(object sender, EventArgs e)
     {
-        Book = new BookDTO
+        BookRecord = new BookDTO
         {
             Title = TitleEntry.Text,
             AuthorIds = SelectedAuthors == null ? new() : SelectedAuthors.Select(a => a.Id).ToList(),
@@ -40,8 +70,10 @@ public partial class AddBookPopup : Popup
             Status = StatusEntry.SelectedItem is null ? Status.Unread : (Status)StatusEntry.SelectedItem,
             Type = TypeEntry.SelectedItem is null ? BookType.Paperback : (BookType)TypeEntry.SelectedItem,
         };
-
-        await _service.SaveBookAsync(Book);
+        if (_isUpdate)
+            await _service.SaveBookAsync(BookRecord);
+        else
+            await _service.SaveNewBookAsync(BookRecord);
 
         Close();
     }
@@ -50,6 +82,8 @@ public partial class AddBookPopup : Popup
     {
         var query = e.NewTextValue?.ToLower() ?? "";
         FilteredAuthors.Clear();
+        if (string.IsNullOrEmpty(query))
+            FilteredAuthorsView.IsVisible = false;
         if (!string.IsNullOrEmpty(query))
         {
             var results = await _authorService.GetFilteredAuthorsAsync(query);
@@ -64,10 +98,10 @@ public partial class AddBookPopup : Popup
             {
                 var label = new Label
                 {
-                    FontSize = 16,
+                    FontSize = 14,
                     VerticalOptions = LayoutOptions.Center,
                     Margin = 10,
-                    Padding = 10
+                    Padding = 0
                 };
                 label.SetBinding(Label.TextProperty, "FullName");
 
@@ -84,28 +118,72 @@ public partial class AddBookPopup : Popup
     private void Authors_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
         var author = e.SelectedItem as AuthorDTO;
+        SelectedAuthorsTemplate(author);
+
+    }
+
+    private void SelectedAuthorsTemplate(AuthorDTO author)
+    {
         SelectedAuthors.Add(author);
         FilteredAuthors.Clear();
-        AuthorsSearch.Text = string.Empty;
         FilteredAuthorsView.IsVisible = false;
+        AuthorsSearch.Text = string.Empty;
 
-        SelectedAuthorsView.ItemsSource = SelectedAuthors;
         SelectedAuthorsView.ItemTemplate = new DataTemplate(() =>
         {
-            var label = new Label
+            var nameLabel = new Label
             {
-                FontSize = 16,
+                FontSize = 14,
+                TextColor = Colors.White,
                 VerticalOptions = LayoutOptions.Center,
-                Margin = 10,
-                Padding = 10,
-                BackgroundColor = Colors.MediumPurple
+                HorizontalOptions = LayoutOptions.Start,
+                Margin = new Thickness(0, 5)
             };
-            label.SetBinding(Label.TextProperty, "FullName");
+            nameLabel.SetBinding(Label.TextProperty, "FullName");
 
-            var viewCell = new ViewCell { View = label };
-            return viewCell;
+            var removeButton = new Button
+            {
+                Text = "X",
+                BackgroundColor = Colors.Transparent,
+                WidthRequest = 20,
+                HeightRequest = 20,
+                Padding = 0,
+                HorizontalOptions = LayoutOptions.End,
+                VerticalOptions = LayoutOptions.Center
+            };
+            removeButton.Clicked += (s, e) =>
+            {
+                var button = s as Button;
+                if (button?.BindingContext is AuthorDTO author)
+                {
+                    SelectedAuthors.Remove(author);
+                    SelectedAuthorsView.ItemsSource = null;
+                    SelectedAuthorsView.ItemsSource = SelectedAuthors;
+                }
+            };
+
+            var layout = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+                VerticalOptions = LayoutOptions.Center,
+                Children = { nameLabel, removeButton }
+            };
+
+            var frame = new Frame
+            {
+                BackgroundColor = Colors.MediumPurple,
+                Content = layout,
+                HasShadow = false,
+                Padding = new Thickness(10, 5),
+                Margin = new Thickness(5, 5)
+            };
+
+            frame.SetBinding(BindingContextProperty, ".");
+
+            return frame;
         });
-
+        FilteredAuthorsView.IsVisible = false;
+        SelectedAuthorsView.ItemsSource = SelectedAuthors;
         SelectedAuthorsView.IsVisible = true;
     }
 
@@ -148,6 +226,11 @@ public partial class AddBookPopup : Popup
     private void Categories_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
         var category = e.SelectedItem as CategoryDTO;
+        SelectedCategoriesTemplate(category);
+    }
+
+    private void SelectedCategoriesTemplate(CategoryDTO category)
+    {
         SelectedCategories.Add(category);
         FilteredCategories.Clear();
         CategoriesSearch.Text = string.Empty;
@@ -182,7 +265,7 @@ public partial class AddBookPopup : Popup
             };
             removeButton.Clicked += (s, e) =>
             {
-                var button = s as ImageButton;
+                var button = s as Button;
                 if (button?.BindingContext is CategoryDTO category)
                 {
                     SelectedCategories.Remove(category);
@@ -256,8 +339,13 @@ public partial class AddBookPopup : Popup
 
     private void Languages_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
-        var Languagy = e.SelectedItem as LanguageDTO;
-        SelectedLanguages.Add(Languagy);
+        var language = e.SelectedItem as LanguageDTO;
+        LanguageSelectedTemplate(language);
+    }
+
+    private void LanguageSelectedTemplate(LanguageDTO language)
+    {
+        SelectedLanguages.Add(language);
         FilteredLanguages.Clear();
         LanguagesSearch.Text = string.Empty;
         FilteredLanguagesView.IsVisible = false;
@@ -282,16 +370,15 @@ public partial class AddBookPopup : Popup
             {
                 Text = "X",
                 BackgroundColor = Colors.Transparent,
-                WidthRequest = 20,
                 HeightRequest = 20,
                 Padding = 0,
-                Margin = new Thickness(5, 5, 5, 5),
                 HorizontalOptions = LayoutOptions.End,
-                VerticalOptions = LayoutOptions.Center
+                VerticalOptions = LayoutOptions.Center,
+                Margin = new Thickness(5, 5, 5, 5),
             };
             removeButton.Clicked += (s, e) =>
             {
-                var button = s as ImageButton;
+                var button = s as Button;
                 if (button?.BindingContext is LanguageDTO language)
                 {
                     SelectedLanguages.Remove(language);
@@ -303,7 +390,6 @@ public partial class AddBookPopup : Popup
             var layout = new StackLayout
             {
                 Orientation = StackOrientation.Horizontal,
-                Spacing = 5,
                 VerticalOptions = LayoutOptions.Center,
                 Children = { nameLabel, removeButton }
             };
@@ -311,11 +397,11 @@ public partial class AddBookPopup : Popup
             var frame = new Frame
             {
                 BackgroundColor = Colors.MediumPurple,
+                Content = layout,
                 CornerRadius = 16,
+                HasShadow = false,
                 Padding = new Thickness(10, 5),
                 Margin = new Thickness(5, 0),
-                Content = layout,
-                HasShadow = false
             };
 
             frame.SetBinding(BindingContextProperty, ".");

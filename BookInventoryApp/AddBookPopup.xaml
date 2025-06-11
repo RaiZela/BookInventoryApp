@@ -3,17 +3,18 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    x:Class="BookInventoryApp.AddBookPopup"
+    x:Class="BookInventoryApp.BookPopup"
     Color="Black">
 
     <ScrollView VerticalScrollBarVisibility="Always">
         <VerticalStackLayout
-            BackgroundColor="Black" 
+            BackgroundColor="Black"
             Padding="25"
-            Spacing="14"
+            Spacing="30"
             HorizontalOptions="Center"
-            WidthRequest="{OnIdiom Phone=350, Tablet=500, Desktop=600}"
-            HeightRequest="{OnIdiom Phone=350, Tablet=500, Desktop=650}">
+            MaximumWidthRequest="630"
+            WidthRequest="{OnIdiom Phone=350, Tablet=500, Desktop=630}"
+            VerticalOptions="Center">
 
             <!-- Header -->
             <Label Text="Add Book"
@@ -22,9 +23,9 @@
                    FontFamily="VictorMono-Bold"
                    HorizontalOptions="Center"
                    TextColor="White"
-                   BackgroundColor="Black"
                    Padding="10,6"
-                   Margin="10,10,10,10" />
+                   Margin="10" />
+
 
             <!-- Title -->
             <Entry x:Name="TitleEntry"
@@ -34,110 +35,109 @@
                    BackgroundColor="#F5F5F5"
                    FontFamily="VictorMono-LightItalic"
                    HeightRequest="45" 
-                   HorizontalOptions="Start"
-                   WidthRequest="{OnIdiom Phone=250, Tablet=400, Desktop=500}"/>
+                   WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=520}"
+                   HorizontalOptions="StartAndExpand" />
 
-            <!-- Type -->
-            <Picker x:Name="TypeEntry"
+            <HorizontalStackLayout  HorizontalOptions="StartAndExpand">
+                <!-- Type -->
+                <Picker x:Name="TypeEntry"
                     Title="Select book type..."
                     TextColor="Black"
                     FontFamily="VictorMono-LightItalic"
                     BackgroundColor="#F5F5F5"
                     HeightRequest="60" 
-                    HorizontalOptions="Start"
-                    WidthRequest="{OnIdiom Phone=250, Tablet=400, Desktop=500}"
+                    HorizontalOptions="FillAndExpand"
+                    WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
                     Margin="5,10,10,10"/>
 
-            <!-- Status -->
-            <Picker x:Name="StatusEntry"
+                <!-- Status -->
+                <Picker x:Name="StatusEntry"
                     Title="Select status..."
                     TextColor="Black"
                     FontFamily="VictorMono-LightItalic"
                     BackgroundColor="#F5F5F5"
                     HeightRequest="60" 
-                    HorizontalOptions="Start"
-                    WidthRequest="{OnIdiom Phone=250, Tablet=400, Desktop=500}"
-                    Margin="5,10,10,10"/>       
+                    HorizontalOptions="FillAndExpand"
+                    WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
+                    Margin="5,10,10,10"/>
 
-            <!-- Authors -->
-            <SearchBar x:Name="AuthorsSearch"
-                       Placeholder="Search authors..."
-                       TextChanged="OnSearchTextChanged"
-                       BackgroundColor="Black"
-                       TextColor="White"
-                       PlaceholderColor="LightGray"
-                       FontFamily="VictorMono-Regular" 
-                       HeightRequest="45" 
-                       HorizontalOptions="Start"
-                       WidthRequest="{OnIdiom Phone=250, Tablet=400, Desktop=500}"
-                       Margin="5,10,10,10"/>
+            </HorizontalStackLayout>
 
-            <ListView x:Name="FilteredAuthorsView"
-                      IsVisible="False"
-                      ItemSelected="Authors_ItemSelected"
-                      BackgroundColor="#DCD3FF"
-                      RowHeight="50"
-                      HeightRequest="100"
-                      SeparatorVisibility="None" 
-                      HorizontalOptions="Start"
-                      WidthRequest="{OnIdiom Phone=250, Tablet=400, Desktop=500}"
-                      Margin="5,10,10,10"/>
+            <HorizontalStackLayout>
+                <!-- Authors -->
+                <VerticalStackLayout  HorizontalOptions="Center">
+                    <SearchBar x:Name="AuthorsSearch"
+                               Placeholder="Search authors..."
+                               TextChanged="OnSearchTextChanged"
+                               BackgroundColor="Black"
+                               TextColor="White"
+                               PlaceholderColor="LightGray"
+                               FontFamily="VictorMono-Regular" 
+                               HeightRequest="45" 
+                               HorizontalOptions="FillAndExpand"
+                               WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
+                               Margin="0,10,10,10"/>
 
-            <ListView x:Name="SelectedAuthorsView"
-                      IsVisible="False"
-                      SelectionMode="None"
-                      BackgroundColor="#9370DB"
-                      RowHeight="50"
-                      HeightRequest="100"
-                      SeparatorVisibility="None"
-                      HorizontalOptions="Start"
-                      WidthRequest="{OnIdiom Phone=250, Tablet=400, Desktop=500}"
-                      Margin="5,10,10,10"/>   
+                    <AbsoluteLayout>
+                        <AbsoluteLayout>
+                            <SearchBar x:Name="LanguagesSearch"
+                                       Placeholder="Search languages..."
+                                       TextChanged="OnLanguagesSearchTextChanged"
+                                       BackgroundColor="Black"
+                                       TextColor="White"
+                                       PlaceholderColor="LightGray"
+                                       FontFamily="VictorMono-Regular"
+                                       HeightRequest="45" 
+                                       HorizontalOptions="FillAndExpand"
+                                       WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
+                                       Margin="5,10,10,10"/>
 
-            <!-- Categories -->
-            <SearchBar x:Name="CategoriesSearch"
-                       Placeholder="Search categories..."
-                       TextChanged="OnCategoriesSearchTextChanged"
-                       BackgroundColor="Black"
-                       TextColor="White"
-                       PlaceholderColor="LightGray"
-                       FontFamily="VictorMono-Regular"
-                       HeightRequest="45" 
-                       HorizontalOptions="Start"
-                       WidthRequest="{OnIdiom Phone=250, Tablet=400, Desktop=500}"
-                       Margin="5,10,10,10"/>
+                            <ListView x:Name="FilteredAuthorsView"
+                                      IsVisible="False"
+                                      ItemSelected="Authors_ItemSelected"
+                                      BackgroundColor="#DCD3FF"
+                                      HeightRequest="100"
+                                      SeparatorVisibility="None" 
+                                      HorizontalOptions="FillAndExpand"
+                                      WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
+                                      Margin="5,10,10,10"/>
+                        </AbsoluteLayout>
 
-            <ListView x:Name="FilteredCategoriesView"
-                      IsVisible="False"
-                      ItemSelected="Categories_ItemSelected"
-                      BackgroundColor="#DCD3FF"
-                      RowHeight="50"
-                      HeightRequest="100"
-                      SeparatorVisibility="None" 
-                      HorizontalOptions="Start"
-                      WidthRequest="{OnIdiom Phone=250, Tablet=400, Desktop=500}"
-                      Margin="5,10,10,10"/>       
 
-            <CollectionView x:Name="SelectedCategoriesView"
-                            IsVisible="False"
-                            ItemsLayout="HorizontalList"
-                            HeightRequest="60"
-                            BackgroundColor="#9370DB"
-                            WidthRequest="{OnIdiom Phone=250, Tablet=400, Desktop=500}"
-                            Margin="0,5" />
+                    </AbsoluteLayout>
 
-            <!-- Languages -->
-            <SearchBar x:Name="LanguagesSearch"
-                       Placeholder="Search languages..."
-                       TextChanged="OnLanguagesSearchTextChanged"
-                       BackgroundColor="Black"
-                       TextColor="White"
-                       PlaceholderColor="LightGray"
-                       FontFamily="VictorMono-Regular"
-                       HeightRequest="45" 
-                       HorizontalOptions="Start"
-                       WidthRequest="{OnIdiom Phone=250, Tablet=400, Desktop=500}"
-                       Margin="5,10,10,10"/>   
+                </VerticalStackLayout>
+
+                <VerticalStackLayout>
+                    <SearchBar x:Name="CategoriesSearch"
+                               Placeholder="Search categories..."
+                               TextChanged="OnCategoriesSearchTextChanged"
+                               BackgroundColor="Black"
+                               TextColor="White"
+                               PlaceholderColor="LightGray"
+                               FontFamily="VictorMono-Regular"
+                               HeightRequest="45" 
+                               HorizontalOptions="FillAndExpand"
+                               WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
+                               Margin="5,10,10,10"/>
+                    <AbsoluteLayout>
+
+                        <ListView x:Name="FilteredCategoriesView"
+                                  IsVisible="False"
+                                  ItemSelected="Categories_ItemSelected"
+                                  BackgroundColor="#DCD3FF"
+                                  RowHeight="50"
+                                  HeightRequest="100"
+                                  SeparatorVisibility="None" 
+                                  HorizontalOptions="FillAndExpand"
+                                  WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
+                                  Margin="5,10,10,10"/>
+                    </AbsoluteLayout>
+                </VerticalStackLayout>
+
+            </HorizontalStackLayout>
+
+
 
             <ListView x:Name="FilteredLanguagesView"
                       IsVisible="False"
@@ -147,17 +147,76 @@
                       HeightRequest="100"
                       SeparatorVisibility="None" 
                       HorizontalOptions="Start"
-                      WidthRequest="{OnIdiom Phone=250, Tablet=400, Desktop=500}"
-                      Margin="5,10,10,10"/>
+                      WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
+                      Margin="0"/>
 
-            <CollectionView x:Name="SelectedLanguagesView"
-                            IsVisible="False"
-                            ItemsLayout="HorizontalList"
-                            HeightRequest="60"
-                            BackgroundColor="#9370DB"
-                            HorizontalOptions="Start"
-                            WidthRequest="{OnIdiom Phone=250, Tablet=400, Desktop=500}"
-                            Margin="5,10,10,10"/>
+
+
+            <VerticalStackLayout>
+                <HorizontalStackLayout HorizontalOptions="Center">
+                    <VerticalStackLayout 
+                              
+                                         Padding="0"
+                                         HorizontalOptions="FillAndExpand">
+                        <Label x:Name="SelectedAuthorsViewName" 
+                               Text="AUTHORS:" 
+                               Margin="5,5,5,5" 
+                               FontAttributes="Bold" 
+                               HorizontalOptions="FillAndExpand"
+                               BackgroundColor="#9370DB" Padding="10,10,10,10"></Label>
+                        <CollectionView x:Name="SelectedAuthorsView"
+                                        ItemsLayout="VerticalList"
+                                        IsVisible="True"
+                                        BackgroundColor="Transparent"
+                                        MaximumWidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=150}"
+                                        WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=150}"
+                                        Margin="5,5,5,5" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout 
+                         
+                                         Padding="0"
+                                         HorizontalOptions="FillAndExpand"
+>
+                        <Label x:Name="SelectedCategoriesViewName" 
+                               Text="CATEGORIES:" 
+                               Margin="5,5,5,5" 
+                               FontAttributes="Bold"
+                               HorizontalOptions="FillAndExpand"
+                                BackgroundColor="#9370DB"
+                               Padding="10,10,10,10"></Label>
+                        <CollectionView x:Name="SelectedCategoriesView"
+                                        IsVisible="False"
+                                        ItemsLayout="VerticalList"
+                                        BackgroundColor="#9370DB"
+                                        MaximumWidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=150}"
+                                        WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=150}"
+                                        Margin="5,5,5,5"
+                                        HorizontalOptions="FillAndExpand"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout 
+                               
+                                         Padding="0"
+                                         HorizontalOptions="FillAndExpand">
+                        <Label x:Name="SelectedLanguagesViewName" 
+                               Text="LANGUAGES:" 
+                               Margin="5,5,5,5" 
+                               FontAttributes="Bold"
+                               HorizontalOptions="FillAndExpand"
+                               BackgroundColor="#9370DB"
+                               Padding="10,10,10,10"></Label>
+                        <CollectionView x:Name="SelectedLanguagesView"
+                                        IsVisible="False"
+                                        ItemsLayout="VerticalList"
+                                        BackgroundColor="#9370DB"
+                                        MaximumWidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=150}"
+                                        WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=150}"
+                                         Margin="5,5,5,5" 
+                                        HorizontalOptions="FillAndExpand"/>
+                    </VerticalStackLayout>
+
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
 
             <!-- Save Button -->
             <Button Text="Save"
@@ -169,7 +228,11 @@
                     FontFamily="VictorMono-Bold"
                     HorizontalOptions="Center"
                     WidthRequest="140"
+                    Margin="10,20,10,10"
                     HeightRequest="45" />
         </VerticalStackLayout>
+
+
+
     </ScrollView>
 </toolkit:Popup>

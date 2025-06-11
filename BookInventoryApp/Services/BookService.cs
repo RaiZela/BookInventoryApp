@@ -6,6 +6,7 @@ public interface IBookService
     Task<List<BooksDTO>> GetPaginatedBooks(int pageNumber, int numberOfBooks);
     Task<BookDTO> GetBookAsync(Guid id);
     Task<IEnumerable<BooksDTO>> GetFilteredBooksAsync(string query);
+    Task<int> SaveNewBookAsync(BookDTO book);
     Task<int> SaveBookAsync(BookDTO book);
     Task<int> DeleteBookAsync(Guid id);
 }
@@ -65,6 +66,61 @@ public class BookService : IBookService
         return book;
     }
 
+    public async Task<int> SaveNewBookAsync(BookDTO bookObj)
+    {
+        var existingBook = await _connection.Table<Book>().FirstOrDefaultAsync(b => b.Id == bookObj.Id);
+        var book = new Book
+        {
+            Title = bookObj.Title,
+            Status = bookObj.Status,
+            Type = bookObj.Type,
+        };
+
+        var bookAuthors = bookObj.AuthorIds.Select(authorId => new BookAuthor
+        {
+            BookId = book.Id,
+            AuthorId = authorId
+        }).ToList();
+
+        var bookCategories = bookObj.CategoriesIds.Select(categoryId => new BookCategory
+        {
+            BookId = book.Id,
+            CategoryId = categoryId
+        }).ToList();
+
+        var bookLanguages = bookObj.LanguageIds.Select(languageId => new BookLanguage
+        {
+            BookId = book.Id,
+            LanguageId = languageId
+        }).ToList();
+
+        var test = await _connection.Table<BookAuthor>().ToListAsync();
+        try
+        {
+            foreach (var author in bookAuthors)
+            {
+                await _connection.InsertOrReplaceAsync(author);
+            }
+
+            foreach (var category in bookCategories)
+            {
+                await _connection.InsertOrReplaceAsync(category);
+            }
+
+            foreach (var language in bookLanguages)
+            {
+                await _connection.InsertOrReplaceAsync(language);
+            }
+
+            return await _connection.InsertAsync(book);
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+    }
     public async Task<int> SaveBookAsync(BookDTO bookObj)
     {
         var existingBook = await _connection.Table<Book>().FirstOrDefaultAsync(b => b.Id == bookObj.Id);
@@ -111,7 +167,7 @@ public class BookService : IBookService
                 await _connection.InsertOrReplaceAsync(language);
             }
 
-            return await _connection.InsertOrReplaceAsync(book);
+            return await _connection.UpdateAsync(book);
 
         }
         catch (Exception ex)
@@ -130,7 +186,7 @@ public class BookService : IBookService
     public async Task<IEnumerable<BooksDTO>> GetFilteredBooksAsync(string query)
     {
         var books = await _connection.Table<Book>()
-            .Where(b => b.Title.Contains(query))
+            .Where(b => b.Title.ToLower().Contains(query.ToLower()))
             .ToListAsync();
 
         var booksDTOs = new List<BooksDTO>();

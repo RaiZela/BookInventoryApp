@@ -8,6 +8,7 @@ public interface ICategoriesService
     Task<int> DeleteCategoryAsync(Category category);
     Task<IEnumerable<CategoryDTO>> GetFilteredCategoriesAsync(string query);
     Task<IEnumerable<string>> GetBookCategoriesAsync(Guid bookId);
+    IEnumerable<CategoryDTO> GetCategoriesById(List<Guid> ids);
 }
 public class CategoriesService : ICategoriesService
 {
@@ -53,5 +54,17 @@ public class CategoriesService : ICategoriesService
             return new List<string>();
 
         return categories;
+    }
+
+    public IEnumerable<CategoryDTO> GetCategoriesById(List<Guid> ids)
+    {
+        var categories = _connection.Table<Category>()
+         .Where(x => ids.Contains(x.Id)).ToListAsync();
+
+        return categories.Result.Select(a => new CategoryDTO
+        {
+            Id = a.Id,
+            Name = a.Name
+        }).ToList();
     }
 }
