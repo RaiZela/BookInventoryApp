@@ -1,4 +1,4 @@
-﻿namespace BookInventoryApp.Data.Services;
+﻿namespace BookInventoryApp.Services;
 public class PersonService
 {
     private readonly SQLiteAsyncConnection _connection;

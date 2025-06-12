@@ -1,0 +1,8 @@
+﻿namespace BookInventoryApp.Data.ViewModels;
+
+public class LanguageDTO
+{
+    public Guid Id { get; set; }
+    public string Code { get; set; }
+    public string Name { get; set; }
+}

@@ -1,0 +1,68 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="BookInventoryApp.BookList"
+             Title="Lilith's Library">
+
+    <Grid>
+        <Image
+               Aspect="AspectFill"
+               Opacity="0.3"
+               IsEnabled="False">
+            <Image.Source>
+                <OnPlatform x:TypeArguments="ImageSource">
+                    <On Platform="Android" Value="background_book_list_image.jpg" />
+                    <On Platform="WinUI" Value="background_book_list.jpg" />
+                </OnPlatform>
+            </Image.Source>
+        </Image>
+
+        <StackLayout Padding="20,20,20,20">
+            <Button Text="Add New Book"
+                    Clicked="OnAddBookClicked"
+                    HorizontalOptions="End" BackgroundColor="MediumPurple" />
+
+            <Grid ColumnDefinitions="*,*, *" Padding="10" Margin="10,5,5,5" BackgroundColor="#362b7d" Opacity="1">
+                <Label Text="Title" 
+                       TextColor="White" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Start" 
+                       Margin="10,10,10,10"
+                       Grid.Column="0"/>
+
+
+                <Label Text="Category" 
+                       TextColor="White" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       Margin="10,10,10,10"
+                       Grid.Column="1"/>
+
+                <Label Text="Language" 
+                        TextColor="White" 
+                        FontAttributes="Bold" 
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Margin="70,10,10,10"
+                        Grid.Column="2"/>   
+            </Grid>
+
+
+            <ListView x:Name="BooksView" 
+                      SelectionMode="Single" 
+                      RowHeight="100" ItemSelected="BooksView_ItemSelected">
+            </ListView>
+
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                <Button Text="Previous"
+                       Clicked="OnPreviusClicked"
+                       HorizontalOptions="Start" />
+                <Button Text="Next"
+                       Clicked="OnNextClicked"
+                       HorizontalOptions="End" />
+            </StackLayout>
+        </StackLayout>
+    </Grid>
+</ContentPage>

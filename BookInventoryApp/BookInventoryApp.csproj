@@ -57,6 +57,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Include="Resources\Images\background_book_list_image.jpg" />
+	  <AndroidResource Include="Resources\Images\background_image_library.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
@@ -70,6 +75,12 @@
 		</Compile>
 		<Compile Update="AddAuthorPopup.xaml.cs">
 			<DependentUpon>AddAuthorPopup.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="BookSearch.xaml.cs">
+		  <DependentUpon>BookSearch.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="BookList.xaml.cs">
+		  <DependentUpon>BookList.xaml</DependentUpon>
 		</Compile>
 	</ItemGroup>
 
@@ -89,7 +100,13 @@
 		<MauiXaml Update="AddAuthorPopup.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="BookDetailsPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="CategoryPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="BookSearch.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="LanguagePage.xaml">
@@ -98,14 +115,16 @@
 		<MauiXaml Update="PersonsPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="Resources\Styles\DarkTheme.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Resources\Styles\LightTheme.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
 		<Folder Include="Resources\Splash\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiImage Include="Platforms\Windows\background_image_library.jpg" />
 	</ItemGroup>
 
 </Project>

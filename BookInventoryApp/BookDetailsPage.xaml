@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookInventoryApp.BookDetailsPage"
+             Title="Book Details"
+             BackgroundColor="#121212">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Book Title -->
+            <Frame BorderColor="MediumPurple" BackgroundColor="#1E1E2F" CornerRadius="10" Padding="15">
+                <Label 
+                    x:Name="BookTitleLabel"
+                    FontSize="28"
+                    Text="{Binding Title}"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    HorizontalTextAlignment="Center" />
+            </Frame>
+
+            <Frame BorderColor="Gray" BackgroundColor="#1E1E2F" CornerRadius="10" Padding="15">
+                <Grid ColumnSpacing="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <VerticalStackLayout Spacing="10" Grid.Column="0">
+                        <Label Text="Authors" TextColor="LightGray" FontSize="14" />
+                        <Label x:Name="BookAuthorsLabel" Text="{Binding Authors}" TextColor="White" FontSize="18" />
+
+                        <Label Text="Categories" TextColor="LightGray" FontSize="14" />
+                        <Label x:Name="BookCategoriesLabel" Text="{Binding Categories}" TextColor="White" FontSize="18"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="10" Grid.Column="1">
+                        <Label Text="Type" TextColor="LightGray" FontSize="14" />
+                        <Label x:Name="BookTypeLabel" Text="{Binding Type}" TextColor="White" FontSize="18" />
+
+                        <Label Text="Languages" TextColor="LightGray" FontSize="14" />
+                        <Label x:Name="BookLanguagesLabel" Text="{Binding Languages}" TextColor="White" FontSize="18" />
+
+                        <Label Text="Status" TextColor="LightGray" FontSize="14" />
+                        <Label x:Name="BookStatusLabel" Text="{Binding Status}" TextColor="White" FontSize="18" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Frame>
+
+            <HorizontalStackLayout HorizontalOptions="End">
+                <Button x:Name="EditButton"
+                        BorderColor="DarkBlue"
+                        TextColor="White"
+                        Text="Edit"
+                        MaximumWidthRequest="100"
+                        MaximumHeightRequest="30"
+                        HorizontalOptions="End"
+                        Clicked="EditButtonClicked"/>
+
+                <Button x:Name="DeleteButton"
+                        BackgroundColor="red"
+                        TextColor="White"
+                        Text="Delete"
+                        Margin="10,10,10,10"
+                        MaximumWidthRequest="100"
+                        HorizontalOptions="End"
+                        Clicked="DeleteButton_Clicked"/>
+
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>
