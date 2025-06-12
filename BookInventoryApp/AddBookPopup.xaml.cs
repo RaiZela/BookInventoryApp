@@ -63,6 +63,7 @@ public partial class BookPopup : Popup
     {
         BookRecord = new BookDTO
         {
+            Id = _isUpdate ? BookRecord.Id : Guid.NewGuid(),
             Title = TitleEntry.Text,
             AuthorIds = SelectedAuthors == null ? new() : SelectedAuthors.Select(a => a.Id).ToList(),
             CategoriesIds = SelectedCategories == null ? new() : SelectedCategories.Select(c => c.Id).ToList(),
@@ -71,7 +72,10 @@ public partial class BookPopup : Popup
             Type = TypeEntry.SelectedItem is null ? BookType.Paperback : (BookType)TypeEntry.SelectedItem,
         };
         if (_isUpdate)
+        {
             await _service.SaveBookAsync(BookRecord);
+            FormUpdate();
+        }
         else
             await _service.SaveNewBookAsync(BookRecord);
 

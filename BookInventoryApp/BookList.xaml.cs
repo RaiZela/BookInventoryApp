@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace BookInventoryApp;
 
-public partial class MainPage : ContentPage
+public partial class BookList : ContentPage
 {
     IBookService _service;
     IAuthorService _authorService;
@@ -12,7 +12,7 @@ public partial class MainPage : ContentPage
     private ObservableCollection<BooksDTO> Books = new ObservableCollection<BooksDTO>();
     private int PageNumber = 1;
 
-    public MainPage(IBookService service, IAuthorService authorService, ICategoriesService categoriesService, ILanguagesService languagesService)
+    public BookList(IBookService service, IAuthorService authorService, ICategoriesService categoriesService, ILanguagesService languagesService)
     {
         InitializeComponent();
         _service = service;

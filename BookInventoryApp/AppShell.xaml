@@ -8,14 +8,14 @@
     Title="BookInventoryApp">
 
     <ShellContent
-        Title="Search"
-        ContentTemplate="{DataTemplate local:Home}"
-        Route="Home" />
+        Title="Book Search"
+        ContentTemplate="{DataTemplate local:BookSearch}"
+        Route="BookSearch" />
     
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Book List"
+        ContentTemplate="{DataTemplate local:BookList}"
+        Route="BookList" />
 
     <ShellContent
     Title="Authors"

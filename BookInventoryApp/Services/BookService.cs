@@ -124,28 +124,26 @@ public class BookService : IBookService
     public async Task<int> SaveBookAsync(BookDTO bookObj)
     {
         var existingBook = await _connection.Table<Book>().FirstOrDefaultAsync(b => b.Id == bookObj.Id);
-        var book = new Book
-        {
-            Title = bookObj.Title,
-            Status = bookObj.Status,
-            Type = bookObj.Type,
-        };
+
+        existingBook.Title = bookObj.Title;
+        existingBook.Status = bookObj.Status;
+        existingBook.Type = bookObj.Type;
 
         var bookAuthors = bookObj.AuthorIds.Select(authorId => new BookAuthor
         {
-            BookId = book.Id,
+            BookId = existingBook.Id,
             AuthorId = authorId
         }).ToList();
 
         var bookCategories = bookObj.CategoriesIds.Select(categoryId => new BookCategory
         {
-            BookId = book.Id,
+            BookId = existingBook.Id,
             CategoryId = categoryId
         }).ToList();
 
         var bookLanguages = bookObj.LanguageIds.Select(languageId => new BookLanguage
         {
-            BookId = book.Id,
+            BookId = existingBook.Id,
             LanguageId = languageId
         }).ToList();
 
@@ -167,7 +165,7 @@ public class BookService : IBookService
                 await _connection.InsertOrReplaceAsync(language);
             }
 
-            return await _connection.UpdateAsync(book);
+            return await _connection.UpdateAsync(existingBook);
 
         }
         catch (Exception ex)

@@ -57,6 +57,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Include="Resources\Images\background_book_list_image.jpg" />
+	  <AndroidResource Include="Resources\Images\background_image_library.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
@@ -70,6 +75,12 @@
 		</Compile>
 		<Compile Update="AddAuthorPopup.xaml.cs">
 			<DependentUpon>AddAuthorPopup.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="BookSearch.xaml.cs">
+		  <DependentUpon>BookSearch.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="BookList.xaml.cs">
+		  <DependentUpon>BookList.xaml</DependentUpon>
 		</Compile>
 	</ItemGroup>
 
@@ -95,7 +106,7 @@
 		<MauiXaml Update="CategoryPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Home.xaml">
+		<MauiXaml Update="BookSearch.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="LanguagePage.xaml">
@@ -114,11 +125,6 @@
 
 	<ItemGroup>
 		<Folder Include="Resources\Splash\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiImage Include="Platforms\Windows\background_image_library.jpg" />
-	  <MauiImage Include="Platforms\Windows\background_author.jpg" />
 	</ItemGroup>
 
 </Project>

@@ -3,11 +3,11 @@ using System.Collections.ObjectModel;
 
 namespace BookInventoryApp;
 
-public partial class Home : ContentPage
+public partial class BookSearch : ContentPage
 {
     private ObservableCollection<BooksDTO> _filteredItems = new ObservableCollection<BooksDTO>();
     IBookService _bookService;
-    public Home(IBookService bookService)
+    public BookSearch(IBookService bookService)
     {
         InitializeComponent();
         ResultsCollectionView.ItemsSource = _filteredItems;

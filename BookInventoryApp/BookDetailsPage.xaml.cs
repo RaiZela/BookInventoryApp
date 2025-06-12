@@ -64,7 +64,7 @@ public partial class BookDetailsPage : ContentPage, IQueryAttributable
         if (Guid.TryParse(BookId, out Guid id))
             await _bookService.DeleteBookAsync(id);
 
-        await Shell.Current.GoToAsync($"///{nameof(MainPage)}");
+        await Shell.Current.GoToAsync($"///{nameof(BookList)}");
     }
 
     private async void EditButtonClicked(object sender, EventArgs e)
