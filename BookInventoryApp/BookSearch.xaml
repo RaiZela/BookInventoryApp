@@ -50,11 +50,11 @@
                             Padding="10" 
                             Margin="5" 
                             BackgroundColor="#362b7d" 
-                            Opacity="1"
+                            Opacity="0.7"
                             InputTransparent="False">
                             <Label 
                                 Text="{Binding Title}" 
-                                TextColor="White"
+                                TextColor="GhostWhite"
                                 InputTransparent="False"/>
                         </Border>
                     </DataTemplate>

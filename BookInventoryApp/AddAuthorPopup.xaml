@@ -1,75 +1,116 @@
-<toolkit:Popup
-               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-               x:Class="BookInventoryApp.AddAuthorPopup"
-               CanBeDismissedByTappingOutsideOfPopup="True" 
-               Color="Black">
+﻿<toolkit:Popup  
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
+    x:Class="BookInventoryApp.AddAuthorPopup"  
+    CanBeDismissedByTappingOutsideOfPopup="True"   
+    Color="Black">
 
-    <VerticalStackLayout 
-                 BackgroundColor="GhostWhite"
-                 HorizontalOptions="Center" 
-                 VerticalOptions="Start"
-                 WidthRequest="{OnPlatform 500, iOS=200, Android=300}"
-                 HeightRequest="{OnPlatform 1000, iOS=200, Android=300}"
-                 Opacity="1">
+    <Grid x:Name="MainLayout" 
+          BackgroundColor="GhostWhite" 
+          WidthRequest="400" 
+          HeightRequest="500"
+          HorizontalOptions="Center" 
+          VerticalOptions="Start"
+          RowSpacing="10"
+          Padding="20">
 
-        <Label Text="Author"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <Label Grid.Row="0" 
+               Text="Author" 
                FontSize="Header" 
-               HorizontalOptions="Center"
-               FontAttributes="Bold"
+               FontAttributes="Bold" 
                FontFamily="VictorMono-Bold" 
-               TextColor="White"
-               Background="Black" 
-               Opacity="1"></Label>
-        <Entry 
-                 Placeholder="Name" 
-                 x:Name="Name"
-                 Margin="5,40,5,5"
-                 TextColor="Black" 
-                 PlaceholderColor="Black"
-                 BackgroundColor="GhostWhite"
-                 Opacity="0.8" 
-                 WidthRequest="{OnPlatform 400, iOS=100, Android=100}"
-                 HeightRequest="{OnPlatform 50, iOS=100, Android=100}"
-                 FontFamily="VictorMono-LightItalic"
-                 HorizontalOptions="Center"
-                 VerticalOptions="Center"/>     
-        <Entry
-             Placeholder="MiddleName" 
-             x:Name="MiddleName"
-             Margin="5,5,5,5"
-             TextColor="Black" 
-             PlaceholderColor="Black"
-             BackgroundColor="GhostWhite"
-             Opacity="0.8" 
-             WidthRequest="{OnPlatform 400, iOS=100, Android=100}"
-             HeightRequest="{OnPlatform 50, iOS=100, Android=100}"
-             FontFamily="VictorMono-LightItalic"
-             HorizontalOptions="Center"
-             VerticalOptions="Center"/>
-        
-        <Entry 
-             Placeholder="LastName" 
-             x:Name="LastName"
-             Margin="5,5,5,5"
-             TextColor="Black" 
-             PlaceholderColor="Black"
-             BackgroundColor="GhostWhite"
-             Opacity="0.8" 
-             WidthRequest="{OnPlatform 400, iOS=100, Android=100}"
-             HeightRequest="{OnPlatform 50, iOS=100, Android=100}"
-             FontFamily="VictorMono-LightItalic"
-             HorizontalOptions="Center"
-             VerticalOptions="Center"/>
+               TextColor="White" 
+               BackgroundColor="Black"
+               HorizontalOptions="Fill" 
+               VerticalOptions="Center" 
+               Padding="10"/>
 
-        <Button Text="Save" 
-                Clicked="OnSaveClicked"
-                WidthRequest="100" 
-                TextColor="White" 
-                BackgroundColor="MediumPurple"
-                VerticalOptions="Center" 
-                Margin="20"/>      
-    </VerticalStackLayout>
+        <!-- Input Fields -->
+        <StackLayout Grid.Row="1" Spacing="10" HorizontalOptions="Fill">
+            <Entry x:Name="Name" Placeholder="Name"
+                   TextColor="Black" PlaceholderColor="DimGray"
+                   BackgroundColor="White" Opacity="0.9"
+                   FontFamily="VictorMono-LightItalic"
+                   HeightRequest="50"/>
+            <Entry x:Name="MiddleName" Placeholder="Middle Name"
+                   TextColor="Black" PlaceholderColor="DimGray"
+                   BackgroundColor="White" Opacity="0.9"
+                   FontFamily="VictorMono-LightItalic"
+                   HeightRequest="50"/>
+            <Entry x:Name="LastName" Placeholder="Last Name"
+                   TextColor="Black" PlaceholderColor="DimGray"
+                   BackgroundColor="White" Opacity="0.9"
+                   FontFamily="VictorMono-LightItalic"
+                   HeightRequest="50"/>
+        </StackLayout>
 
+        <!-- Buttons -->
+        <HorizontalStackLayout Grid.Row="2" HorizontalOptions="End">
+            <Button Text="Save" 
+                    Clicked="OnSaveClicked"
+                    WidthRequest="100"
+                    TextColor="White" 
+                    BackgroundColor="MediumPurple"
+                    Margin="10"/>
+            <ImageButton x:Name="DeleteButton"
+                         Source="delete.png"
+                         BackgroundColor="Transparent"
+                         WidthRequest="30"
+                         HeightRequest="30"
+                         Clicked="DeleteButton_Clicked"
+                         Margin="10"/>
+        </HorizontalStackLayout>
+
+        <!-- Success Overlay -->
+        <Grid x:Name="SuccessOverlay"
+              BackgroundColor="#80000000"
+              IsVisible="False"
+              Opacity="0"
+              ZIndex="99"
+              HorizontalOptions="Fill"
+              VerticalOptions="Fill"
+              RowSpan="3">
+
+            <Label x:Name="SuccessIcon"
+                   Text="✅"
+                   FontSize="64"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+        </Grid>
+
+        <!-- Error Overlay -->
+        <Grid x:Name="ErrorOverlay"
+              BackgroundColor="#80000000"
+              IsVisible="False"
+              Opacity="0"
+              ZIndex="99"
+              HorizontalOptions="Fill"
+              VerticalOptions="Fill"
+              RowSpan="3">
+
+            <StackLayout VerticalOptions="Center"
+                         HorizontalOptions="Center"
+                         Spacing="10">
+                <Label x:Name="ErrorIcon"
+                       Text="❌"
+                       FontSize="30"
+                       TextColor="White"
+                       HorizontalOptions="Center"/>
+                <Label x:Name="ErrorMessage"
+                       Text="Something went wrong!"
+                       FontSize="18"
+                       TextColor="White"
+                       HorizontalOptions="Center"/>
+            </StackLayout>
+        </Grid>
+
+    </Grid>
 </toolkit:Popup>

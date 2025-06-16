@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace BookInventoryApp;
 
-public partial class BookPopup : Popup
+public partial class BookPopupAndroid : Popup
 {
     IBookService _service;
     IAuthorService _authorService;
@@ -18,7 +18,7 @@ public partial class BookPopup : Popup
     public ObservableCollection<LanguageDTO> SelectedLanguages { get; set; } = new();
     private BookDTO BookRecord { get; set; }
     private bool _isUpdate = false;
-    public BookPopup(IBookService service, IAuthorService authorService, ICategoriesService categoriesService, ILanguagesService languagesService, BookDTO book)
+    public BookPopupAndroid(IBookService service, IAuthorService authorService, ICategoriesService categoriesService, ILanguagesService languagesService, BookDTO book)
     {
         InitializeComponent();
         _service = service;

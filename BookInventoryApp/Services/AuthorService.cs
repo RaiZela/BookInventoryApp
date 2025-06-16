@@ -4,7 +4,8 @@ public interface IAuthorService
 {
     Task<List<Author>> GetAuthorsAsync();
     Task<Author> GetAuthorAsync(Guid id);
-    Task<int> SaveAuthorAsync(Author author);
+    Task<int> SaveNewAuthorAsync(Author author);
+    Task<int> SaveAuthorAsync(Author Author);
     Task<int> DeleteAuthorAsync(Author author);
     Task<IEnumerable<string>> GetBookAuthorNames(Guid bookId);
     Task<IEnumerable<Guid>> GetBookAuthorIds(Guid bookId);
@@ -20,18 +21,21 @@ public class AuthorService : IAuthorService
         _connection = connection;
     }
 
-    public Task<List<Author>> GetAuthorsAsync() =>
-   _connection.Table<Author>().Take(10).ToListAsync();
+    public async Task<List<Author>> GetAuthorsAsync() =>
+   await _connection.Table<Author>().Take(10).ToListAsync();
 
-    public Task<Author> GetAuthorAsync(Guid id) =>
-         _connection.Table<Author>().FirstOrDefaultAsync(b => b.Id == id);
+    public async Task<Author> GetAuthorAsync(Guid id) =>
+         await _connection.Table<Author>().FirstOrDefaultAsync(b => b.Id == id);
 
 
-    public Task<int> SaveAuthorAsync(Author Author) =>
-         _connection.InsertOrReplaceAsync(Author);
+    public async Task<int> SaveNewAuthorAsync(Author Author) =>
+         await _connection.InsertOrReplaceAsync(Author);
 
-    public Task<int> DeleteAuthorAsync(Author Author) =>
-        _connection.DeleteAsync(Author);
+    public async Task<int> SaveAuthorAsync(Author Author) =>
+      await _connection.UpdateAsync(Author);
+
+    public async Task<int> DeleteAuthorAsync(Author Author) =>
+        await _connection.DeleteAsync(Author);
 
     public async Task<IEnumerable<string>> GetBookAuthorNames(Guid bookId)
     {
@@ -64,7 +68,7 @@ public class AuthorService : IAuthorService
         return authors.Result.Select(a => new AuthorDTO
         {
             Id = a.Id,
-            FullName = a.FullName
+            FullName = string.Join(' ', a.Name, a.MiddleName, a.LastName).Trim()
         }).ToList();
     }
     public async Task<IEnumerable<AuthorDTO>> GetFilteredAuthorsAsync(string query)
@@ -77,7 +81,7 @@ public class AuthorService : IAuthorService
         return authors.Select(a => new AuthorDTO
         {
             Id = a.Id,
-            FullName = a.FullName
+            FullName = string.Join(' ', a.Name, a.MiddleName, a.LastName).Trim()
         }).ToList();
     }
 }

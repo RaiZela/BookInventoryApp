@@ -17,12 +17,11 @@ public partial class AuthorPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        //AuthorsView.ItemsSource = await _service.GetAuthorsAsync();
     }
 
     private async void OnAddAuthorClicked(object sender, EventArgs e)
     {
-        var popup = new AddAuthorPopup(_service);
+        var popup = new AddAuthorPopup(_service, new AuthorDTO());
         await this.ShowPopupAsync(popup);
     }
 
@@ -45,25 +44,27 @@ public partial class AuthorPage : ContentPage
         foreach (var item in results)
             FilteredAuthors.Add(item);
 
-        ResultsCollectionView.IsVisible = true;
-        ResultsCollectionView.ItemsSource = FilteredAuthors;
-        ResultsCollectionView.IsRefreshing = true;
-        ResultsCollectionView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
-        ResultsCollectionView.ItemTemplate = new DataTemplate(() =>
-        {
-            var label = new Label
-            {
-                FontSize = 16,
-                VerticalOptions = LayoutOptions.Center,
-                Margin = 10,
-                Padding = 5,
-                TextColor = Colors.GhostWhite
-            };
-            label.SetBinding(Label.TextProperty, "FullName");
 
-            var viewCell = new ViewCell { View = label };
-            return viewCell;
-        });
+        ResultsCollectionView.ItemsSource = FilteredAuthors;
+        ResultsCollectionView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
+        ResultsCollectionView.BackgroundColor = Color.FromArgb("#362b7d");
+        ResultsCollectionView.Opacity = 0.7;
+        ResultsCollectionView.IsVisible = true;
+        ResultsCollectionView.Margin = new Thickness(0, 0, 0, 0);
+
+    }
+
+    private async void ResultsCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var selection = e.CurrentSelection.FirstOrDefault() as AuthorDTO ?? new AuthorDTO();
+        ResultsCollectionView.SelectedItem = null;
+        ResultsCollectionView.IsVisible = false;
+        SearchBar.Text = null;
+        if (selection is not null && selection.Id != Guid.Empty)
+        {
+            var popup = new AddAuthorPopup(_service, selection);
+            await this.ShowPopupAsync(popup);
+        }
 
     }
 }

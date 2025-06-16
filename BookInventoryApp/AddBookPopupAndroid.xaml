@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    x:Class="BookInventoryApp.BookPopup"
+    x:Class="BookInventoryApp.BookPopupAndroid"
     Color="Black">
 
     <ScrollView VerticalScrollBarVisibility="Always">
@@ -30,67 +30,69 @@
             <!-- Title -->
             <Entry x:Name="TitleEntry"
                    Placeholder="Book title"
-                   TextColor="Black"
+                   TextColor="White"
                    PlaceholderColor="DarkGray"
-                   BackgroundColor="#F5F5F5"
+                   BackgroundColor="DimGray"
                    FontFamily="VictorMono-LightItalic"
                    HeightRequest="45" 
-                   WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=520}"
+                   WidthRequest="{OnIdiom Phone=300, Tablet=300}"
                    HorizontalOptions="StartAndExpand" />
 
             <HorizontalStackLayout  HorizontalOptions="StartAndExpand">
                 <!-- Type -->
                 <Picker x:Name="TypeEntry"
                     Title="Select book type..."
-                    TextColor="Black"
+                    TextColor="White"
+                    TitleColor="DarkGray"
                     FontFamily="VictorMono-LightItalic"
-                    BackgroundColor="#F5F5F5"
+                    BackgroundColor="DimGray"
                     HeightRequest="60" 
                     HorizontalOptions="FillAndExpand"
-                    WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
+                    WidthRequest="{OnIdiom Phone=140, Tablet=150}"
                     Margin="5,10,10,10"/>
 
                 <!-- Status -->
                 <Picker x:Name="StatusEntry"
                     Title="Select status..."
-                    TextColor="Black"
+                    TextColor="White"
                     FontFamily="VictorMono-LightItalic"
-                    BackgroundColor="#F5F5F5"
+                    BackgroundColor="DimGray"
+                    TitleColor="DarkGray"
                     HeightRequest="60" 
                     HorizontalOptions="FillAndExpand"
-                    WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
+                    WidthRequest="{OnIdiom Phone=140, Tablet=150, Desktop=250}"
                     Margin="5,10,10,10"/>
 
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout>
+            <VerticalStackLayout>
                 <!-- Authors -->
                 <VerticalStackLayout  HorizontalOptions="Center">
                     <SearchBar x:Name="AuthorsSearch"
                                Placeholder="Search authors..."
                                TextChanged="OnSearchTextChanged"
-                               BackgroundColor="Black"
+                               BackgroundColor="DimGrey"
                                TextColor="White"
                                PlaceholderColor="LightGray"
                                FontFamily="VictorMono-Regular" 
                                HeightRequest="45" 
                                HorizontalOptions="FillAndExpand"
-                               WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
-                               Margin="0,10,10,10"/>
+                               WidthRequest="{OnIdiom Phone=300, Tablet=300}"
+                               Margin="10,10,10,10"/>
 
                     <AbsoluteLayout>
                         <AbsoluteLayout>
                             <SearchBar x:Name="LanguagesSearch"
                                        Placeholder="Search languages..."
                                        TextChanged="OnLanguagesSearchTextChanged"
-                                       BackgroundColor="Black"
+                                       BackgroundColor="DimGray"
                                        TextColor="White"
                                        PlaceholderColor="LightGray"
                                        FontFamily="VictorMono-Regular"
                                        HeightRequest="45" 
                                        HorizontalOptions="FillAndExpand"
-                                       WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
-                                       Margin="5,10,10,10"/>
+                                       WidthRequest="{OnIdiom Phone=300, Tablet=300}"
+                                       Margin="0,10,10,10"/>
 
                             <ListView x:Name="FilteredAuthorsView"
                                       IsVisible="False"
@@ -99,8 +101,8 @@
                                       HeightRequest="100"
                                       SeparatorVisibility="None" 
                                       HorizontalOptions="FillAndExpand"
-                                      WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
-                                      Margin="5,10,10,10"/>
+                                      WidthRequest="{OnIdiom Phone=300, Tablet=300}"
+                                      Margin="0,10,10,10"/>
                         </AbsoluteLayout>
 
 
@@ -112,30 +114,30 @@
                     <SearchBar x:Name="CategoriesSearch"
                                Placeholder="Search categories..."
                                TextChanged="OnCategoriesSearchTextChanged"
-                               BackgroundColor="Black"
+                               BackgroundColor="DimGray"
                                TextColor="White"
                                PlaceholderColor="LightGray"
                                FontFamily="VictorMono-Regular"
                                HeightRequest="45" 
                                HorizontalOptions="FillAndExpand"
-                               WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
-                               Margin="5,10,10,10"/>
+                               WidthRequest="{OnIdiom Phone=300, Tablet=300}"
+                               Margin="10,10,10,10"/>
                     <AbsoluteLayout>
 
                         <ListView x:Name="FilteredCategoriesView"
                                   IsVisible="False"
                                   ItemSelected="Categories_ItemSelected"
                                   BackgroundColor="#DCD3FF"
-                                  RowHeight="50"
+                                  RowHeight="45"
                                   HeightRequest="100"
                                   SeparatorVisibility="None" 
                                   HorizontalOptions="FillAndExpand"
-                                  WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
+                                  WidthRequest="{OnIdiom Phone=300, Tablet=300}"
                                   Margin="5,10,10,10"/>
                     </AbsoluteLayout>
                 </VerticalStackLayout>
 
-            </HorizontalStackLayout>
+            </VerticalStackLayout>
 
 
 
@@ -230,7 +232,7 @@
                     WidthRequest="140"
                     Margin="10,20,10,10"
                     HeightRequest="45" />
-                <Grid x:Name="SuccessOverlay"
+            <Grid x:Name="SuccessOverlay"
                       BackgroundColor="#80000000"
                       IsVisible="False"
                       Opacity="0"
@@ -250,8 +252,8 @@
                        Opacity="1"/>
             </Grid>
 
-        <!-- Error Overlay -->
-        <Grid x:Name="ErrorOverlay"
+            <!-- Error Overlay -->
+            <Grid x:Name="ErrorOverlay"
       BackgroundColor="#80000000"
       IsVisible="False"
       Opacity="0"
@@ -260,7 +262,7 @@
       VerticalOptions="Fill"
       AbsoluteLayout.LayoutFlags="All"
       AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <Label Text="❌ Failed to add book!"
+                <Label Text="❌ Failed to add book!"
            FontSize="18"
            FontAttributes="Bold"
            TextColor="White"
@@ -269,7 +271,7 @@
            HorizontalOptions="Center"
            VerticalOptions="Center"
            Opacity="1"/>
-        </Grid>
+            </Grid>
         </VerticalStackLayout>
         <!-- Success Overlay -->
 

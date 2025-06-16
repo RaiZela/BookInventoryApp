@@ -121,10 +121,24 @@ public partial class BookList : ContentPage
 
     private async void OnAddBookClicked(object sender, EventArgs e)
     {
-        var popup = new BookPopup(_service, _authorService, _categoriesService, _languagesService, new BookDTO());
-        await this.ShowPopupAsync(popup);
+        if (DeviceInfo.Platform == DevicePlatform.WinUI)
+        {
+            var popup = new BookPopup(_service, _authorService, _categoriesService, _languagesService, new BookDTO());
+            await this.ShowPopupAsync(popup);
+        }
+        else if (DeviceInfo.Platform == DevicePlatform.Android)
+        {
+            var popup = new BookPopupAndroid(_service, _authorService, _categoriesService, _languagesService, new BookDTO());
+            await this.ShowPopupAsync(popup);
+        }
+        else
+        {
+            var popup = new BookPopupAndroid(_service, _authorService, _categoriesService, _languagesService, new BookDTO());
+            await this.ShowPopupAsync(popup);
+        }
         await UpdateBooksView();
     }
+
 
     private async void OnNextClicked(object sender, EventArgs e)
     {

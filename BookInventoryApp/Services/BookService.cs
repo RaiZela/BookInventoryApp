@@ -147,7 +147,6 @@ public class BookService : IBookService
             LanguageId = languageId
         }).ToList();
 
-        var test = await _connection.Table<BookAuthor>().ToListAsync();
         try
         {
             foreach (var author in bookAuthors)

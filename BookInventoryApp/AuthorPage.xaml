@@ -3,7 +3,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="BookInventoryApp.AuthorPage"
              Title="Author">
-    
+
     <Grid>
         <Image
             Aspect="AspectFill"
@@ -15,7 +15,7 @@
                 </OnPlatform>
             </Image.Source>
         </Image>
-        
+
         <VerticalStackLayout 
             Padding="20"
             Opacity="1">
@@ -33,7 +33,7 @@
                    Margin="50" 
                    Padding="20" 
                    Background="Black" 
-                   Opacity="1"></Label>  
+                   Opacity="1"></Label>
 
             <SearchBar x:Name="SearchBar"
               Placeholder="Search author..."
@@ -45,13 +45,28 @@
               MinimumHeightRequest="50" 
               Margin="60, 40, 60, 20"/>
 
-            <ListView x:Name="ResultsCollectionView" 
-                      Opacity="0.7" 
-                      BackgroundColor="#362b7d" 
-                      RowHeight="50" 
-                      IsVisible="False" 
-                      Margin="0,0,0,0" >
-            </ListView>
+            <CollectionView 
+                x:Name="ResultsCollectionView" 
+                SelectionMode="Single"
+                SelectionChanged="ResultsCollectionView_SelectionChanged"
+                Margin="60, 5, 60, 20">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border 
+                               Padding="10" 
+                               Margin="0,0,0,0" 
+                               BackgroundColor="#362b7d" 
+                               Opacity="0.7"
+                               InputTransparent="False">
+                            <Label 
+                                FontSize="15"
+                                   Text="{Binding FullName}" 
+                                   TextColor="GhostWhite"
+                                   InputTransparent="False"/>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </VerticalStackLayout>
 
     </Grid>
