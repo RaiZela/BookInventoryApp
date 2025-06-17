@@ -53,7 +53,9 @@
                         TextColor="White"
                         Text="Edit"
                         MaximumWidthRequest="100"
-                        MaximumHeightRequest="30"
+                        Margin="10,10,10,10"
+                        MaximumHeightRequest="90"
+                            Padding="20,5,20,5"
                         HorizontalOptions="End"
                         Clicked="EditButtonClicked"/>
 

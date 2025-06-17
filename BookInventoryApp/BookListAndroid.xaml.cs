@@ -19,6 +19,7 @@ public partial class BookListAndroid : ContentPage
         _authorService = authorService;
         _categoriesService = categoriesService;
         _languagesService = languagesService;
+        BindingContext = this;
     }
 
     protected override async void OnAppearing()
@@ -36,46 +37,46 @@ public partial class BookListAndroid : ContentPage
         BooksView.BackgroundColor = Color.FromHex("#362b7d");
         BooksView.Opacity = 0.7;
         BooksView.Margin = 10;
-        BooksView.ItemTemplate = new DataTemplate(() =>
-        {
-            var titleLabel = new Label
-            {
-                FontSize = 18,
-                TextColor = Colors.White,
-                FontFamily = "VictorMono-BoldItalic",
-                Margin = new Thickness(5, 2),
-            };
-            titleLabel.SetBinding(Label.TextProperty, "Title");
+        //BooksView.ItemTemplate = new DataTemplate(() =>
+        //{
+        //    var titleLabel = new Label
+        //    {
+        //        FontSize = 18,
+        //        TextColor = Colors.White,
+        //        FontFamily = "VictorMono-BoldItalic",
+        //        Margin = new Thickness(5, 2),
+        //    };
+        //    titleLabel.SetBinding(Label.TextProperty, "Title");
 
-            var authorLabel = new Label
-            {
-                FontSize = 14,
-                TextColor = Colors.LightGray,
-                FontFamily = "VictorMono-Light",
-                Margin = new Thickness(5, 0, 5, 5)
-            };
-            authorLabel.SetBinding(Label.TextProperty, "Authors");
+        //    var authorLabel = new Label
+        //    {
+        //        FontSize = 14,
+        //        TextColor = Colors.LightGray,
+        //        FontFamily = "VictorMono-Light",
+        //        Margin = new Thickness(5, 0, 5, 5)
+        //    };
+        //    authorLabel.SetBinding(Label.TextProperty, "Authors");
 
-            var categoryLabel = new Label
-            {
-                FontSize = 14,
-                TextColor = Colors.MediumPurple,
-                FontFamily = "VictorMono-LightItalic",
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center
-            };
-            categoryLabel.SetBinding(Label.TextProperty, "Categories");
+        //    var categoryLabel = new Label
+        //    {
+        //        FontSize = 14,
+        //        TextColor = Colors.MediumPurple,
+        //        FontFamily = "VictorMono-LightItalic",
+        //        HorizontalOptions = LayoutOptions.Center,
+        //        VerticalOptions = LayoutOptions.Center
+        //    };
+        //    categoryLabel.SetBinding(Label.TextProperty, "Categories");
 
-            var languageLabel = new Label
-            {
-                FontSize = 14,
-                TextColor = Colors.MediumPurple,
-                FontFamily = "VictorMono-LightItalic",
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center
-            };
-            languageLabel.SetBinding(Label.TextProperty, "Languages");
-        });
+        //    var languageLabel = new Label
+        //    {
+        //        FontSize = 14,
+        //        TextColor = Colors.MediumPurple,
+        //        FontFamily = "VictorMono-LightItalic",
+        //        HorizontalOptions = LayoutOptions.Center,
+        //        VerticalOptions = LayoutOptions.Center
+        //    };
+        //    languageLabel.SetBinding(Label.TextProperty, "Languages");
+        //});
 
 
     }

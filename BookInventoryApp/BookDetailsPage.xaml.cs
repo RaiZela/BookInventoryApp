@@ -82,8 +82,21 @@ public partial class BookDetailsPage : ContentPage, IQueryAttributable
     }
     private async void EditButtonClicked(object sender, EventArgs e)
     {
-        var popup = new BookPopup(_bookService, _authorService, _categoriesService, _languagesService, Book);
-        await this.ShowPopupAsync(popup);
+        if (DeviceInfo.Platform == DevicePlatform.WinUI)
+        {
+            var popup = new BookPopup(_bookService, _authorService, _categoriesService, _languagesService, Book);
+            await this.ShowPopupAsync(popup);
+        }
+        else if (DeviceInfo.Platform == DevicePlatform.Android)
+        {
+            var popup = new BookPopupAndroid(_bookService, _authorService, _categoriesService, _languagesService, Book);
+            await this.ShowPopupAsync(popup);
+        }
+        else
+        {
+            var popup = new BookPopupAndroid(_bookService, _authorService, _categoriesService, _languagesService, Book);
+            await this.ShowPopupAsync(popup);
+        }
     }
     private async Task AnimateSuccessAsync()
     {

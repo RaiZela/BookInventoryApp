@@ -2,10 +2,10 @@
 
 public interface ICategoriesService
 {
-    Task<List<Category>> GetCategoriesAsync();
+    Task<List<CategoryDTO>> GetCategoriesAsync();
     Task<Category> GetCategoryAsync(Guid id);
     Task<int> SaveCategoryAsync(Category category);
-    Task<int> DeleteCategoryAsync(Category category);
+    Task<int> DeleteCategoryAsync(Guid id);
     Task<IEnumerable<CategoryDTO>> GetFilteredCategoriesAsync(string query);
     Task<IEnumerable<string>> GetBookCategoriesAsync(Guid bookId);
     IEnumerable<CategoryDTO> GetCategoriesById(List<Guid> ids);
@@ -17,8 +17,18 @@ public class CategoriesService : ICategoriesService
     {
         _connection = connection;
     }
-    public Task<List<Category>> GetCategoriesAsync() =>
-        _connection.Table<Category>().ToListAsync();
+    public async Task<List<CategoryDTO>> GetCategoriesAsync()
+    {
+        var categories = await _connection.Table<Category>().ToListAsync();
+
+        return categories.Select(c => new CategoryDTO
+        {
+            Id = c.Id,
+            Code = c.Code,
+            Name = c.Name
+        }).ToList();
+
+    }
 
     public Task<Category> GetCategoryAsync(Guid id) =>
         _connection.Table<Category>().FirstOrDefaultAsync(c => c.Id == id);
@@ -26,8 +36,14 @@ public class CategoriesService : ICategoriesService
     public Task<int> SaveCategoryAsync(Category category) =>
         _connection.InsertOrReplaceAsync(category);
 
-    public Task<int> DeleteCategoryAsync(Category category) =>
-        _connection.DeleteAsync(category);
+    public async Task<int> DeleteCategoryAsync(Guid id)
+    {
+        var category = await _connection.Table<Category>().Where(x => x.Id == id).FirstOrDefaultAsync();
+        if (category is not null)
+            return await _connection.DeleteAsync(category);
+
+        return -1;
+    }
 
     public async Task<IEnumerable<CategoryDTO>> GetFilteredCategoriesAsync(string query)
     {

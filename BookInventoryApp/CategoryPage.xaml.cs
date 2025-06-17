@@ -22,4 +22,18 @@ public partial class CategoryPage : ContentPage
         var popup = new AddCategoryPopup(_service);
         await this.ShowPopupAsync(popup);
     }
+
+    private async void OnDeleteCategoryClicked(object sender, EventArgs e)
+    {
+        if (sender is SwipeItem item && item.CommandParameter is CategoryDTO category)
+        {
+            bool confirm = await DisplayAlert("Confirm Delete", $"Delete category '{category.Name}'?", "Yes", "No");
+            if (confirm)
+            {
+                await _service.DeleteCategoryAsync(category.Id);
+                CategoryView.ItemsSource = await _service.GetCategoriesAsync();
+            }
+        }
+    }
+
 }

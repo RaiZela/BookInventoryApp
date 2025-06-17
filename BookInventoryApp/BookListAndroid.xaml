@@ -19,14 +19,39 @@
 
         <StackLayout Padding="20,20,20,20">
             <Button Text="Add New Book"
-                    Clicked="OnAddBookClicked"
-                    HorizontalOptions="End" BackgroundColor="MediumPurple" />
+         Clicked="OnAddBookClicked"
+         HorizontalOptions="End" BackgroundColor="MediumPurple" />
+
+            <Image Source="icon.png"
+       HeightRequest="100"
+       WidthRequest="100"
+       Opacity="1"
+       VerticalOptions="Center"
+       HorizontalOptions="Center"
+       IsVisible="True" />
 
 
-            <ListView x:Name="BooksView" 
-                      SelectionMode="Single" 
-                      RowHeight="100" ItemSelected="BooksView_ItemSelected">
+            <ListView x:Name="BooksView"
+          ItemsSource="{Binding Books}"
+          ItemSelected="BooksView_ItemSelected"
+          SelectionMode="Single"
+          RowHeight="100"
+          BackgroundColor="Transparent">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10" BackgroundColor="#362b7d">
+                                <Label Text="{Binding Title}" TextColor="White" FontAttributes="Bold"/>
+                                <Label Text="{Binding Authors}" TextColor="White"/>
+                                <Label Text="{Binding Categories}" TextColor="MediumPurple"/>
+                                <Label Text="{Binding Languages}" TextColor="MediumPurple"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
+
 
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">

@@ -43,13 +43,13 @@
               BackgroundColor="White" 
               Opacity="0.5" 
               MinimumHeightRequest="50" 
-              Margin="60, 40, 60, 20"/>
+              Margin="30, 40, 60, 20"/>
 
             <CollectionView 
                 x:Name="ResultsCollectionView" 
                 SelectionMode="Single"
                 SelectionChanged="ResultsCollectionView_SelectionChanged"
-                Margin="60, 5, 60, 20">
+                Margin="60, 5, 70, 20">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Border 

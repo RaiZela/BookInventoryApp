@@ -45,7 +45,7 @@
                         HorizontalOptions="Center"
                         VerticalOptions="Center"
                         Margin="70,10,10,10"
-                        Grid.Column="2"/>   
+                        Grid.Column="2"/>
             </Grid>
 
 

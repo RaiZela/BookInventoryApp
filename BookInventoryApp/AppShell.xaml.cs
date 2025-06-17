@@ -16,6 +16,7 @@ namespace BookInventoryApp
             _languageService = languageService;
             InitializeComponent();
             Routing.RegisterRoute("BookList", typeof(BookList));
+            Routing.RegisterRoute(nameof(BookDetailsPage), typeof(BookDetailsPage));
 
             if (DeviceInfo.Platform == DevicePlatform.Android)
             {

@@ -1,12 +1,46 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="BookInventoryApp.AddCategoryPopup"
-             CanBeDismissedByTappingOutsideOfPopup="True">
-    <StackLayout Padding="20" BackgroundColor="White" WidthRequest="300">
-        <Entry Placeholder="Code" x:Name="Code"/>
-        <Entry Placeholder="Name" x:Name="Name"/>
-        <Button Text="Save" Clicked="OnSaveClicked"/>
-    </StackLayout>
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="BookInventoryApp.AddCategoryPopup"
+               CanBeDismissedByTappingOutsideOfPopup="True">
+
+    <Frame Padding="20"
+           BackgroundColor="White"
+           CornerRadius="12"
+           WidthRequest="320"
+           HeightRequest="200"
+           HasShadow="True"
+           VerticalOptions="Center"
+           HorizontalOptions="Center" >
+
+        <VerticalStackLayout Spacing="15">
+            <Label Text="Add New Category"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="Black"
+                   HorizontalOptions="Center"/>
+
+            <Entry x:Name="Code"
+                   Placeholder="Enter code"
+                   PlaceholderColor="Gray"
+                   TextColor="Black"
+                   BackgroundColor="#f2f2f2"/>
+
+            <Entry x:Name="Name"
+                   Placeholder="Enter name"
+                   PlaceholderColor="Gray"
+                   TextColor="Black"
+                   BackgroundColor="#f2f2f2"
+/>
+
+            <Button Text="Save"
+                    Clicked="OnSaveClicked"
+                    BackgroundColor="MediumPurple"
+                    TextColor="White"
+                    CornerRadius="8"
+                    FontAttributes="Bold"/>
+
+        </VerticalStackLayout>
+
+    </Frame>
 </toolkit:Popup>

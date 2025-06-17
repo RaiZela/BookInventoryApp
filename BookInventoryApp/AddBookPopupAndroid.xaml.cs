@@ -78,13 +78,9 @@ public partial class BookPopupAndroid : Popup
             {
                 var result = await _service.SaveBookAsync(BookRecord);
                 if (result > 0)
-                {
-                    await ShowOverlay(SuccessOverlay);
-                }
+                    await Snackbar.Make("✅ Book is updated!", duration: TimeSpan.FromSeconds(3)).Show();
                 else
-                {
-                    await ShowOverlay(ErrorOverlay);
-                }
+                    await Snackbar.Make("Failed to update book", duration: TimeSpan.FromSeconds(3)).Show();
             }
             catch
             {
@@ -135,7 +131,8 @@ public partial class BookPopupAndroid : Popup
                         VerticalOptions = LayoutOptions.Center,
                         Margin = 10,
                         Padding = 0,
-                        WidthRequest = 150
+                        WidthRequest = 150,
+                        TextColor = Colors.White
                     };
                     label.SetBinding(Label.TextProperty, "FullName");
 
@@ -359,10 +356,11 @@ public partial class BookPopupAndroid : Popup
                 {
                     var label = new Label
                     {
-                        FontSize = 16,
+                        FontSize = 14,
                         VerticalOptions = LayoutOptions.Center,
                         Margin = 10,
-                        Padding = 10,
+                        Padding = 0,
+                        WidthRequest = 150,
                         TextColor = Colors.White
                     };
                     label.SetBinding(Label.TextProperty, "Name");
