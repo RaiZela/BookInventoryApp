@@ -11,11 +11,7 @@
         Title="Book Search"
         ContentTemplate="{DataTemplate local:BookSearch}"
         Route="BookSearch" />
-    
-    <ShellContent
-        Title="Book List"
-        ContentTemplate="{DataTemplate local:BookList}"
-        Route="BookList" />
+
 
     <ShellContent
     Title="Authors"

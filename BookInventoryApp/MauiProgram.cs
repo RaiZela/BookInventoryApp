@@ -32,6 +32,9 @@ public static class MauiProgram
                 fonts.AddFont("VictorMono-ThinItalic.ttf", "VictorMono-ThinItalic");
             });
 
+        builder.Services.AddSingleton<AppShell>();
+
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

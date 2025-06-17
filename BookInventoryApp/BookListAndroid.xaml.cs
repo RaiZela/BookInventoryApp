@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace BookInventoryApp;
 
-public partial class BookList : ContentPage
+public partial class BookListAndroid : ContentPage
 {
     IBookService _service;
     IAuthorService _authorService;
@@ -12,7 +12,7 @@ public partial class BookList : ContentPage
     private ObservableCollection<BooksDTO> Books = new ObservableCollection<BooksDTO>();
     private int PageNumber = 1;
 
-    public BookList(IBookService service, IAuthorService authorService, ICategoriesService categoriesService, ILanguagesService languagesService)
+    public BookListAndroid(IBookService service, IAuthorService authorService, ICategoriesService categoriesService, ILanguagesService languagesService)
     {
         InitializeComponent();
         _service = service;
@@ -75,39 +75,9 @@ public partial class BookList : ContentPage
                 VerticalOptions = LayoutOptions.Center
             };
             languageLabel.SetBinding(Label.TextProperty, "Languages");
-
-            var leftColumn = new StackLayout
-            {
-                Orientation = StackOrientation.Vertical,
-                Children = { titleLabel, authorLabel }
-            };
-
-            var grid = new Grid
-            {
-                ColumnDefinitions =
-                                {
-                                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
-                                    new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) },
-                                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
-                                },
-                Padding = 10,
-                BackgroundColor = Colors.Black,
-                Opacity = 0.8,
-                Margin = new Thickness(10, 5)
-            };
-
-            grid.Children.Add(leftColumn);
-            Grid.SetColumn(leftColumn, 0);
-
-            grid.Children.Add(categoryLabel);
-            Grid.SetColumn(categoryLabel, 1);
-
-
-            grid.Children.Add(languageLabel);
-            Grid.SetColumn(languageLabel, 2);
-
-            return new ViewCell { View = grid };
         });
+
+
     }
 
     private async Task UpdateBooksView()

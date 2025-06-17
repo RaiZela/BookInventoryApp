@@ -75,6 +75,9 @@
 		<Compile Update="AddAuthorPopup.xaml.cs">
 			<DependentUpon>AddAuthorPopup.xaml</DependentUpon>
 		</Compile>
+		<Compile Update="BookListAndroid.xaml.cs">
+		  <DependentUpon>BookListAndroid.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="BookSearch.xaml.cs">
 		  <DependentUpon>BookSearch.xaml</DependentUpon>
 		</Compile>
@@ -103,6 +106,9 @@
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="BookDetailsPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="BookListAndroid.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="CategoryPage.xaml">

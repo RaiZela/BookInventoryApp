@@ -1,34 +1,36 @@
 ﻿using BookInventoryApp.Data.Seed;
 
-namespace BookInventoryApp
+namespace BookInventoryApp;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    private readonly IServiceProvider _serviceProvider;
+    private readonly AppShell _appShell;
+
+    public App(IServiceProvider serviceProvider, AppShell appShell)
     {
-        private readonly IServiceProvider _serviceProvider;
-        public App(IServiceProvider serviceProvider)
-        {
-            InitializeComponent();
-            _serviceProvider = serviceProvider;
-            var connection = _serviceProvider.GetRequiredService<SQLiteAsyncConnection>();
-            //connection.DeleteAllAsync<Book>().Wait();
-            //connection.DeleteAllAsync<Author>().Wait();
-            //connection.DeleteAllAsync<Category>().Wait();
-            //connection.DeleteAllAsync<Person>().Wait();
-            //connection.DeleteAllAsync<Language>().Wait();
+        InitializeComponent();
+        _serviceProvider = serviceProvider;
+        _appShell = appShell;
 
-            if (connection.Table<Author>().CountAsync().Result == 0)
-                SeedAuthors.SeedAuthorsAsync(connection);
-            if (connection.Table<Category>().CountAsync().Result == 0)
-                SeedCategories.SeedCategoriesAsync(connection);
-            if (connection.Table<Language>().CountAsync().Result == 0)
-                SeedLanguages.SeedLanguagesAsync(connection);
-        }
+        var connection = _serviceProvider.GetRequiredService<SQLiteAsyncConnection>();
 
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new AppShell());
-        }
+        //connection.DeleteAllAsync<Book>().Wait();
+        //connection.DeleteAllAsync<Author>().Wait();
+        //connection.DeleteAllAsync<Category>().Wait();
+        //connection.DeleteAllAsync<Person>().Wait();
+        //connection.DeleteAllAsync<Language>().Wait();
 
+        if (connection.Table<Author>().CountAsync().Result == 0)
+            SeedAuthors.SeedAuthorsAsync(connection);
+        if (connection.Table<Category>().CountAsync().Result == 0)
+            SeedCategories.SeedCategoriesAsync(connection);
+        if (connection.Table<Language>().CountAsync().Result == 0)
+            SeedLanguages.SeedLanguagesAsync(connection);
+    }
 
+    protected override Window CreateWindow(IActivationState? activationState)
+    {
+        return new Window(_appShell);
     }
 }
