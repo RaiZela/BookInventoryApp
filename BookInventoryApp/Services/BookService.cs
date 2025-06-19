@@ -262,27 +262,27 @@ public class BookService : IBookService
         return bookLanguages.Select(x => x.LanguageId);
     }
 
-    private async Task<Guid> GetPresentBookHolder(Guid bookId)
-    {
+    //private async Task<Guid> GetPresentBookHolder(Guid bookId)
+    //{
 
-        var personId = (await _connection.Table<LendedBooks>()
-                .Where(x => x.BookId == bookId && !x.IsReturned)
-                .OrderByDescending(x => x.On)
-                .FirstOrDefaultAsync()).PersonId;
+    //    var personId = (await _connection.Table<LendedBooks>()
+    //            .Where(x => x.BookId == bookId && !x.IsReturned)
+    //            .OrderByDescending(x => x.On)
+    //            .FirstOrDefaultAsync()).FriendId;
 
-        return personId;
-    }
+    //    return personId;
+    //}
 
-    private async Task<Guid> GetBorrowedBookOwner(Guid bookId)
-    {
+    //private async Task<Guid> GetBorrowedBookOwner(Guid bookId)
+    //{
 
-        var bookOwnerId = (await _connection.Table<BorrowedBooks>()
-                .Where(x => x.BookId == bookId && !x.IsReturned)
-                .OrderByDescending(x => x.On)
-                .FirstOrDefaultAsync()).PersonId;
+    //    var bookOwnerId = (await _connection.Table<BorrowedBooks>()
+    //            .Where(x => x.BookId == bookId && !x.IsReturned)
+    //            .OrderByDescending(x => x.On)
+    //            .FirstOrDefaultAsync()).FriendId;
 
-        return bookOwnerId;
-    }
+    //    return bookOwnerId;
+    //}
 
     #endregion Helpers
 }

@@ -52,6 +52,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ICategoriesService, CategoriesService>();
         builder.Services.AddTransient<ILanguagesService, LanguagesService>();
         builder.Services.AddTransient<IFriendService, FriendService>();
+        builder.Services.AddTransient<IBookLoanService, BookLoanService>();
 
         return builder.Build();
     }

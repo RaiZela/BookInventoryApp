@@ -27,6 +27,7 @@ public partial class App : Application
             SeedCategories.SeedCategoriesAsync(connection);
         if (connection.Table<Language>().CountAsync().Result == 0)
             SeedLanguages.SeedLanguagesAsync(connection);
+
     }
 
     protected override Window CreateWindow(IActivationState? activationState)

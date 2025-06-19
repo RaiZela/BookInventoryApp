@@ -24,7 +24,7 @@
                     FontAttributes="Bold"
                     HorizontalOptions="End"
                     WidthRequest="180" />
-            
+
             <CollectionView x:Name="FriendCollection"
                             Margin="0,10"
                             ItemsLayout="VerticalList"
@@ -34,13 +34,73 @@
                         <SwipeView>
                             <SwipeView.LeftItems>
                                 <SwipeItems>
-                                    <SwipeItem Text="Delete"
-                                               IconImageSource="delete.png"
-                                               Invoked="SwipeItem_Invoked"
-                                               CommandParameter="{Binding .}" />
+                                    <!-- Delete -->
+                                    <SwipeItem Text="Delete" IconImageSource="delete.png" Invoked="SwipeItem_Invoked" CommandParameter="{Binding .}" />
                                 </SwipeItems>
                             </SwipeView.LeftItems>
+                            <SwipeView.RightItems>
+                                <SwipeItemView Invoked="OnLendBookClicked">
+                                    <Grid Padding="10" WidthRequest="60">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
 
+                                        <Label Text="📘"
+                                                   FontSize="20"
+                                                   HorizontalOptions="Center" />
+                                        <Label Text="Lend"
+                                                   Grid.Row="1"
+                                                   FontSize="12"
+                                                   HorizontalOptions="Center" />
+                                    </Grid>
+
+                                    <SwipeItemView.CommandParameter>
+                                        <Binding />
+                                    </SwipeItemView.CommandParameter>
+                                </SwipeItemView>
+
+                                <SwipeItemView Invoked="OnBorrowBookClicked">
+                                    <Grid Padding="10" WidthRequest="60">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Label Text="📕"
+                                                   FontSize="20"
+                                                   HorizontalOptions="Center" />
+                                        <Label Text="Borrow Book"
+                                                   Grid.Row="1"
+                                                   FontSize="12"
+                                                   HorizontalOptions="Center" />
+                                    </Grid>
+
+                                    <SwipeItemView.CommandParameter>
+                                        <Binding />
+                                    </SwipeItemView.CommandParameter>
+                                </SwipeItemView>
+
+                                <SwipeItemView x:Name="ViewLoansSwipe" Invoked="OnViewLoansClicked">
+                                    <Grid Padding="10" WidthRequest="60">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Label Text="📂"
+                                                   FontSize="20"
+                                                   HorizontalOptions="Center" />
+                                        <Label Text="View Loans"
+                                                   Grid.Row="1"
+                                                   FontSize="12"
+                                                   HorizontalOptions="Center" />
+                                    </Grid>
+                                    <SwipeItemView.CommandParameter>
+                                        <Binding />
+                                    </SwipeItemView.CommandParameter>
+                                </SwipeItemView>
+                            </SwipeView.RightItems>
                             <Frame BorderColor="#ccc"
                                    CornerRadius="8"
                                    Margin="0,5"
@@ -53,7 +113,6 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <!-- Friend Info and Tap for Edit -->
                                     <VerticalStackLayout Grid.Column="0"
                                                          Spacing="5">
                                         <VerticalStackLayout.GestureRecognizers>

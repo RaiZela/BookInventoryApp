@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookInventoryApp.FriendLoansPage"
+             Title="FriendLoansPage">
+    <ScrollView>
+        <SwipeView>
+            <SwipeView.RightItems>
+                <SwipeItems>
+                    <SwipeItem Text="Mark Returned"
+                       BackgroundColor="Green"
+                       Invoked="OnMarkReturned"
+                       CommandParameter="{Binding Id}" />
+                </SwipeItems>
+            </SwipeView.RightItems>
+            <VerticalStackLayout Padding="20" Spacing="20">
+                <Label Text="Current Loans" FontSize="18" FontAttributes="Bold" />
+                <CollectionView x:Name="CurrentLoans" />
+
+                <Label Text="Returned Books" FontSize="18" FontAttributes="Bold" />
+                <CollectionView x:Name="ReturnedLoans" />
+            </VerticalStackLayout>
+        </SwipeView>
+    </ScrollView>
+</ContentPage>

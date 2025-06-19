@@ -75,7 +75,7 @@ public partial class FriendPopup : Popup
 
         if (confirm)
         {
-            var Friends = await _service.DeleteFriendAsync(Friend);
+            var Friends = await _service.DeleteFriendAsync(Friend.Id);
 
             if (Friends > 0)
             {

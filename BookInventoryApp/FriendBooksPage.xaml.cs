@@ -6,15 +6,15 @@ public partial class FriendBooksPage : ContentPage
 {
     private readonly FriendsDTO _friend;
     private readonly bool _showBooksTheyBorrowed;
-    private readonly IBookService _bookService;
+    private readonly ILendedBooksService _lendedBookService;
 
     public string PageTitle { get; set; }
 
-    public FriendBooksPage(FriendsDTO friend, bool showBooksTheyBorrowed, IBookService bookService)
+    public FriendBooksPage(FriendsDTO friend, bool showBooksTheyBorrowed, ILendedBooksService lendedBookService)
     {
         InitializeComponent();
         BindingContext = this;
-        _bookService = bookService;
+        _lendedBookService = lendedBookService;
         _friend = friend;
         _showBooksTheyBorrowed = showBooksTheyBorrowed;
         PageTitle = _showBooksTheyBorrowed
@@ -26,7 +26,7 @@ public partial class FriendBooksPage : ContentPage
     {
         base.OnAppearing();
 
-        var allRecords = await _bookService.GetFriendBookRecordsAsync(_friend.Id);
+        var allRecords = await _lendedBookService.GetBookLoanInfoByFriendIdAsync(_friend.Id);
 
         var relevant = allRecords
             .Where(r => r.IsBorrowedByFriend == _showBooksTheyBorrowed)
