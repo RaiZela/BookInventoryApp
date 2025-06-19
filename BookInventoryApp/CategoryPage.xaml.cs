@@ -21,6 +21,7 @@ public partial class CategoryPage : ContentPage
     {
         var popup = new AddCategoryPopup(_service);
         await this.ShowPopupAsync(popup);
+        CategoryView.ItemsSource = await _service.GetCategoriesAsync();
     }
 
     private async void OnDeleteCategoryClicked(object sender, EventArgs e)

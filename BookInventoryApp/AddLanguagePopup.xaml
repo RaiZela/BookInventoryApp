@@ -3,9 +3,44 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="BookInventoryApp.AddLanguagePopup">
-    <StackLayout Padding="20" BackgroundColor="White" WidthRequest="300">
-        <Entry Placeholder="Code" x:Name="Code"/>
-        <Entry Placeholder="Name" x:Name="Name"/>
-        <Button Text="Save" Clicked="OnSaveClicked"/>
-    </StackLayout>
+    <Frame Padding="20"
+           BackgroundColor="White"
+           CornerRadius="12"
+           WidthRequest="320"
+           HeightRequest="250"
+           HasShadow="True"
+           VerticalOptions="Center"
+           HorizontalOptions="Center" >
+
+        <VerticalStackLayout Spacing="15">
+            <Label Text="Add New Language"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="Black"
+                   HorizontalOptions="Center"
+                   BackgroundColor="GhostWhite"/>
+
+            <Entry x:Name="Code"
+                   Placeholder="Enter code"
+                   PlaceholderColor="Gray"
+                   TextColor="Black"
+                   BackgroundColor="White" />
+
+            <Entry x:Name="Name"
+                   Placeholder="Enter name"
+                   PlaceholderColor="Gray"
+                   TextColor="Black"
+                   BackgroundColor="White"
+/>
+
+            <Button Text="Save"
+                    Clicked="OnSaveClicked"
+                    BackgroundColor="MediumPurple"
+                    TextColor="White"
+                    CornerRadius="8"
+                    FontAttributes="Bold"/>
+
+        </VerticalStackLayout>
+
+    </Frame>
 </toolkit:Popup>

@@ -29,8 +29,8 @@
    Route="LanguagePage" />
 
     <ShellContent
-   Title="Persons"
-   ContentTemplate="{DataTemplate local:PersonsPage}"
-   Route="PersonsPage" />
+   Title="Friends"
+   ContentTemplate="{DataTemplate local:FriendsPage}"
+   Route="FriendsPage" />
 
 </Shell>

@@ -18,7 +18,7 @@ public partial class App : Application
         //connection.DeleteAllAsync<Book>().Wait();
         //connection.DeleteAllAsync<Author>().Wait();
         //connection.DeleteAllAsync<Category>().Wait();
-        //connection.DeleteAllAsync<Person>().Wait();
+        //connection.DeleteAllAsync<Friend>().Wait();
         //connection.DeleteAllAsync<Language>().Wait();
 
         if (connection.Table<Author>().CountAsync().Result == 0)

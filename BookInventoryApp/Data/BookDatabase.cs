@@ -8,7 +8,7 @@ public class BookDatabase
         _connection.CreateTableAsync<Book>().Wait();
         _connection.CreateTableAsync<Author>().Wait();
         _connection.CreateTableAsync<Category>().Wait();
-        _connection.CreateTableAsync<Person>().Wait();
+        _connection.CreateTableAsync<Friend>().Wait();
         _connection.CreateTableAsync<Language>().Wait();
 
         _connection.CreateTableAsync<LendedBooks>().Wait();

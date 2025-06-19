@@ -59,6 +59,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
+		<PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.6" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
@@ -66,6 +67,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="FriendPopup.xaml.cs">
+		  <DependentUpon>FriendPopup.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="AddBookPopupAndroid.xaml.cs">
 		  <DependentUpon>AddBookPopupAndroid.xaml</DependentUpon>
 		</Compile>
@@ -84,9 +88,18 @@
 		<Compile Update="BookList.xaml.cs">
 		  <DependentUpon>BookList.xaml</DependentUpon>
 		</Compile>
+		<Compile Update="FriendsPage.xaml.cs">
+		  <DependentUpon>FriendsPage.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+		<MauiXaml Update="FriendBooksPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="FriendPopup.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="AddBookPopupAndroid.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -120,7 +133,7 @@
 		<MauiXaml Update="LanguagePage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="PersonsPage.xaml">
+		<MauiXaml Update="FriendsPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Resources\Styles\DarkTheme.xaml">

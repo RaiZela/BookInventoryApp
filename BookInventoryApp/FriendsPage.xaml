@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="BookInventoryApp.FriendsPage"
+             Title="Friends">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+
+            <SearchBar x:Name="SearchBar"
+                       Placeholder="Search friends..."
+                       TextChanged="OnSearchTextChanged"
+                       BackgroundColor="#f2f2f2"
+                       Margin="0,0,0,10"/>
+
+
+            <Button Text="Add New Friend"
+                    Clicked="OnAddFriendClicked"
+                    BackgroundColor="MediumPurple"
+                    TextColor="White"
+                    CornerRadius="8"
+                    FontAttributes="Bold"
+                    HorizontalOptions="End"
+                    WidthRequest="180" />
+            
+            <CollectionView x:Name="FriendCollection"
+                            Margin="0,10"
+                            ItemsLayout="VerticalList"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.LeftItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Delete"
+                                               IconImageSource="delete.png"
+                                               Invoked="SwipeItem_Invoked"
+                                               CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+
+                            <Frame BorderColor="#ccc"
+                                   CornerRadius="8"
+                                   Margin="0,5"
+                                   Padding="10"
+                                   HasShadow="True"
+                                   BackgroundColor="White">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Friend Info and Tap for Edit -->
+                                    <VerticalStackLayout Grid.Column="0"
+                                                         Spacing="5">
+                                        <VerticalStackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnFriendTapped"
+                                                                  CommandParameter="{Binding .}" />
+                                        </VerticalStackLayout.GestureRecognizers>
+
+                                        <HorizontalStackLayout>
+                                            <Label Text="Name:"
+                                                   FontAttributes="Bold,Italic"
+                                                   FontSize="16"
+                                                   TextColor="#333"
+                                                   VerticalOptions="Center" />
+                                            <Label Text="{Binding FirstName}"
+                                                   FontSize="16"
+                                                   TextColor="#333"
+                                                   VerticalOptions="Center"
+                                                   Margin="5,0,0,0"/>
+                                            <Label Text="{Binding LastName}"
+                                                   FontSize="16"
+                                                   TextColor="#333"
+                                                   VerticalOptions="Center"
+                                                   Margin="5,0,0,0"/>
+                                        </HorizontalStackLayout>
+
+                                        <HorizontalStackLayout>
+                                            <Label Text="Nickname:"
+                                                   FontAttributes="Bold,Italic"
+                                                   FontSize="16"
+                                                   TextColor="#333"
+                                                   VerticalOptions="Center" />
+                                            <Label Text="{Binding Nickname}"
+                                                   FontSize="16"
+                                                   TextColor="#333"
+                                                   VerticalOptions="Center"
+                                                   Margin="5,0,0,0"/>
+                                        </HorizontalStackLayout>
+
+                                        <HorizontalStackLayout>
+                                            <Label Text="Address:"
+                                                   FontAttributes="Bold,Italic"
+                                                   FontSize="16"
+                                                   TextColor="#333"
+                                                   VerticalOptions="Center" />
+                                            <Label Text="{Binding Address}"
+                                                   FontSize="16"
+                                                   TextColor="#333"
+                                                   VerticalOptions="Center"
+                                                   Margin="5,0,0,0"/>
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+
+                                    <!-- Right-Side Image -->
+                                    <Image Grid.Column="1"
+                                           Source="friend_icon.png"
+                                           WidthRequest="60"
+                                           HeightRequest="60"
+                                           HorizontalOptions="End"
+                                           VerticalOptions="Center"
+                                           Margin="10,0,0,0" />
+                                </Grid>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
