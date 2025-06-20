@@ -20,29 +20,31 @@ public partial class FriendLoansPage : ContentPage
         var allLoans = await _bookLoanService.GetLoansAsync();
         var relevant = allLoans.Where(l => l.FriendId == _friend.Id).ToList();
 
-        var books = await _bookLoanService.GetLoansAsync();
         var loansWithBooks = relevant
             .Select(l => new
             {
                 l.Id,
-                BookTitle = books.FirstOrDefault(b => b.Id == l.BookId)?.Title ?? "Unknown",
+                BookTitle = l.Title ?? "Unknown",
                 l.DateBorrowed,
                 l.DateReturned,
-                l.Direction
+                l.Direction,
+                l.IsBorrowedByFriend,
+                l.IsReturned
             }).ToList();
 
-        CurrentLoans.ItemsSource = loansWithBooks.Where(l => l.DateReturned == null).ToList();
-        ReturnedLoans.ItemsSource = loansWithBooks.Where(l => l.DateReturned != null).ToList();
+        CurrentLoans.ItemsSource = loansWithBooks.Where(l => l.IsBorrowedByFriend && !l.IsReturned).ToList();
+        ReturnedLoans.ItemsSource = loansWithBooks.Where(l => l.IsBorrowedByFriend && l.IsReturned).ToList();
     }
 
     private async void OnMarkReturned(object sender, EventArgs e)
     {
-        if ((sender as SwipeItem)?.CommandParameter is Guid loanId)
+        if (sender is SwipeItem item && item.CommandParameter is Guid loanId)
         {
             var loan = (await _bookLoanService.GetLoansAsync()).FirstOrDefault(l => l.Id == loanId);
             if (loan != null)
             {
                 loan.DateReturned = DateTime.Now;
+                loan.IsReturned = true;
                 await _bookLoanService.UpdateLoanAsync(loan);
                 OnAppearing();
             }

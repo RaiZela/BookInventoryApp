@@ -1,4 +1,6 @@
-﻿namespace BookInventoryApp.Services;
+﻿using System.Globalization;
+
+namespace BookInventoryApp.Services;
 
 public interface IBookService
 {
@@ -35,7 +37,7 @@ public class BookService : IBookService
             booksList.Add(new BooksDTO
             {
                 Id = book.Id,
-                Title = book.Title,
+                Title = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(book.Title.ToLower()),
                 Authors = string.Join(',', authors),
                 Categories = string.Join(',', categories),
                 Languages = string.Join(',', categories)

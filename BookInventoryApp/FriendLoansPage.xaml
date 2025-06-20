@@ -2,24 +2,93 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BookInventoryApp.FriendLoansPage"
-             Title="FriendLoansPage">
-    <ScrollView>
-        <SwipeView>
-            <SwipeView.RightItems>
-                <SwipeItems>
-                    <SwipeItem Text="Mark Returned"
-                       BackgroundColor="Green"
-                       Invoked="OnMarkReturned"
-                       CommandParameter="{Binding Id}" />
-                </SwipeItems>
-            </SwipeView.RightItems>
-            <VerticalStackLayout Padding="20" Spacing="20">
-                <Label Text="Current Loans" FontSize="18" FontAttributes="Bold" />
-                <CollectionView x:Name="CurrentLoans" />
+             Title="Loans"
+             BackgroundColor="#f9f9f9">
 
-                <Label Text="Returned Books" FontSize="18" FontAttributes="Bold" />
-                <CollectionView x:Name="ReturnedLoans" />
-            </VerticalStackLayout>
-        </SwipeView>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="25">
+
+            <!-- CURRENT LOANS -->
+            <Label Text="📘 Currently Active"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="#333" />
+
+            <CollectionView x:Name="CurrentLoans"
+                            ItemsLayout="VerticalList"
+                            EmptyView="No current loans.">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Mark Returned"
+                                               BackgroundColor="Green"
+                                               Invoked="OnMarkReturned"
+                                               CommandParameter="{Binding Id}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Frame CornerRadius="12"
+                                   Padding="15"
+                                   Margin="0,5"
+                                   BackgroundColor="White"
+                                   HasShadow="True">
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding BookTitle}"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           TextColor="#4B0082" />
+                                    <Label Text="{Binding DateBorrowed, StringFormat='Borrowed: {0:MMM dd, yyyy}'}"
+                                           FontSize="14"
+                                           TextColor="#666" />
+                                    <Label Text="{Binding Direction, StringFormat='Type: {0}'}"
+                                           FontSize="14"
+                                           TextColor="#888" />
+                                </VerticalStackLayout>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- RETURNED LOANS -->
+            <Label Text="📂 History"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="#333"
+                   Margin="0,20,0,0" />
+
+            <CollectionView x:Name="ReturnedLoans"
+                            ItemsLayout="VerticalList"
+                            EmptyView="No historical records.">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="12"
+                               Padding="15"
+                               Margin="0,5"
+                               BackgroundColor="#f0f0f0"
+                               HasShadow="True">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding BookTitle}"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="#222" />
+                                <Label Text="{Binding DateBorrowed, StringFormat='Borrowed: {0:MMM dd, yyyy}'}"
+                                       FontSize="14"
+                                       TextColor="#666" />
+                                <Label Text="{Binding DateReturned, StringFormat='Returned: {0:MMM dd, yyyy}'}"
+                                       FontSize="14"
+                                       TextColor="#888" />
+                                <Label Text="{Binding Direction, StringFormat='Type: {0}'}"
+                                       FontSize="14"
+                                       TextColor="#999" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -29,6 +29,7 @@ public partial class FriendsPage : ContentPage
         base.OnAppearing();
         allFriends = await _service.GetFriendsAsync();
         FriendCollection.ItemsSource = allFriends;
+
     }
 
     private void OnSearchTextChanged(object sender, TextChangedEventArgs e)

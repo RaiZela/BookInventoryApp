@@ -8,4 +8,5 @@ public class BookLoanInfo
     public DateTime DateBorrowed { get; set; }
     public DateTime? DateReturned { get; set; } = null;
     public bool IsBorrowedByFriend { get; set; }
+    public bool IsReturned { get; set; }
 }

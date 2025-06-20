@@ -1,4 +1,5 @@
 using BookInventoryApp.Services;
+using System.Globalization;
 
 namespace BookInventoryApp;
 
@@ -10,9 +11,8 @@ public partial class LendBorrowPopup : Popup
     private readonly IBookLoanService _loanService;
     private readonly IBookService _bookService;
 
-    private List<BooksDTO> _allBooks;
-    private BooksDTO _selectedBook;
-
+    private List<BooksDTO> AllBooks;
+    private List<BooksDTO> SelectedBooks;
     public LendBorrowPopup(Friend friend,
         LoanDirection direction,
         SQLiteAsyncConnection connection,
@@ -26,7 +26,7 @@ public partial class LendBorrowPopup : Popup
         _loanService = loanService;
         _bookService = bookService;
         PopupTitle.Text = direction == LoanDirection.Out ? "Lend Book" : "Borrow Book";
-
+        SelectedBooks = new List<BooksDTO>();
         OnAppearing();
 
     }
@@ -34,7 +34,7 @@ public partial class LendBorrowPopup : Popup
 
     protected async void OnAppearing()
     {
-        _allBooks = await _bookService.GetBooksAsync();
+        AllBooks = await _bookService.GetBooksAsync();
     }
 
     private void OnBookSearchChanged(object sender, TextChangedEventArgs e)
@@ -44,45 +44,142 @@ public partial class LendBorrowPopup : Popup
         if (string.IsNullOrWhiteSpace(keyword))
         {
             BookSuggestions.IsVisible = false;
-            _selectedBook = null;
             return;
         }
 
-        var filtered = _allBooks
-            .Where(book => book.Title.ToLower().Contains(keyword))
+        var filtered = AllBooks
+            .Where(book => book.Title.ToLower().Contains(keyword.ToLower()))
             .ToList();
 
-        BookSuggestions.ItemsSource = filtered;
-        BookSuggestions.IsVisible = filtered.Any();
-        _selectedBook = null;
-    }
-
-    private void OnSuggestionSelected(object sender, SelectionChangedEventArgs e)
-    {
-        if (e.CurrentSelection.FirstOrDefault() is BooksDTO book)
+        if (filtered.Count == 0 || filtered.Any(r => r.Title.ToLower() != keyword.ToLower()))
         {
-            _selectedBook = book;
+            Guid id = Guid.NewGuid();
+            var newBook = new BooksDTO
+            {
+                Title = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(keyword.ToLower()),
+                Id = id // Temporary ID for the search term
+            };
+
+            filtered.Insert(0, newBook);
+
+        }
+
+        if (SelectedBooks is not null && SelectedBooks.Count() > 0)
+            filtered = filtered.Where(r => !SelectedBooks.Any(s => s.Id == r.Id)).ToList();
+
+        if (filtered.Count() > 0)
+        {
+
+            BookSuggestions.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
+            BookSuggestions.ItemTemplate = new DataTemplate(() =>
+            {
+                var label = new Label
+                {
+                    FontSize = 14,
+                    VerticalOptions = LayoutOptions.Center,
+                    Margin = 10,
+                    Padding = 0,
+                    WidthRequest = 150,
+                    HeightRequest = 50,
+                    TextColor = Colors.White
+                };
+                label.SetBinding(Label.TextProperty, "Title");
+
+                var viewCell = new ViewCell { View = label };
+                return viewCell;
+            });
+            BookSuggestions.ItemsSource = filtered;
+            BookSuggestions.IsVisible = true;
+        }
+    }
+    private void OnSuggestionSelected(object sender, SelectedItemChangedEventArgs e)
+    {
+        if (e.SelectedItem is BooksDTO book)
+        {
+            SelectedBooks.Add(book);
             BookSearchBar.Text = book.Title;
             BookSuggestions.IsVisible = false;
         }
+        SelectedBooksView.ItemTemplate = new DataTemplate(() =>
+        {
+            var nameLabel = new Label
+            {
+                FontSize = 14,
+                TextColor = Colors.White,
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Start,
+                Margin = new Thickness(0, 5)
+            };
+            nameLabel.SetBinding(Label.TextProperty, "Title");
+
+            var removeButton = new Button
+            {
+                Text = "X",
+                BackgroundColor = Colors.Transparent,
+                WidthRequest = 20,
+                HeightRequest = 20,
+                Padding = 0,
+                HorizontalOptions = LayoutOptions.End,
+                VerticalOptions = LayoutOptions.Center
+            };
+            removeButton.Clicked += (s, e) =>
+            {
+                var button = s as Button;
+                if (button?.BindingContext is BooksDTO book)
+                {
+                    SelectedBooks.Remove(book);
+                    SelectedBooksView.ItemsSource = null;
+                    SelectedBooksView.ItemsSource = SelectedBooks;
+                }
+            };
+
+            var layout = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+                VerticalOptions = LayoutOptions.Center,
+                Children = { nameLabel, removeButton }
+            };
+
+            var frame = new Frame
+            {
+                BackgroundColor = Colors.MediumPurple,
+                Content = layout,
+                HasShadow = false,
+                Padding = new Thickness(10, 5),
+                Margin = new Thickness(5, 5),
+                CornerRadius = 16,
+            };
+
+            frame.SetBinding(BindingContextProperty, ".");
+
+            return frame;
+        });
+        SelectedBooksView.ItemsSource = SelectedBooks;
+        SelectedBooksView.IsVisible = true;
+        BookSearchBar.Text = null;
     }
 
     public async void OnBorrowConfirm(object sender, EventArgs e)
     {
-        var enteredTitle = BookSearchBar.Text?.Trim();
+        var bookObj = sender as BooksDTO;
 
-        var bookId = _selectedBook?.Id ?? Guid.Empty;
+        var bookId = bookObj?.Id ?? Guid.Empty;
+        List<BookLoan> loans = new();
 
-        var loan = new BookLoan
+        foreach (var book in SelectedBooks)
         {
-            BookId = bookId,
-            Title = enteredTitle,
-            FriendId = _friend.Id,
-            DateBorrowed = DateTime.Now,
-            Direction = LoanDirection.In
-        };
+            loans.Add(new BookLoan
+            {
+                BookId = bookId,
+                Title = book.Title,
+                FriendId = _friend.Id,
+                DateBorrowed = DateTime.Now,
+                Direction = _direction,
+                IsBorrowedByFriend = _direction == LoanDirection.Out,
+            });
+        }
 
-        var result = await _loanService.InsertLoanAsync(loan);
+        var result = await _loanService.InsertAllLoansAsync(loans);
         if (result > 0)
         {
             await AnimateSuccessAsync();
