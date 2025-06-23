@@ -10,6 +10,9 @@ public partial class BookPopup : Popup
     IAuthorService _authorService;
     ICategoriesService _categoriesService;
     ILanguagesService _languagesService;
+
+    private int _currentStep = 0;
+    private readonly List<View> _steps;
     public ObservableCollection<AuthorDTO> FilteredAuthors { get; set; } = new();
     public ObservableCollection<AuthorDTO> SelectedAuthors { get; set; } = new();
     public ObservableCollection<CategoryDTO> FilteredCategories { get; set; } = new();
@@ -18,7 +21,11 @@ public partial class BookPopup : Popup
     public ObservableCollection<LanguageDTO> SelectedLanguages { get; set; } = new();
     private BookDTO BookRecord { get; set; }
     private bool _isUpdate = false;
-    public BookPopup(IBookService service, IAuthorService authorService, ICategoriesService categoriesService, ILanguagesService languagesService, BookDTO book)
+    public BookPopup(IBookService service,
+        IAuthorService authorService,
+        ICategoriesService categoriesService,
+        ILanguagesService languagesService,
+        BookDTO book)
     {
         InitializeComponent();
         _service = service;
@@ -35,6 +42,7 @@ public partial class BookPopup : Popup
         }
         else
             BookRecord = book ?? new BookDTO();
+
     }
 
     private void FormUpdate()
@@ -444,5 +452,60 @@ public partial class BookPopup : Popup
         SelectedLanguagesView.ItemsSource = SelectedLanguages;
         SelectedLanguagesView.IsVisible = true;
     }
+
+    int currentStep = 1;
+
+    private void OnNextClicked(object sender, EventArgs e)
+    {
+        switch (currentStep)
+        {
+            case 1:
+                Step1.IsVisible = false;
+                Step2.IsVisible = true;
+                BackButton.IsVisible = true;
+                currentStep = 2;
+                break;
+            case 2:
+                Step2.IsVisible = false;
+                Step3.IsVisible = true;
+                NextButton.Text = "Save";
+                currentStep = 3;
+                break;
+            case 3:
+                OnSaveClicked(sender, e); // Your existing save logic
+                break;
+        }
+    }
+
+    private void OnBackClicked(object sender, EventArgs e)
+    {
+        switch (currentStep)
+        {
+            case 2:
+                Step2.IsVisible = false;
+                Step1.IsVisible = true;
+                BackButton.IsVisible = false;
+                currentStep = 1;
+                break;
+            case 3:
+                Step3.IsVisible = false;
+                Step2.IsVisible = true;
+                NextButton.Text = "Next";
+                currentStep = 2;
+                break;
+        }
+    }
+
+    private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (sender is Entry entry)
+        {
+            if (!int.TryParse(entry.Text, out int number) || number < 0)
+            {
+                entry.Text = e.OldTextValue;
+            }
+        }
+    }
+
 }
 
