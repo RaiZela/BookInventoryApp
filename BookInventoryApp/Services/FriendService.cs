@@ -25,8 +25,7 @@ public class FriendService : IFriendService
             Name = x.Name,
             LastName = x.LastName,
             Nickname = x.Nickname,
-            Address = x.Address,
-            LibraryID = x.LibraryID
+            Address = x.Address
         }).ToList();
     }
 

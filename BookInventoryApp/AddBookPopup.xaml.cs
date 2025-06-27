@@ -453,49 +453,6 @@ public partial class BookPopup : Popup
         SelectedLanguagesView.IsVisible = true;
     }
 
-    int currentStep = 1;
-
-    private void OnNextClicked(object sender, EventArgs e)
-    {
-        switch (currentStep)
-        {
-            case 1:
-                Step1.IsVisible = false;
-                Step2.IsVisible = true;
-                BackButton.IsVisible = true;
-                currentStep = 2;
-                break;
-            case 2:
-                Step2.IsVisible = false;
-                Step3.IsVisible = true;
-                NextButton.Text = "Save";
-                currentStep = 3;
-                break;
-            case 3:
-                OnSaveClicked(sender, e); // Your existing save logic
-                break;
-        }
-    }
-
-    private void OnBackClicked(object sender, EventArgs e)
-    {
-        switch (currentStep)
-        {
-            case 2:
-                Step2.IsVisible = false;
-                Step1.IsVisible = true;
-                BackButton.IsVisible = false;
-                currentStep = 1;
-                break;
-            case 3:
-                Step3.IsVisible = false;
-                Step2.IsVisible = true;
-                NextButton.Text = "Next";
-                currentStep = 2;
-                break;
-        }
-    }
-
     private void Entry_TextChanged(object sender, TextChangedEventArgs e)
     {
         if (sender is Entry entry)
@@ -505,6 +462,49 @@ public partial class BookPopup : Popup
                 entry.Text = e.OldTextValue;
             }
         }
+    }
+    int currentStep = 1;
+    const int totalSteps = 3;
+
+    void OnNextClicked(object sender, EventArgs e)
+    {
+        if (currentStep < totalSteps)
+        {
+            currentStep++;
+            UpdateStepUI();
+        }
+        else
+        {
+            OnSaveClicked(sender, e); // Optional final action
+        }
+    }
+
+    void OnBackClicked(object sender, EventArgs e)
+    {
+        if (currentStep > 1)
+        {
+            currentStep--;
+            UpdateStepUI();
+        }
+    }
+
+    void UpdateStepUI()
+    {
+        Step1.IsVisible = currentStep == 1;
+        Step2.IsVisible = currentStep == 2;
+        Step3.IsVisible = currentStep == 3;
+
+        BackButton.IsVisible = currentStep > 1;
+        NextButton.Text = currentStep == totalSteps ? "Save" : "Next";
+
+        // Update step labels
+        StepLabel1.TextColor = currentStep >= 1 ? Colors.White : Colors.Gray;
+        StepLabel2.TextColor = currentStep >= 2 ? Colors.White : Colors.Gray;
+        StepLabel3.TextColor = currentStep == 3 ? Colors.White : Colors.Gray;
+
+        // Update progress bar
+        double progressFraction = (double)(currentStep - 1) / (totalSteps - 1);
+        ProgressBar.WidthRequest = ProgressBackground.Width * progressFraction;
     }
 
 }

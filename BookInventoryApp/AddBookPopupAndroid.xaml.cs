@@ -10,6 +10,9 @@ public partial class BookPopupAndroid : Popup
     IAuthorService _authorService;
     ICategoriesService _categoriesService;
     ILanguagesService _languagesService;
+
+    private int _currentStep = 0;
+    private readonly List<View> _steps;
     public ObservableCollection<AuthorDTO> FilteredAuthors { get; set; } = new();
     public ObservableCollection<AuthorDTO> SelectedAuthors { get; set; } = new();
     public ObservableCollection<CategoryDTO> FilteredCategories { get; set; } = new();
@@ -18,7 +21,11 @@ public partial class BookPopupAndroid : Popup
     public ObservableCollection<LanguageDTO> SelectedLanguages { get; set; } = new();
     private BookDTO BookRecord { get; set; }
     private bool _isUpdate = false;
-    public BookPopupAndroid(IBookService service, IAuthorService authorService, ICategoriesService categoriesService, ILanguagesService languagesService, BookDTO book)
+    public BookPopupAndroid(IBookService service,
+        IAuthorService authorService,
+        ICategoriesService categoriesService,
+        ILanguagesService languagesService,
+        BookDTO book)
     {
         InitializeComponent();
         _service = service;
@@ -35,6 +42,7 @@ public partial class BookPopupAndroid : Popup
         }
         else
             BookRecord = book ?? new BookDTO();
+
     }
 
     private void FormUpdate()
@@ -78,9 +86,13 @@ public partial class BookPopupAndroid : Popup
             {
                 var result = await _service.SaveBookAsync(BookRecord);
                 if (result > 0)
-                    await Snackbar.Make("✅ Book is updated!", duration: TimeSpan.FromSeconds(3)).Show();
+                {
+                    await ShowOverlay(SuccessOverlay);
+                }
                 else
-                    await Snackbar.Make("Failed to update book", duration: TimeSpan.FromSeconds(3)).Show();
+                {
+                    await ShowOverlay(ErrorOverlay);
+                }
             }
             catch
             {
@@ -118,31 +130,24 @@ public partial class BookPopupAndroid : Popup
             results = results.Where(r => !SelectedAuthors.Any(s => s.Id == r.Id)).ToList();
             foreach (var item in results)
                 FilteredAuthors.Add(item);
-
-            if (FilteredAuthors.Count() > 0)
+            FilteredAuthorsView.IsVisible = true;
+            FilteredAuthorsView.ItemsSource = FilteredAuthors;
+            FilteredAuthorsView.IsRefreshing = true;
+            FilteredAuthorsView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
+            FilteredAuthorsView.ItemTemplate = new DataTemplate(() =>
             {
-
-                FilteredAuthorsView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
-                FilteredAuthorsView.ItemTemplate = new DataTemplate(() =>
+                var label = new Label
                 {
-                    var label = new Label
-                    {
-                        FontSize = 14,
-                        VerticalOptions = LayoutOptions.Center,
-                        Margin = 10,
-                        Padding = 0,
-                        WidthRequest = 150,
-                        TextColor = Colors.White
-                    };
-                    label.SetBinding(Label.TextProperty, "FullName");
+                    FontSize = 14,
+                    VerticalOptions = LayoutOptions.Center,
+                    Margin = 10,
+                    Padding = 0
+                };
+                label.SetBinding(Label.TextProperty, "FullName");
 
-                    var viewCell = new ViewCell { View = label };
-                    return viewCell;
-                });
-                FilteredAuthorsView.ItemsSource = FilteredAuthors;
-                //FilteredAuthorsView.IsRefreshing = true;
-                FilteredAuthorsView.IsVisible = true;
-            }
+                var viewCell = new ViewCell { View = label };
+                return viewCell;
+            });
         }
         else
         {
@@ -210,8 +215,7 @@ public partial class BookPopupAndroid : Popup
                 Content = layout,
                 HasShadow = false,
                 Padding = new Thickness(10, 5),
-                Margin = new Thickness(5, 5),
-                CornerRadius = 16,
+                Margin = new Thickness(5, 5)
             };
 
             frame.SetBinding(BindingContextProperty, ".");
@@ -233,31 +237,25 @@ public partial class BookPopupAndroid : Popup
             results = results.Where(r => !SelectedCategories.Any(s => s.Id == r.Id)).ToList();
             foreach (var item in results)
                 FilteredCategories.Add(item);
-
-            if (FilteredCategories.Count() > 0)
+            FilteredCategoriesView.IsVisible = true;
+            FilteredCategoriesView.ItemsSource = FilteredCategories;
+            FilteredCategoriesView.IsRefreshing = true;
+            FilteredCategoriesView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
+            FilteredCategoriesView.ItemTemplate = new DataTemplate(() =>
             {
-
-                FilteredCategoriesView.ItemTemplate = new DataTemplate(() =>
+                var label = new Label
                 {
-                    var label = new Label
-                    {
-                        FontSize = 14,
-                        VerticalOptions = LayoutOptions.Center,
-                        Margin = 10,
-                        Padding = 0,
-                        WidthRequest = 150,
-                        TextColor = Colors.White
-                    };
-                    label.SetBinding(Label.TextProperty, "Name");
+                    FontSize = 16,
+                    VerticalOptions = LayoutOptions.Center,
+                    Margin = 10,
+                    Padding = 10,
+                    TextColor = Colors.White
+                };
+                label.SetBinding(Label.TextProperty, "Name");
 
-                    var viewCell = new ViewCell { View = label };
-                    return viewCell;
-                });
-                FilteredCategoriesView.ItemsSource = FilteredCategories;
-                //FilteredCategoriesView.IsRefreshing = true;
-                FilteredCategoriesView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
-                FilteredCategoriesView.IsVisible = true;
-            }
+                var viewCell = new ViewCell { View = label };
+                return viewCell;
+            });
         }
         else
         {
@@ -278,6 +276,10 @@ public partial class BookPopupAndroid : Popup
         CategoriesSearch.Text = string.Empty;
         FilteredCategoriesView.IsVisible = false;
 
+        SelectedCategoriesView.ItemsLayout = new LinearItemsLayout(ItemsLayoutOrientation.Horizontal)
+        {
+            ItemSpacing = 8
+        };
 
         SelectedCategoriesView.ItemTemplate = new DataTemplate(() =>
         {
@@ -286,9 +288,7 @@ public partial class BookPopupAndroid : Popup
                 FontSize = 14,
                 TextColor = Colors.White,
                 VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Start,
-                Margin = new Thickness(0, 5),
-
+                HorizontalOptions = LayoutOptions.Start
             };
             nameLabel.SetBinding(Label.TextProperty, "Name");
 
@@ -299,6 +299,7 @@ public partial class BookPopupAndroid : Popup
                 WidthRequest = 20,
                 HeightRequest = 20,
                 Padding = 0,
+                Margin = new Thickness(5, 5, 5, 5),
                 HorizontalOptions = LayoutOptions.End,
                 VerticalOptions = LayoutOptions.Center
             };
@@ -316,6 +317,7 @@ public partial class BookPopupAndroid : Popup
             var layout = new StackLayout
             {
                 Orientation = StackOrientation.Horizontal,
+                Spacing = 5,
                 VerticalOptions = LayoutOptions.Center,
                 Children = { nameLabel, removeButton }
             };
@@ -323,11 +325,11 @@ public partial class BookPopupAndroid : Popup
             var frame = new Frame
             {
                 BackgroundColor = Colors.MediumPurple,
-                Content = layout,
-                HasShadow = false,
+                CornerRadius = 16,
                 Padding = new Thickness(10, 5),
-                Margin = new Thickness(5, 5),
-                CornerRadius = 16
+                Margin = new Thickness(5, 0),
+                Content = layout,
+                HasShadow = false
             };
 
             frame.SetBinding(BindingContextProperty, ".");
@@ -349,32 +351,25 @@ public partial class BookPopupAndroid : Popup
             results = results.Where(r => !SelectedLanguages.Any(s => s.Id == r.Id)).ToList();
             foreach (var item in results)
                 FilteredLanguages.Add(item);
-
-            if (FilteredLanguages.Count() > 0)
-            {
-                FilteredLanguagesView.ItemTemplate = new DataTemplate(() =>
-                {
-                    var label = new Label
-                    {
-                        FontSize = 14,
-                        VerticalOptions = LayoutOptions.Center,
-                        Margin = 10,
-                        Padding = 0,
-                        WidthRequest = 150,
-                        TextColor = Colors.White
-                    };
-                    label.SetBinding(Label.TextProperty, "Name");
-
-                    var viewCell = new ViewCell { View = label };
-                    return viewCell;
-                });
-            }
-
-
-            FilteredLanguagesView.ItemsSource = FilteredLanguages;
-            //FilteredLanguagesView.IsRefreshing = true;
-            FilteredLanguagesView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
             FilteredLanguagesView.IsVisible = true;
+            FilteredLanguagesView.ItemsSource = FilteredLanguages;
+            FilteredLanguagesView.IsRefreshing = true;
+            FilteredLanguagesView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
+            FilteredLanguagesView.ItemTemplate = new DataTemplate(() =>
+            {
+                var label = new Label
+                {
+                    FontSize = 16,
+                    VerticalOptions = LayoutOptions.Center,
+                    Margin = 10,
+                    Padding = 10,
+                    TextColor = Colors.White
+                };
+                label.SetBinding(Label.TextProperty, "Name");
+
+                var viewCell = new ViewCell { View = label };
+                return viewCell;
+            });
         }
         else
         {
@@ -457,5 +452,60 @@ public partial class BookPopupAndroid : Popup
         SelectedLanguagesView.ItemsSource = SelectedLanguages;
         SelectedLanguagesView.IsVisible = true;
     }
+
+    private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (sender is Entry entry)
+        {
+            if (!int.TryParse(entry.Text, out int number) || number < 0)
+            {
+                entry.Text = e.OldTextValue;
+            }
+        }
+    }
+    int currentStep = 1;
+    const int totalSteps = 3;
+
+    void OnNextClicked(object sender, EventArgs e)
+    {
+        if (currentStep < totalSteps)
+        {
+            currentStep++;
+            //UpdateStepUI();
+        }
+        else
+        {
+            OnSaveClicked(sender, e); // Optional final action
+        }
+    }
+
+    void OnBackClicked(object sender, EventArgs e)
+    {
+        if (currentStep > 1)
+        {
+            currentStep--;
+            //UpdateStepUI();
+        }
+    }
+
+    //void UpdateStepUI()
+    //{
+    //    Step1.IsVisible = currentStep == 1;
+    //    Step2.IsVisible = currentStep == 2;
+    //    Step3.IsVisible = currentStep == 3;
+
+    //    BackButton.IsVisible = currentStep > 1;
+    //    NextButton.Text = currentStep == totalSteps ? "Save" : "Next";
+
+    //    // Update step labels
+    //    StepLabel1.TextColor = currentStep >= 1 ? Colors.White : Colors.Gray;
+    //    StepLabel2.TextColor = currentStep >= 2 ? Colors.White : Colors.Gray;
+    //    StepLabel3.TextColor = currentStep == 3 ? Colors.White : Colors.Gray;
+
+    //    // Update progress bar
+    //    double progressFraction = (double)(currentStep - 1) / (totalSteps - 1);
+    //    ProgressBar.WidthRequest = ProgressBackground.Width * progressFraction;
+    //}
+
 }
 

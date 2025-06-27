@@ -163,7 +163,7 @@
 
                                     <!-- Right-Side Image -->
                                     <Image Grid.Column="1"
-                                           Source="friend_icon.png"
+                                           Source="no_img.jpg"
                                            WidthRequest="60"
                                            HeightRequest="60"
                                            HorizontalOptions="End"

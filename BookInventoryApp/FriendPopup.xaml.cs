@@ -22,7 +22,7 @@ public partial class FriendPopup : Popup
         LastName.Text = Friend.LastName;
         Nickname.Text = Friend.Nickname;
         Address.Text = Friend.Address;
-        LastName.Text = Friend.LastName;
+        Title.Text = Friend.FullName;
     }
     private async void OnSaveClicked(object sender, EventArgs e)
     {

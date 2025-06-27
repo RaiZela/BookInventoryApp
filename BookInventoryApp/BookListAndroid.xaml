@@ -22,15 +22,6 @@
          Clicked="OnAddBookClicked"
          HorizontalOptions="End" BackgroundColor="MediumPurple" />
 
-            <Image Source="icon.png"
-       HeightRequest="100"
-       WidthRequest="100"
-       Opacity="1"
-       VerticalOptions="Center"
-       HorizontalOptions="Center"
-       IsVisible="True" />
-
-
             <ListView x:Name="BooksView"
           ItemsSource="{Binding Books}"
           ItemSelected="BooksView_ItemSelected"
@@ -55,10 +46,11 @@
 
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                <Button Text="Previous"
+                <Button x:Name="PreviousButton" 
                        Clicked="OnPreviusClicked"
                        HorizontalOptions="Start" />
-                <Button Text="Next"
+                <Button x:Name="NextButton" 
+                       Text="Next"
                        Clicked="OnNextClicked"
                        HorizontalOptions="End" />
             </StackLayout>

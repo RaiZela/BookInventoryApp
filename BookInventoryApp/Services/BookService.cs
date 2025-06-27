@@ -5,7 +5,7 @@ namespace BookInventoryApp.Services;
 public interface IBookService
 {
     Task<List<BooksDTO>> GetBooksAsync();
-    Task<List<BooksDTO>> GetPaginatedBooks(int pageNumber, int numberOfBooks);
+    Task<PaginatedViewModel<BooksDTO>> GetPaginatedBooks(int pageNumber, int numberOfBooks);
     Task<BookDTO> GetBookAsync(Guid id);
     Task<IEnumerable<BooksDTO>> GetFilteredBooksAsync(string query);
     Task<int> SaveNewBookAsync(BookDTO book);
@@ -206,7 +206,7 @@ public class BookService : IBookService
         return booksDTOs;
     }
 
-    public async Task<List<BooksDTO>> GetPaginatedBooks(int pageNumber, int numberOfBooks)
+    public async Task<PaginatedViewModel<BooksDTO>> GetPaginatedBooks(int pageNumber, int numberOfBooks)
     {
         var booksList = new List<BooksDTO>();
 
@@ -241,7 +241,13 @@ public class BookService : IBookService
 
         }
 
-        return booksList;
+        return new PaginatedViewModel<BooksDTO>
+        {
+            PageNumber = pageNumber < 1 ? 1 : pageNumber,
+            PageSize = numberOfBooks < 1 ? 1 : numberOfBooks,
+            TotalItems = await _connection.Table<Book>().CountAsync(),
+            Records = booksList
+        };
     }
 
 

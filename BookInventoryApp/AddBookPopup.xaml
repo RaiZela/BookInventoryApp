@@ -1,39 +1,52 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <toolkit:Popup
-  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:local="clr-namespace:BookInventoryApp.Behavior"
     x:Class="BookInventoryApp.BookPopup"
-    Size="{OnIdiom Phone='200,500', Tablet='400,600', Desktop='600,700'}"
-    Color="Black">
-    <ScrollView>
-        <VerticalStackLayout Spacing="10" 
-                             HorizontalOptions="Center" 
-                             VerticalOptions="Center"
-                             Padding="30,30,30,30">
-            
-            <Label Text="Book Details" 
-                   TextColor="White" 
-                   FontSize="25" 
-                   IsVisible="True"
-                   FontAttributes="Bold"
-                   FontFamily="VictorMono-Regular" HorizontalOptions="Center"></Label>
-            
-            <VerticalStackLayout x:Name="Step1" IsVisible="True">
-                <!-- Title -->
-                <Entry x:Name="TitleEntry"
-                   Placeholder="Book title"
-                   TextColor="Black"
-                   PlaceholderColor="DarkGray"
-                   BackgroundColor="Transparent"
-                   FontFamily="VictorMono-LightItalic"
-                   HeightRequest="45" 
-                   WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=520}"
-                   HorizontalOptions="StartAndExpand" />
-                <HorizontalStackLayout  HorizontalOptions="StartAndExpand">
-                    <!-- Type -->
-                    <Picker x:Name="TypeEntry"
+    Size="{OnIdiom Phone='320,580', Tablet='400,650', Desktop='640,720'}">
+
+    <VerticalStackLayout Padding="20" Spacing="10">
+
+        <!-- Step Progress Bar -->
+        <Grid HeightRequest="30" HorizontalOptions="FillAndExpand">
+            <BoxView x:Name="ProgressBackground"
+                     BackgroundColor="LightGray"
+                     CornerRadius="10"
+                     HeightRequest="10"
+                     VerticalOptions="Center"/>
+            <BoxView x:Name="ProgressBar"
+                     BackgroundColor="MediumPurple"
+                     CornerRadius="10"
+                     HeightRequest="10"
+                     VerticalOptions="Center"
+                     WidthRequest="0"/>
+        </Grid>
+
+        <!-- Step Labels -->
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+            <Label Text="1" TextColor="White" x:Name="StepLabel1"/>
+            <Label Text="2" TextColor="Gray" x:Name="StepLabel2"/>
+            <Label Text="3" TextColor="Gray" x:Name="StepLabel3"/>
+        </HorizontalStackLayout>
+
+        <!-- Steps Content (Wrapped in ScrollView for flexibility) -->
+        <ScrollView>
+            <VerticalStackLayout Spacing="20" Padding="10">
+                <VerticalStackLayout x:Name="Step1" IsVisible="True">
+                    <Entry x:Name="TitleEntry"
+                           Placeholder="Book title"
+                           TextColor="Black"
+                           PlaceholderColor="DarkGray"
+                           BackgroundColor="Transparent"
+                           FontFamily="VictorMono-LightItalic"
+                           HeightRequest="45" 
+                           WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=520}"
+                           HorizontalOptions="StartAndExpand" />
+                    <HorizontalStackLayout  HorizontalOptions="StartAndExpand">
+
+
+                        <Picker x:Name="TypeEntry"
                     Title="Select book type..."
                     TextColor="Black"
                     FontFamily="VictorMono-LightItalic"
@@ -42,8 +55,9 @@
                     HorizontalOptions="FillAndExpand"
                     WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
                     Margin="5,10,10,10"/>
-                    <!-- Status -->
-                    <Picker x:Name="StatusEntry"
+
+
+                        <Picker x:Name="StatusEntry"
                     Title="Select status..."
                     TextColor="Black"
                     FontFamily="VictorMono-LightItalic"
@@ -52,21 +66,21 @@
                     HorizontalOptions="FillAndExpand"
                     WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
                     Margin="5,10,10,10"/>
-                </HorizontalStackLayout>
-                <!-- Nr of copies -->
-                <Entry Placeholder="Number Of Copies..." TextChanged="Entry_TextChanged" MaximumWidthRequest="510">
-                    <Entry.Behaviors>
-                        <local:PositiveNumberBehavior />
-                    </Entry.Behaviors>
-                </Entry>
-            </VerticalStackLayout>
-            <VerticalStackLayout x:Name="Step2" IsVisible="False">
-                <HorizontalStackLayout>
+                    </HorizontalStackLayout>
 
-                    <!--Authors-->
 
-                    <VerticalStackLayout  HorizontalOptions="Center">
-                        <SearchBar x:Name="AuthorsSearch"
+
+                    <Entry Placeholder="Number Of Copies..." TextChanged="Entry_TextChanged" MaximumWidthRequest="510">
+                        <Entry.Behaviors>
+                            <local:PositiveNumberBehavior />
+                        </Entry.Behaviors>
+                    </Entry>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout x:Name="Step2" IsVisible="False">
+                    <HorizontalStackLayout>
+                        <VerticalStackLayout  HorizontalOptions="Center">
+                            <SearchBar x:Name="AuthorsSearch"
                                Placeholder="Search authors..."
                                TextChanged="OnSearchTextChanged"
                                BackgroundColor="Black"
@@ -78,9 +92,9 @@
                                WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
                                Margin="0,10,10,10"/>
 
-                        <AbsoluteLayout>
                             <AbsoluteLayout>
-                                <SearchBar x:Name="LanguagesSearch"
+                                <AbsoluteLayout>
+                                    <SearchBar x:Name="LanguagesSearch"
                                        Placeholder="Search languages..."
                                        TextChanged="OnLanguagesSearchTextChanged"
                                        BackgroundColor="Black"
@@ -92,7 +106,7 @@
                                        WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
                                        Margin="5,10,10,10"/>
 
-                                <ListView x:Name="FilteredAuthorsView"
+                                    <ListView x:Name="FilteredAuthorsView"
                                       IsVisible="False"
                                       ItemSelected="Authors_ItemSelected"
                                       BackgroundColor="#DCD3FF"
@@ -101,15 +115,15 @@
                                       HorizontalOptions="FillAndExpand"
                                       WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
                                       Margin="5,10,10,10"/>
+                                </AbsoluteLayout>
+
+
                             </AbsoluteLayout>
 
+                        </VerticalStackLayout>
 
-                        </AbsoluteLayout>
-
-                    </VerticalStackLayout>
-
-                    <VerticalStackLayout>
-                        <SearchBar x:Name="CategoriesSearch"
+                        <VerticalStackLayout>
+                            <SearchBar x:Name="CategoriesSearch"
                                Placeholder="Search categories..."
                                TextChanged="OnCategoriesSearchTextChanged"
                                BackgroundColor="Transparent"
@@ -120,9 +134,9 @@
                                HorizontalOptions="FillAndExpand"
                                WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
                                Margin="5,10,10,10"/>
-                        <AbsoluteLayout>
+                            <AbsoluteLayout>
 
-                            <ListView x:Name="FilteredCategoriesView"
+                                <ListView x:Name="FilteredCategoriesView"
                                   IsVisible="False"
                                   ItemSelected="Categories_ItemSelected"
                                   BackgroundColor="Transparent"
@@ -132,14 +146,11 @@
                                   HorizontalOptions="FillAndExpand"
                                   WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
                                   Margin="5,10,10,10"/>
-                        </AbsoluteLayout>
-                    </VerticalStackLayout>
+                            </AbsoluteLayout>
+                        </VerticalStackLayout>
 
-                </HorizontalStackLayout>
-
-
-
-                <ListView x:Name="FilteredLanguagesView"
+                    </HorizontalStackLayout>
+                    <ListView x:Name="FilteredLanguagesView"
                       IsVisible="False"
                       ItemSelected="Languages_ItemSelected"
                       BackgroundColor="#DCD3FF"
@@ -150,41 +161,39 @@
                       WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
                       Margin="0"/>
 
-
-
-                <VerticalStackLayout>
-                    <HorizontalStackLayout HorizontalOptions="Center">
-                        <VerticalStackLayout 
+                    <VerticalStackLayout>
+                        <HorizontalStackLayout HorizontalOptions="Center">
+                            <VerticalStackLayout 
                               
                                          Padding="0"
                                          HorizontalOptions="FillAndExpand">
-                            <Label x:Name="SelectedAuthorsViewName" 
+                                <Label x:Name="SelectedAuthorsViewName" 
                                Text="AUTHORS:" 
                                Margin="5,5,5,5" 
                                FontAttributes="Bold" 
                                HorizontalOptions="FillAndExpand"
                                BackgroundColor="#9370DB" Padding="10,10,10,10"></Label>
-                            <CollectionView x:Name="SelectedAuthorsView"
+                                <CollectionView x:Name="SelectedAuthorsView"
                                         ItemsLayout="VerticalList"
                                         IsVisible="True"
                                         BackgroundColor="Transparent"
                                         MaximumWidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=150}"
                                         WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=150}"
                                         Margin="5,5,5,5" />
-                        </VerticalStackLayout>
-                        <VerticalStackLayout 
+                            </VerticalStackLayout>
+                            <VerticalStackLayout 
                          
                                          Padding="0"
                                          HorizontalOptions="FillAndExpand"
 >
-                            <Label x:Name="SelectedCategoriesViewName" 
+                                <Label x:Name="SelectedCategoriesViewName" 
                                Text="CATEGORIES:" 
                                Margin="5,5,5,5" 
                                FontAttributes="Bold"
                                HorizontalOptions="FillAndExpand"
                                 BackgroundColor="#9370DB"
                                Padding="10,10,10,10"></Label>
-                            <CollectionView x:Name="SelectedCategoriesView"
+                                <CollectionView x:Name="SelectedCategoriesView"
                                         IsVisible="False"
                                         ItemsLayout="VerticalList"
                                         BackgroundColor="#9370DB"
@@ -192,20 +201,20 @@
                                         WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=150}"
                                         Margin="5,5,5,5"
                                         HorizontalOptions="FillAndExpand"/>
-                        </VerticalStackLayout>
+                            </VerticalStackLayout>
 
-                        <VerticalStackLayout 
+                            <VerticalStackLayout 
                                
                                          Padding="0"
                                          HorizontalOptions="FillAndExpand">
-                            <Label x:Name="SelectedLanguagesViewName" 
+                                <Label x:Name="SelectedLanguagesViewName" 
                                Text="LANGUAGES:" 
                                Margin="5,5,5,5" 
                                FontAttributes="Bold"
                                HorizontalOptions="FillAndExpand"
                                BackgroundColor="#9370DB"
                                Padding="10,10,10,10"></Label>
-                            <CollectionView x:Name="SelectedLanguagesView"
+                                <CollectionView x:Name="SelectedLanguagesView"
                                         IsVisible="False"
                                         ItemsLayout="VerticalList"
                                         BackgroundColor="#9370DB"
@@ -213,26 +222,17 @@
                                         WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=150}"
                                          Margin="5,5,5,5" 
                                         HorizontalOptions="FillAndExpand"/>
-                        </VerticalStackLayout>
+                            </VerticalStackLayout>
 
-                    </HorizontalStackLayout>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
-            </VerticalStackLayout>
-            <VerticalStackLayout x:Name="Step3" IsVisible="False">
-                <!-- Authors, Languages, Categories -->
-            </VerticalStackLayout>
-            <Button Text="Save"
-                    Clicked="OnSaveClicked"
-                    TextColor="White"
-                    BackgroundColor="MediumPurple"
-                    FontAttributes="Bold"
-                    CornerRadius="10"
-                    FontFamily="VictorMono-Bold"
-                    HorizontalOptions="Center"
-                    WidthRequest="140"
-                    Margin="10,20,10,10"
-                    HeightRequest="45" />
-            <Grid x:Name="SuccessOverlay"
+
+                <VerticalStackLayout x:Name="Step3" IsVisible="False">
+                    <!-- Optional: confirmation, review summary, etc. -->
+                    <Label Text="Ready to save your book?" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+                <Grid x:Name="SuccessOverlay"
                       BackgroundColor="#80000000"
                       IsVisible="False"
                       Opacity="0"
@@ -241,7 +241,7 @@
                       VerticalOptions="Fill"
                       AbsoluteLayout.LayoutFlags="All"
                       AbsoluteLayout.LayoutBounds="0,0,1,1">
-                <Label Text="✅ Book added successfully!"
+                    <Label Text="✅ Book added successfully!"
                        FontSize="18"
                        FontAttributes="Bold"
                        TextColor="White"
@@ -250,10 +250,7 @@
                        HorizontalOptions="Center"
                        VerticalOptions="Center"
                        Opacity="1"/>
-            </Grid>
-            <!--Error Overlay-->
-
-            <Grid x:Name="ErrorOverlay"
+                    <Grid x:Name="ErrorOverlay"
       BackgroundColor="#80000000"
       IsVisible="False"
       Opacity="0"
@@ -262,7 +259,7 @@
       VerticalOptions="Fill"
       AbsoluteLayout.LayoutFlags="All"
       AbsoluteLayout.LayoutBounds="0,0,1,1">
-                <Label Text="❌ Failed to add book!"
+                        <Label Text="❌ Failed to add book!"
            FontSize="18"
            FontAttributes="Bold"
            TextColor="White"
@@ -271,14 +268,16 @@
            HorizontalOptions="Center"
            VerticalOptions="Center"
            Opacity="1"/>
-            </Grid>
+                    </Grid>
+                </Grid>
+            </VerticalStackLayout>
 
+        </ScrollView>
 
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
-                <Button Text="Back" Clicked="OnBackClicked" x:Name="BackButton" IsVisible="False"/>
-                <Button Text="Next" Clicked="OnNextClicked" x:Name="NextButton" />
-            </HorizontalStackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
-
+        <!-- Navigation Buttons -->
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="15">
+            <Button x:Name="BackButton" Text="Back" Clicked="OnBackClicked" IsVisible="False"/>
+            <Button x:Name="NextButton" Text="Next" Clicked="OnNextClicked"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
 </toolkit:Popup>

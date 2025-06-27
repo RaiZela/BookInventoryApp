@@ -56,12 +56,14 @@
 
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                <Button Text="Previous"
+                <Button x:Name="PreviousButton" Text="Previous"
                        Clicked="OnPreviusClicked"
-                       HorizontalOptions="Start" />
-                <Button Text="Next"
+                       HorizontalOptions="Start" 
+                       Margin="10,10,10,10" />
+                <Button x:Name="NextButton" Text="Next"
                        Clicked="OnNextClicked"
-                       HorizontalOptions="End" />
+                       HorizontalOptions="End"
+                       Margin="10,10,10,10"/>
             </StackLayout>
         </StackLayout>
     </Grid>

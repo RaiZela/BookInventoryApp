@@ -32,9 +32,6 @@
 
                             <Label Text="Categories" TextColor="LightGray" FontSize="14" />
                             <Label x:Name="BookCategoriesLabel" Text="{Binding Categories}" TextColor="White" FontSize="18"/>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Spacing="10" Grid.Column="1">
                             <Label Text="Type" TextColor="LightGray" FontSize="14" />
                             <Label x:Name="BookTypeLabel" Text="{Binding Type}" TextColor="White" FontSize="18" />
 
@@ -43,6 +40,14 @@
 
                             <Label Text="Status" TextColor="LightGray" FontSize="14" />
                             <Label x:Name="BookStatusLabel" Text="{Binding Status}" TextColor="White" FontSize="18" />
+                            
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Column="1">
+                            <Image Source="icon.png" VerticalOptions="Center" HorizontalOptions="Center"
+                                   MaximumHeightRequest="500"
+                                   MaximumWidthRequest="500">
+                            </Image>
                         </VerticalStackLayout>
                     </Grid>
                 </Frame>

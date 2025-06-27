@@ -26,7 +26,7 @@ public partial class BookList : ContentPage
         base.OnAppearing();
         Books.Clear();
         var books = await _service.GetPaginatedBooks(PageNumber, 10);
-        foreach (var book in books)
+        foreach (var book in books.Records)
         {
             Books.Add(book);
         }
@@ -114,8 +114,18 @@ public partial class BookList : ContentPage
     {
         Books.Clear();
         var results = await _service.GetPaginatedBooks(PageNumber, 10);
-        foreach (var item in results)
+        foreach (var item in results.Records)
             Books.Add(item);
+
+        if (results.PageNumber == 1)
+            PreviousButton.IsEnabled = false;
+        else
+            PreviousButton.IsEnabled = true;
+
+        if (results.PageNumber * results.PageSize >= results.TotalItems)
+            NextButton.IsEnabled = false;
+        else
+            NextButton.IsEnabled = true;
     }
 
     private async void OnAddBookClicked(object sender, EventArgs e)

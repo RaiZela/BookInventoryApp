@@ -4,26 +4,34 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
     x:Class="BookInventoryApp.FriendPopup"  
     CanBeDismissedByTappingOutsideOfPopup="True"   
-    Color="Black">
+    Color="Transparent">
+    <Border Padding="0" HeightRequest="500"
+           WidthRequest="400"
+           Stroke="Gray"
+           BackgroundColor="Gray" Opacity="0.8">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="10"/>
+        </Border.StrokeShape>
 
-    <Grid x:Name="MainLayout" 
-          BackgroundColor="GhostWhite" 
+
+        <Grid x:Name="MainLayout" 
+          BackgroundColor="Transparent" 
           WidthRequest="400" 
           HeightRequest="500"
           HorizontalOptions="Center" 
           VerticalOptions="Start"
-          RowSpacing="10"
-          Padding="20">
+          RowSpacing="5"
+          Padding="20" Opacity="0.9">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
 
-        <!-- Title -->
-        <Label Grid.Row="0" 
-               Text="Friend" 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Title -->
+            <Label x:Name="Title" Grid.Row="0" 
                FontSize="Header" 
                FontAttributes="Bold" 
                FontFamily="VictorMono-Bold" 
@@ -33,49 +41,73 @@
                VerticalOptions="Center" 
                Padding="10"/>
 
-        <!-- Input Fields -->
-        <StackLayout Grid.Row="1" Spacing="10" HorizontalOptions="Fill">
-            <Entry x:Name="Name" Placeholder="Name"
+            <!-- Input Fields -->
+            <StackLayout Grid.Row="1" Spacing="10" HorizontalOptions="Fill">
+                <Border Padding="10,5,5,10" BackgroundColor="WhiteSmoke" Margin="5,0,5,10">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="35"/>
+                    </Border.StrokeShape>
+                    <Entry x:Name="Name" Placeholder="Name"
                    TextColor="Black" PlaceholderColor="DimGray"
-                   BackgroundColor="White" Opacity="0.9"
+                   BackgroundColor="Transparent" Opacity="0.9"
                    FontFamily="VictorMono-LightItalic"
                    HeightRequest="50"/>
-            <Entry x:Name="LastName" Placeholder="Last Name"
+                </Border>
+                
+                <Border Padding="10,5,5,10" BackgroundColor="WhiteSmoke" Margin="5,0,5,10">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="35"/>
+                    </Border.StrokeShape>
+                    <Entry x:Name="LastName" Placeholder="Last Name"
                    TextColor="Black" PlaceholderColor="DimGray"
-                   BackgroundColor="White" Opacity="0.9"
+                   BackgroundColor="Transparent" Opacity="0.9"
                    FontFamily="VictorMono-LightItalic"
                    HeightRequest="50"/>
-            <Entry x:Name="Address" Placeholder="Address"
-                   TextColor="Black" PlaceholderColor="DimGray"
-                   BackgroundColor="White" Opacity="0.9"
-                   FontFamily="VictorMono-LightItalic"
-                   HeightRequest="50"/>
-            <Entry x:Name="Nickname" Placeholder="Nickname"
-                   TextColor="Black" PlaceholderColor="DimGray"
-                   BackgroundColor="White" Opacity="0.9"
-                   FontFamily="VictorMono-LightItalic"
-                   HeightRequest="50"/>
-        </StackLayout>
+                </Border>
 
-        <!-- Buttons -->
-        <HorizontalStackLayout Grid.Row="2" HorizontalOptions="End">
-            <Button Text="Save" 
+                <Border Padding="10,5,5,10" BackgroundColor="WhiteSmoke" Margin="5,0,5,10">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="35"/>
+                    </Border.StrokeShape>
+                    <Entry x:Name="Address" Placeholder="Address"
+                   TextColor="Black" PlaceholderColor="DimGray"
+                   BackgroundColor="Transparent" Opacity="0.9"
+                   FontFamily="VictorMono-LightItalic"
+                   HeightRequest="50"/>
+                </Border>
+
+                <Border Padding="10,5,5,10" BackgroundColor="WhiteSmoke" Margin="5,0,5,30">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="35"/>
+                    </Border.StrokeShape>
+                    <Entry x:Name="Nickname" Placeholder="Nickname"
+                   TextColor="Black" PlaceholderColor="DimGray"
+                   BackgroundColor="Transparent" Opacity="0.9"
+                   FontFamily="VictorMono-LightItalic"
+                   HeightRequest="50"/>
+                </Border>
+            </StackLayout>
+
+            <!-- Buttons -->
+            <HorizontalStackLayout Grid.Row="2" HorizontalOptions="End" VerticalOptions="End" Margin="10, 50,10,10">
+                <Button Text="Save" 
                     Clicked="OnSaveClicked"
                     WidthRequest="100"
                     TextColor="White" 
                     BackgroundColor="MediumPurple"
-                    Margin="10"/>
-            <ImageButton x:Name="DeleteButton"
+                        Margin="10"
+                    />
+                <ImageButton x:Name="DeleteButton"
                          Source="delete.png"
                          BackgroundColor="Transparent"
                          WidthRequest="30"
                          HeightRequest="30"
                          Clicked="DeleteButton_Clicked"
                          Margin="10"/>
-        </HorizontalStackLayout>
+            </HorizontalStackLayout>
 
-        <!-- Success Overlay -->
-        <Grid x:Name="SuccessOverlay"
+            <!-- Success Overlay -->
+            <Grid x:Name="SuccessOverlay"
               BackgroundColor="#80000000"
               IsVisible="False"
               Opacity="0"
@@ -84,15 +116,15 @@
               VerticalOptions="Fill"
               RowSpan="3">
 
-            <Label x:Name="SuccessIcon"
+                <Label x:Name="SuccessIcon"
                    Text="✅"
                    FontSize="64"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"/>
-        </Grid>
+            </Grid>
 
-        <!-- Error Overlay -->
-        <Grid x:Name="ErrorOverlay"
+            <!-- Error Overlay -->
+            <Grid x:Name="ErrorOverlay"
               BackgroundColor="#80000000"
               IsVisible="False"
               Opacity="0"
@@ -101,21 +133,22 @@
               VerticalOptions="Fill"
               RowSpan="3">
 
-            <StackLayout VerticalOptions="Center"
+                <StackLayout VerticalOptions="Center"
                          HorizontalOptions="Center"
                          Spacing="10">
-                <Label x:Name="ErrorIcon"
+                    <Label x:Name="ErrorIcon"
                        Text="❌"
                        FontSize="30"
                        TextColor="White"
                        HorizontalOptions="Center"/>
-                <Label x:Name="ErrorMessage"
+                    <Label x:Name="ErrorMessage"
                        Text="Something went wrong!"
                        FontSize="18"
                        TextColor="White"
                        HorizontalOptions="Center"/>
-            </StackLayout>
-        </Grid>
+                </StackLayout>
+            </Grid>
 
-    </Grid>
+        </Grid>
+    </Border>
 </toolkit:Popup>
