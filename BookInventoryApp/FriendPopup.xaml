@@ -8,7 +8,7 @@
     <Border Padding="0" HeightRequest="500"
            WidthRequest="400"
            Stroke="Gray"
-           BackgroundColor="Gray" Opacity="0.8">
+           BackgroundColor="White" Opacity="1">
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="10"/>
         </Border.StrokeShape>
@@ -21,7 +21,7 @@
           HorizontalOptions="Center" 
           VerticalOptions="Start"
           RowSpacing="5"
-          Padding="20" Opacity="0.9">
+          Padding="20" Opacity="1">
 
 
             <Grid.RowDefinitions>

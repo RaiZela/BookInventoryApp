@@ -4,76 +4,13 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:local="clr-namespace:BookInventoryApp.Behavior"
     x:Class="BookInventoryApp.BookPopupAndroid"
-    Size="{OnIdiom Phone='380,500', Tablet='400,650', Desktop='640,720'}" Color="Transparent">
+    Size="{OnIdiom Phone='380,700', Tablet='400,650', Desktop='640,720'}" Color="Transparent">
     <Border Stroke="#1da6ca" StrokeThickness="2" StrokeShape="RoundRectangle 20" BackgroundColor="#0b121d" WidthRequest="380" HeightRequest="600">
         <ScrollView VerticalScrollBarVisibility="Always">
 
             <VerticalStackLayout Padding="10" Spacing="10"  WidthRequest="380" HeightRequest="600">
 
-                <!-- Step Progress Bar -->
-                <!--<Grid HeightRequest="30" HorizontalOptions="FillAndExpand">
-                <BoxView x:Name="ProgressBackground"
-                     BackgroundColor="Gray"
-                     Opacity="0.3"
-                     CornerRadius="10"
-                     HeightRequest="10"
-                     VerticalOptions="Center"/>
-                <BoxView x:Name="ProgressBar"
-                     BackgroundColor="DimGray"
-                     Opacity="0.3"
-                     CornerRadius="10"
-                     HeightRequest="10"
-                     VerticalOptions="Center"
-                     HorizontalOptions="Start"
-                     WidthRequest="0"/>
-                <RoundRectangle x:Name="ProgressNumber" 
-                     BackgroundColor="MediumPurple"
-                     CornerRadius="50"
-                     WidthRequest="20"
-                     HeightRequest="20"
-                     Margin="80"
-                     HorizontalOptions="Start">
-                </RoundRectangle>
-                <RoundRectangle x:Name="ProgressNumber2" 
-                     BackgroundColor="Gray"
-                     Opacity="0.3"
-                     CornerRadius="50"
-                     WidthRequest="20"
-                     HeightRequest="20" 
-                     HorizontalOptions="Start">
-                </RoundRectangle>
-                <RoundRectangle x:Name="ProgressNumber3" 
-                     BackgroundColor="Gray"
-                     Opacity="0.3"
-                     CornerRadius="50"
-                     WidthRequest="20"
-                     HeightRequest="20" 
-                     HorizontalOptions="Start"
-                     Margin="180">
-                </RoundRectangle>
-                <RoundRectangle x:Name="ProgressNumber4" 
-                     BackgroundColor="Gray"
-                     Opacity="0.3"
-                     CornerRadius="50"
-                     WidthRequest="20"
-                     HeightRequest="20" 
-                     HorizontalOptions="End">
-                </RoundRectangle>
-
-            </Grid>-->
-
-                <!-- Step Labels -->
-                <!--<HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
-                <Label Text="1" TextColor="White" x:Name="StepLabel1"/>
-                <Label Text="2" TextColor="Gray" x:Name="StepLabel2"/>
-                <Label Text="3" TextColor="Gray" x:Name="StepLabel3"/>
-            </HorizontalStackLayout>-->
-
-                <!-- Steps Content (Wrapped in ScrollView for flexibility) -->
-
-                <VerticalStackLayout Spacing="10" Padding="10">
-
-                    <Label Text="📚 Book Details" FontSize="Title" TextColor="#90CAF9" FontAttributes="Bold" HorizontalOptions="Center"></Label>
+                <Label Text="📚 Book Details" FontSize="Title" TextColor="#90CAF9" FontAttributes="Bold" HorizontalOptions="Center"></Label>
 
                     <VerticalStackLayout x:Name="Step1" IsVisible="True">
 
@@ -84,7 +21,9 @@
                             <Border 
                                     Stroke="#212b37" 
                                     StrokeThickness="2" 
-                                    Background="Transparent" BackgroundColor="#111925" Padding="5">
+                                    Background="Transparent" 
+                                    BackgroundColor="#111925" 
+                                    Padding="5">
                                 <Border.StrokeShape>
                                     <RoundRectangle/>
                                 </Border.StrokeShape>
@@ -104,7 +43,7 @@
                             <Border
                                    Stroke="#212b37" 
                                    StrokeThickness="2" 
-                                     Background="Transparent" BackgroundColor="#111925" Padding="5">
+                                    Background="Transparent" BackgroundColor="#111925" Padding="5">
                                 <Border.StrokeShape>
                                     <RoundRectangle/>
                                 </Border.StrokeShape>
@@ -122,6 +61,7 @@
                             <Label Text="Status" TextColor="#B0BEC5" />
                             <Border
                                 Stroke="#212b37" 
+                                Background="Transparent"
                                 StrokeThickness="2" 
                                 BackgroundColor="#111925" Padding="5">
                                 <Border.StrokeShape>
@@ -129,8 +69,8 @@
                                 </Border.StrokeShape>
                                 <Picker  x:Name="StatusEntry"  
                                 Title="Select status..."
-                                Background="Transparent"
-                                FontSize="20"
+                                BackgroundColor="Transparent"
+                                FontSize="18"
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="CenterAndExpand"/>
                             </Border>
@@ -311,60 +251,20 @@
 
                     <VerticalStackLayout x:Name="Step3" IsVisible="False">
                         <Button Text="Save"
-                    Clicked="OnSaveClicked"
-                    TextColor="White"
-                    BackgroundColor="MediumPurple"
-                    FontAttributes="Bold"
-                    CornerRadius="10"
-                    FontFamily="VictorMono-Bold"
-                    HorizontalOptions="Center"
-                    WidthRequest="140"
-                    Margin="10,20,10,10"
-                    HeightRequest="45" />
+                                Clicked="OnSaveClicked"
+                                TextColor="White"
+                                BackgroundColor="MediumPurple"
+                                FontAttributes="Bold"
+                                CornerRadius="10"
+                                FontFamily="VictorMono-Bold"
+                                HorizontalOptions="Center"
+                                WidthRequest="140"
+                                HeightRequest="45" IsVisible="True" />   
                         <Label Text="Ready to save your book?" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center"/>
                     </VerticalStackLayout>
-                    <Grid x:Name="SuccessOverlay"
-                      BackgroundColor="#80000000"
-                      IsVisible="False"
-                      Opacity="0"
-                      ZIndex="10"
-                      HorizontalOptions="Fill"
-                      VerticalOptions="Fill"
-                      AbsoluteLayout.LayoutFlags="All"
-                      AbsoluteLayout.LayoutBounds="0,0,1,1">
-                        <Label Text="✅ Book added successfully!"
-                       FontSize="18"
-                       FontAttributes="Bold"
-                       TextColor="White"
-                       BackgroundColor="MediumSeaGreen"
-                       Padding="15"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"
-                       Opacity="1"/>
-                        <Grid x:Name="ErrorOverlay"
-      BackgroundColor="#80000000"
-      IsVisible="False"
-      Opacity="0"
-      ZIndex="10"
-      HorizontalOptions="Fill"
-      VerticalOptions="Fill"
-      AbsoluteLayout.LayoutFlags="All"
-      AbsoluteLayout.LayoutBounds="0,0,1,1">
-                            <Label Text="❌ Failed to add book!"
-           FontSize="18"
-           FontAttributes="Bold"
-           TextColor="White"
-           BackgroundColor="DarkRed"
-           Padding="15"
-           HorizontalOptions="Center"
-           VerticalOptions="Center"
-           Opacity="1"/>
-                        </Grid>
-                    </Grid>
-                </VerticalStackLayout>
-
+                
                 <!-- Navigation Buttons -->
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="15">
+                <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
                     <Button x:Name="BackButton" Text="Back" Clicked="OnBackClicked" IsVisible="False"/>
                     <Button x:Name="NextButton" 
                         Text="Next" 
@@ -378,6 +278,44 @@
                         WidthRequest="70"
                         TextColor="#1da6ca" IsVisible="True"/>
                 </HorizontalStackLayout>
+                <Grid x:Name="SuccessOverlay"
+                          BackgroundColor="#80000000"
+                          IsVisible="False"
+                          Opacity="0"
+                          ZIndex="10"
+                          HorizontalOptions="Fill"
+                          VerticalOptions="Fill"
+                          AbsoluteLayout.LayoutFlags="All"
+                          AbsoluteLayout.LayoutBounds="0,0,1,1">
+                    <Label Text="✅ Book added successfully!"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               BackgroundColor="MediumSeaGreen"
+                               Padding="15"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Opacity="1"/>
+                    <Grid x:Name="ErrorOverlay"
+                              BackgroundColor="#80000000"
+                              IsVisible="False"
+                              Opacity="0"
+                              ZIndex="10"
+                              HorizontalOptions="Fill"
+                              VerticalOptions="Fill"
+                              AbsoluteLayout.LayoutFlags="All"
+                              AbsoluteLayout.LayoutBounds="0,0,1,1">
+                        <Label Text="❌ Failed to add book!"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               BackgroundColor="DarkRed"
+                               Padding="15"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Opacity="1"/>
+                    </Grid>
+                </Grid>
             </VerticalStackLayout>
         </ScrollView>
     </Border>
