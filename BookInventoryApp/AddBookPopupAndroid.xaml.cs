@@ -471,11 +471,12 @@ public partial class BookPopupAndroid : Popup
         if (currentStep < totalSteps)
         {
             currentStep++;
-            //UpdateStepUI();
+            UpdateStepUI();
         }
         else
         {
-            OnSaveClicked(sender, e); // Optional final action
+            //OnSaveClicked(sender, e); // Optional final action
+            NextButton.IsVisible = false;
         }
     }
 
@@ -484,28 +485,28 @@ public partial class BookPopupAndroid : Popup
         if (currentStep > 1)
         {
             currentStep--;
-            //UpdateStepUI();
+            UpdateStepUI();
         }
     }
 
-    //void UpdateStepUI()
-    //{
-    //    Step1.IsVisible = currentStep == 1;
-    //    Step2.IsVisible = currentStep == 2;
-    //    Step3.IsVisible = currentStep == 3;
+    void UpdateStepUI()
+    {
+        Step1.IsVisible = currentStep == 1;
+        Step2.IsVisible = currentStep == 2;
+        Step3.IsVisible = currentStep == 3;
 
-    //    BackButton.IsVisible = currentStep > 1;
-    //    NextButton.Text = currentStep == totalSteps ? "Save" : "Next";
+        BackButton.IsVisible = currentStep > 1;
+        NextButton.Text = currentStep == totalSteps ? "Save" : "Next";
 
-    //    // Update step labels
-    //    StepLabel1.TextColor = currentStep >= 1 ? Colors.White : Colors.Gray;
-    //    StepLabel2.TextColor = currentStep >= 2 ? Colors.White : Colors.Gray;
-    //    StepLabel3.TextColor = currentStep == 3 ? Colors.White : Colors.Gray;
+        // Update step labels
+        //Step1.TextColor = currentStep >= 1 ? Colors.White : Colors.Gray;
+        //Step2.TextColor = currentStep >= 2 ? Colors.White : Colors.Gray;
+        //Step3.TextColor = currentStep == 3 ? Colors.White : Colors.Gray;
 
-    //    // Update progress bar
-    //    double progressFraction = (double)(currentStep - 1) / (totalSteps - 1);
-    //    ProgressBar.WidthRequest = ProgressBackground.Width * progressFraction;
-    //}
+        // Update progress bar
+        //double progressFraction = (double)(currentStep - 1) / (totalSteps - 1);
+        //ProgressBar.WidthRequest = ProgressBackground.Width * progressFraction;
+    }
 
 }
 

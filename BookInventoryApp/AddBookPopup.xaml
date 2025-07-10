@@ -4,77 +4,73 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:local="clr-namespace:BookInventoryApp.Behavior"
     x:Class="BookInventoryApp.BookPopup"
-    Size="{OnIdiom Phone='320,580', Tablet='400,650', Desktop='640,720'}">
+    Size="{OnIdiom Desktop='600,600'}" Color="#0b121d">
+    <Border Stroke="#1da6ca" StrokeThickness="2" StrokeShape="RoundRectangle 20" WidthRequest="600" HeightRequest="450">
+        <ScrollView VerticalScrollBarVisibility="Always">
 
-    <VerticalStackLayout Padding="20" Spacing="10">
+            <VerticalStackLayout  Spacing="10" Padding="10"   WidthRequest="600" HeightRequest="600">
 
-        <!-- Step Progress Bar -->
-        <Grid HeightRequest="30" HorizontalOptions="FillAndExpand">
-            <BoxView x:Name="ProgressBackground"
-                     BackgroundColor="LightGray"
-                     CornerRadius="10"
-                     HeightRequest="10"
-                     VerticalOptions="Center"/>
-            <BoxView x:Name="ProgressBar"
-                     BackgroundColor="MediumPurple"
-                     CornerRadius="10"
-                     HeightRequest="10"
-                     VerticalOptions="Center"
-                     WidthRequest="0"/>
-        </Grid>
+                <Label Text="📚 Book Details" FontSize="Title" TextColor="#90CAF9" FontAttributes="Bold" HorizontalOptions="Center" Margin="10"></Label>
 
-        <!-- Step Labels -->
-        <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
-            <Label Text="1" TextColor="White" x:Name="StepLabel1"/>
-            <Label Text="2" TextColor="Gray" x:Name="StepLabel2"/>
-            <Label Text="3" TextColor="Gray" x:Name="StepLabel3"/>
-        </HorizontalStackLayout>
-
-        <!-- Steps Content (Wrapped in ScrollView for flexibility) -->
-        <ScrollView>
-            <VerticalStackLayout Spacing="20" Padding="10">
                 <VerticalStackLayout x:Name="Step1" IsVisible="True">
-                    <Entry x:Name="TitleEntry"
-                           Placeholder="Book title"
-                           TextColor="Black"
-                           PlaceholderColor="DarkGray"
-                           BackgroundColor="Transparent"
-                           FontFamily="VictorMono-LightItalic"
-                           HeightRequest="45" 
-                           WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=520}"
-                           HorizontalOptions="StartAndExpand" />
-                    <HorizontalStackLayout  HorizontalOptions="StartAndExpand">
 
+                    <HorizontalStackLayout WidthRequest="600">
+                        <VerticalStackLayout WidthRequest="300">
+                            <Label Text="Title" TextColor="#B0BEC5">
+                            </Label>
 
-                        <Picker x:Name="TypeEntry"
-                    Title="Select book type..."
-                    TextColor="Black"
-                    FontFamily="VictorMono-LightItalic"
-                    BackgroundColor="#F5F5F5"
-                    HeightRequest="60" 
-                    HorizontalOptions="FillAndExpand"
-                    WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
-                    Margin="5,10,10,10"/>
+                            <Border>
+                                <Border.StrokeShape>
+                                    <RoundRectangle/>
+                                </Border.StrokeShape>
+                                <Entry x:Name="TitleEntry" 
+                                       Placeholder="Book title" />
+                            </Border>
 
+                        </VerticalStackLayout>
 
-                        <Picker x:Name="StatusEntry"
-                    Title="Select status..."
-                    TextColor="Black"
-                    FontFamily="VictorMono-LightItalic"
-                    BackgroundColor="#F5F5F5"
-                    HeightRequest="60" 
-                    HorizontalOptions="FillAndExpand"
-                    WidthRequest="{OnIdiom Phone=50, Tablet=100, Desktop=250}"
-                    Margin="5,10,10,10"/>
+                        <VerticalStackLayout  WidthRequest="300">
+                            <Label Text="Type" TextColor="#B0BEC5"/>
+
+                            <Border>
+                                <Border.StrokeShape>
+                                    <RoundRectangle/>
+                                </Border.StrokeShape>
+                                <Picker x:Name="TypeEntry" 
+                                        SelectedIndex="0"/>
+                            </Border>
+                        </VerticalStackLayout>
                     </HorizontalStackLayout>
 
 
+                    <HorizontalStackLayout WidthRequest="600">
+                        <VerticalStackLayout WidthRequest="300">
+                            <Label Text="Status" TextColor="#B0BEC5" />
+                            <Border>
+                                <Border.StrokeShape>
+                                    <RoundRectangle/>
+                                </Border.StrokeShape>
+                                <Picker  x:Name="StatusEntry"  
+                                     SelectedIndex="0"/>
+                            </Border>
+                        </VerticalStackLayout>
 
-                    <Entry Placeholder="Number Of Copies..." TextChanged="Entry_TextChanged" MaximumWidthRequest="510">
-                        <Entry.Behaviors>
-                            <local:PositiveNumberBehavior />
-                        </Entry.Behaviors>
-                    </Entry>
+                        <VerticalStackLayout>
+                            <Label Text="Number of Copies" TextColor="#B0BEC5" ></Label>
+                            <Border>
+                                <Border.StrokeShape>
+                                    <RoundRectangle/>
+                                </Border.StrokeShape>
+                                <Entry 
+                                   TextChanged="Entry_TextChanged" 
+                                   MaximumWidthRequest="50" >
+                                    <Entry.Behaviors>
+                                        <local:PositiveNumberBehavior />
+                                    </Entry.Behaviors>
+                                </Entry>
+                            </Border>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout x:Name="Step2" IsVisible="False">
@@ -229,55 +225,73 @@
                 </VerticalStackLayout>
 
                 <VerticalStackLayout x:Name="Step3" IsVisible="False">
-                    <!-- Optional: confirmation, review summary, etc. -->
+                    <Button Text="Save"
+                                Clicked="OnSaveClicked"
+                                TextColor="White"
+                                BackgroundColor="MediumPurple"
+                                FontAttributes="Bold"
+                                CornerRadius="10"
+                                FontFamily="VictorMono-Bold"
+                                HorizontalOptions="Center"
+                                WidthRequest="140"
+                                HeightRequest="45" IsVisible="True" />
                     <Label Text="Ready to save your book?" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
+
+                <!-- Navigation Buttons -->
+                <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                    <Button x:Name="BackButton" Text="Back" Clicked="OnBackClicked" IsVisible="False"/>
+                    <Button x:Name="NextButton" 
+                        Text="Next" 
+                        Clicked="OnNextClicked" 
+                        BorderColor="#1da6ca" 
+                        BackgroundColor="Transparent"
+                        FontAttributes="Bold"
+                        Padding="10"
+                        Shadow="0 0 12 AliceBlue 1"
+                        HeightRequest="50" 
+                        WidthRequest="70"
+                        TextColor="#1da6ca" IsVisible="True"/>
+                </HorizontalStackLayout>
                 <Grid x:Name="SuccessOverlay"
-                      BackgroundColor="#80000000"
-                      IsVisible="False"
-                      Opacity="0"
-                      ZIndex="10"
-                      HorizontalOptions="Fill"
-                      VerticalOptions="Fill"
-                      AbsoluteLayout.LayoutFlags="All"
-                      AbsoluteLayout.LayoutBounds="0,0,1,1">
+                          BackgroundColor="#80000000"
+                          IsVisible="False"
+                          Opacity="0"
+                          ZIndex="10"
+                          HorizontalOptions="Fill"
+                          VerticalOptions="Fill"
+                          AbsoluteLayout.LayoutFlags="All"
+                          AbsoluteLayout.LayoutBounds="0,0,1,1">
                     <Label Text="✅ Book added successfully!"
-                       FontSize="18"
-                       FontAttributes="Bold"
-                       TextColor="White"
-                       BackgroundColor="MediumSeaGreen"
-                       Padding="15"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"
-                       Opacity="1"/>
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               BackgroundColor="MediumSeaGreen"
+                               Padding="15"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Opacity="1"/>
                     <Grid x:Name="ErrorOverlay"
-      BackgroundColor="#80000000"
-      IsVisible="False"
-      Opacity="0"
-      ZIndex="10"
-      HorizontalOptions="Fill"
-      VerticalOptions="Fill"
-      AbsoluteLayout.LayoutFlags="All"
-      AbsoluteLayout.LayoutBounds="0,0,1,1">
+                              BackgroundColor="#80000000"
+                              IsVisible="False"
+                              Opacity="0"
+                              ZIndex="10"
+                              HorizontalOptions="Fill"
+                              VerticalOptions="Fill"
+                              AbsoluteLayout.LayoutFlags="All"
+                              AbsoluteLayout.LayoutBounds="0,0,1,1">
                         <Label Text="❌ Failed to add book!"
-           FontSize="18"
-           FontAttributes="Bold"
-           TextColor="White"
-           BackgroundColor="DarkRed"
-           Padding="15"
-           HorizontalOptions="Center"
-           VerticalOptions="Center"
-           Opacity="1"/>
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               BackgroundColor="DarkRed"
+                               Padding="15"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Opacity="1"/>
                     </Grid>
                 </Grid>
             </VerticalStackLayout>
-
         </ScrollView>
-
-        <!-- Navigation Buttons -->
-        <HorizontalStackLayout HorizontalOptions="Center" Spacing="15">
-            <Button x:Name="BackButton" Text="Back" Clicked="OnBackClicked" IsVisible="False"/>
-            <Button x:Name="NextButton" Text="Next" Clicked="OnNextClicked"/>
-        </HorizontalStackLayout>
-    </VerticalStackLayout>
+    </Border>
 </toolkit:Popup>

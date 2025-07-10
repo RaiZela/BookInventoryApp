@@ -48,48 +48,6 @@ public partial class BookListAndroid : ContentPage
         BooksView.BackgroundColor = Color.FromHex("#362b7d");
         BooksView.Opacity = 0.7;
         BooksView.Margin = 10;
-        //BooksView.ItemTemplate = new DataTemplate(() =>
-        //{
-        //    var titleLabel = new Label
-        //    {
-        //        FontSize = 18,
-        //        TextColor = Colors.White,
-        //        FontFamily = "VictorMono-BoldItalic",
-        //        Margin = new Thickness(5, 2),
-        //    };
-        //    titleLabel.SetBinding(Label.TextProperty, "Title");
-
-        //    var authorLabel = new Label
-        //    {
-        //        FontSize = 14,
-        //        TextColor = Colors.LightGray,
-        //        FontFamily = "VictorMono-Light",
-        //        Margin = new Thickness(5, 0, 5, 5)
-        //    };
-        //    authorLabel.SetBinding(Label.TextProperty, "Authors");
-
-        //    var categoryLabel = new Label
-        //    {
-        //        FontSize = 14,
-        //        TextColor = Colors.MediumPurple,
-        //        FontFamily = "VictorMono-LightItalic",
-        //        HorizontalOptions = LayoutOptions.Center,
-        //        VerticalOptions = LayoutOptions.Center
-        //    };
-        //    categoryLabel.SetBinding(Label.TextProperty, "Categories");
-
-        //    var languageLabel = new Label
-        //    {
-        //        FontSize = 14,
-        //        TextColor = Colors.MediumPurple,
-        //        FontFamily = "VictorMono-LightItalic",
-        //        HorizontalOptions = LayoutOptions.Center,
-        //        VerticalOptions = LayoutOptions.Center
-        //    };
-        //    languageLabel.SetBinding(Label.TextProperty, "Languages");
-        //});
-
-
     }
 
     private async Task UpdateBooksView()
@@ -144,9 +102,15 @@ public partial class BookListAndroid : ContentPage
         await UpdateBooksView();
     }
 
-    private async void BooksView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+    //private async void BooksView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+    //{
+    //    var book = e.SelectedItem as BooksDTO;
+    //    await Shell.Current.GoToAsync($"{nameof(BookDetailsPage)}?bookId={book.Id}");
+    //}
+
+    private async void BooksView_ItemTapped(object sender, ItemTappedEventArgs e)
     {
-        var book = e.SelectedItem as BooksDTO;
+        var book = e.Item as BooksDTO;
         await Shell.Current.GoToAsync($"{nameof(BookDetailsPage)}?bookId={book.Id}");
     }
 }

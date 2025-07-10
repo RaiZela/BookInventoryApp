@@ -7,4 +7,5 @@ public class BooksDTO
     public string Authors { get; set; }
     public string Categories { get; set; }
     public string Languages { get; set; }
+    public string Status { get; set; }
 }

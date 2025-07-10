@@ -236,7 +236,8 @@ public class BookService : IBookService
                 Title = book.Title.ToUpper(),
                 Authors = string.Join(Environment.NewLine, authors),
                 Categories = string.Join(Environment.NewLine, categories),
-                Languages = string.Join(Environment.NewLine, languages)
+                Languages = string.Join(Environment.NewLine, languages),
+                Status = book.Status.ToString()
             });
 
         }

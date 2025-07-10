@@ -13,6 +13,7 @@ public class BookDTO
     public IEnumerable<Guid> AuthorIds { get; set; } = new List<Guid>();
     public IEnumerable<Guid> CategoriesIds { get; set; } = new List<Guid>();
     public IEnumerable<Guid> LanguageIds { get; set; } = new List<Guid>();
+
 }
 
 

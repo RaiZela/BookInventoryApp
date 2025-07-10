@@ -33,17 +33,23 @@ public partial class BookList : ContentPage
         BooksView.IsVisible = true;
         BooksView.ItemsSource = Books;
         BooksView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
-        BooksView.BackgroundColor = Color.FromHex("#362b7d");
-        BooksView.Opacity = 0.7;
         BooksView.Margin = 10;
         BooksView.ItemTemplate = new DataTemplate(() =>
         {
+            var cover = new Image
+            {
+                Source = "background_image_library_author.jpg",
+                Aspect = Aspect.Center,
+                MaximumHeightRequest = 150,
+                MaximumWidthRequest = 120
+            };
+
             var titleLabel = new Label
             {
                 FontSize = 18,
                 TextColor = Colors.White,
                 FontFamily = "VictorMono-BoldItalic",
-                Margin = new Thickness(5, 2),
+                Margin = new Thickness(5, 5),
             };
             titleLabel.SetBinding(Label.TextProperty, "Title");
 
@@ -58,28 +64,50 @@ public partial class BookList : ContentPage
 
             var categoryLabel = new Label
             {
-                FontSize = 14,
-                TextColor = Colors.MediumPurple,
+                FontSize = 12,
+                TextColor = Colors.Grey,
                 FontFamily = "VictorMono-LightItalic",
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center
+                Margin = new Thickness(5, 0, 5, 0)
             };
             categoryLabel.SetBinding(Label.TextProperty, "Categories");
 
             var languageLabel = new Label
             {
-                FontSize = 14,
-                TextColor = Colors.MediumPurple,
+                FontSize = 12,
+                TextColor = Colors.Grey,
                 FontFamily = "VictorMono-LightItalic",
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center
+                Margin = new Thickness(5, 0, 5, 0)
             };
             languageLabel.SetBinding(Label.TextProperty, "Languages");
 
             var leftColumn = new StackLayout
             {
                 Orientation = StackOrientation.Vertical,
-                Children = { titleLabel, authorLabel }
+                Children = { titleLabel, authorLabel, categoryLabel, languageLabel },
+                HeightRequest = 100
+            };
+
+            var statusLabel = new Label
+            {
+                FontSize = 12,
+                TextColor = Colors.GhostWhite,
+                FontFamily = "VictorMono-LightItalic",
+                Margin = new Thickness(5, 0, 5, 0),
+                HorizontalOptions = LayoutOptions.CenterAndExpand
+
+            };
+            statusLabel.SetBinding(Label.TextProperty, "Status");
+
+            var imageCol = new StackLayout
+            {
+                Orientation = StackOrientation.Vertical,
+                Children = { cover }
+            };
+
+            var statusCol = new StackLayout
+            {
+                Orientation = StackOrientation.Vertical,
+                Children = { statusLabel }
             };
 
             var grid = new Grid
@@ -90,21 +118,19 @@ public partial class BookList : ContentPage
                                     new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) },
                                     new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
                                 },
-                Padding = 10,
+                Padding = 20,
                 BackgroundColor = Colors.Black,
                 Opacity = 0.8,
                 Margin = new Thickness(10, 5)
             };
+            grid.Children.Add(imageCol);
+            Grid.SetColumn(imageCol, 0);
 
             grid.Children.Add(leftColumn);
-            Grid.SetColumn(leftColumn, 0);
+            Grid.SetColumn(leftColumn, 1);
 
-            grid.Children.Add(categoryLabel);
-            Grid.SetColumn(categoryLabel, 1);
-
-
-            grid.Children.Add(languageLabel);
-            Grid.SetColumn(languageLabel, 2);
+            grid.Children.Add(statusCol);
+            Grid.SetColumn(statusCol, 2);
 
             return new ViewCell { View = grid };
         });

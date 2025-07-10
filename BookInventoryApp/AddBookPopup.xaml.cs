@@ -498,14 +498,16 @@ public partial class BookPopup : Popup
         NextButton.Text = currentStep == totalSteps ? "Save" : "Next";
 
         // Update step labels
-        StepLabel1.TextColor = currentStep >= 1 ? Colors.White : Colors.Gray;
-        StepLabel2.TextColor = currentStep >= 2 ? Colors.White : Colors.Gray;
-        StepLabel3.TextColor = currentStep == 3 ? Colors.White : Colors.Gray;
+        //StepLabel1.TextColor = currentStep >= 1 ? Colors.White : Colors.Gray;
+        //StepLabel2.TextColor = currentStep >= 2 ? Colors.White : Colors.Gray;
+        //StepLabel3.TextColor = currentStep == 3 ? Colors.White : Colors.Gray;
 
         // Update progress bar
-        double progressFraction = (double)(currentStep - 1) / (totalSteps - 1);
-        ProgressBar.WidthRequest = ProgressBackground.Width * progressFraction;
+        //double progressFraction = (double)(currentStep - 1) / (totalSteps - 1);
+        //ProgressBar.WidthRequest = ProgressBackground.Width * progressFraction;
     }
-
 }
+
+
+
 
