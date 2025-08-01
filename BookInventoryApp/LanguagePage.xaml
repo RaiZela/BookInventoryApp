@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BookInventoryApp.LanguagePage"
              Title="Languages"
-             BackgroundColor="#f4f4f4">
+             BackgroundColor="#121212">
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
 
             <Button Text="Add New Language"
               Clicked="OnAddLanguageClicked"
-              BackgroundColor="MediumPurple"
+              BackgroundColor="#1da6ca"
               TextColor="White"
               CornerRadius="8"
               FontAttributes="Bold"
@@ -25,12 +25,12 @@
                          Margin="10,5"
                          Padding="10"
                          HasShadow="True"
-                         BackgroundColor="White">
+                         BackgroundColor="#121212">
                             <SwipeView>
                                 <SwipeView.LeftItems>
                                     <SwipeItems>
                                         <SwipeItem
-                                            BackgroundColor="White"
+                                            BackgroundColor="#121212"
                                               Text="Delete"
                                               IconImageSource="delete.png"
                                               Invoked="OnDeleteLanguageClicked"
@@ -41,12 +41,12 @@
                                     <Label Text="{Binding Code}"
                                         FontAttributes="Bold"
                                         FontSize="16"
-                                        TextColor="#333"
+                                        TextColor="GhostWhite"
                                         VerticalOptions="Center"
                                         />
                                     <Label Text="{Binding Name}"
                                             FontSize="16"
-                                            TextColor="#555"
+                                            TextColor="White"
                                             Margin="20,0,-30,0"
                                             VerticalOptions="Center"/>
                                 </HorizontalStackLayout>

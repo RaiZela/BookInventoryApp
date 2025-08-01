@@ -9,7 +9,7 @@
             <VerticalStackLayout Padding="20" Spacing="20">
 
                 <!-- Book Title -->
-                <Frame BorderColor="MediumPurple" BackgroundColor="#1E1E2F" CornerRadius="10" Padding="15">
+                <Frame BorderColor="#1da6ca" BackgroundColor="#1E1E2F" CornerRadius="10" Padding="15">
                     <Label 
                     x:Name="BookTitleLabel"
                     FontSize="28"
@@ -40,7 +40,7 @@
 
                             <Label Text="Status" TextColor="LightGray" FontSize="14" />
                             <Label x:Name="BookStatusLabel" Text="{Binding Status}" TextColor="White" FontSize="18" />
-                            
+
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Grid.Column="1">
@@ -54,13 +54,14 @@
 
                 <HorizontalStackLayout HorizontalOptions="End">
                     <Button x:Name="EditButton"
-                        BorderColor="DarkBlue"
+                        BorderColor="#1da6ca"
                         TextColor="White"
                         Text="Edit"
                         MaximumWidthRequest="100"
                         Margin="10,10,10,10"
                         MaximumHeightRequest="90"
-                            Padding="20,5,20,5"
+                        Padding="20,5,20,5"
+                        Background="Transparent"
                         HorizontalOptions="End"
                         Clicked="EditButtonClicked"/>
 

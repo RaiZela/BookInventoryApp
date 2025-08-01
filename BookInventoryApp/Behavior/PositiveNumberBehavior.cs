@@ -22,7 +22,7 @@ public class PositiveNumberBehavior : Behavior<Entry>
             }
             else
             {
-                entry.TextColor = Colors.Black;
+                entry.TextColor = Colors.White;
             }
         }
     }

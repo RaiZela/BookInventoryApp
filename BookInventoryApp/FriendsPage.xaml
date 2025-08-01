@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="BookInventoryApp.FriendsPage"
-             Title="Friends">
+             Title="Friends"  BackgroundColor="#121212">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
@@ -12,13 +12,13 @@
             <SearchBar x:Name="SearchBar"
                        Placeholder="Search friends..."
                        TextChanged="OnSearchTextChanged"
-                       BackgroundColor="#f2f2f2"
+                       
                        Margin="0,0,0,10"/>
 
 
             <Button Text="Add New Friend"
                     Clicked="OnAddFriendClicked"
-                    BackgroundColor="MediumPurple"
+                    BackgroundColor="#1da6ca"
                     TextColor="White"
                     CornerRadius="8"
                     FontAttributes="Bold"
@@ -35,7 +35,7 @@
                             <SwipeView.LeftItems>
                                 <SwipeItems>
                                     <!-- Delete -->
-                                    <SwipeItem Text="Delete" IconImageSource="delete.png" Invoked="SwipeItem_Invoked" CommandParameter="{Binding .}" />
+                                    <SwipeItem Text="Delete" IconImageSource="delete.png" Invoked="SwipeItem_Invoked" CommandParameter="{Binding .}"   BackgroundColor="#121212"/>
                                 </SwipeItems>
                             </SwipeView.LeftItems>
                             <SwipeView.RightItems>
@@ -52,7 +52,7 @@
                                         <Label Text="Lend"
                                                    Grid.Row="1"
                                                    FontSize="12"
-                                                   HorizontalOptions="Center" />
+                                                   HorizontalOptions="Center" TextColor="White" />
                                     </Grid>
 
                                     <SwipeItemView.CommandParameter>
@@ -70,7 +70,7 @@
                                         <Label Text="📕"
                                                    FontSize="20"
                                                    HorizontalOptions="Center" />
-                                        <Label Text="Borrow Book"
+                                        <Label Text="Borrow Book" TextColor="White"
                                                    Grid.Row="1"
                                                    FontSize="12"
                                                    HorizontalOptions="Center" />
@@ -90,11 +90,11 @@
 
                                         <Label Text="📂"
                                                    FontSize="20"
-                                                   HorizontalOptions="Center" />
+                                                   HorizontalOptions="Center" TextColor="White"/>
                                         <Label Text="View Loans"
                                                    Grid.Row="1"
                                                    FontSize="12"
-                                                   HorizontalOptions="Center" />
+                                                   HorizontalOptions="Center" TextColor="White" />
                                     </Grid>
                                     <SwipeItemView.CommandParameter>
                                         <Binding />
@@ -106,7 +106,7 @@
                                    Margin="0,5"
                                    Padding="10"
                                    HasShadow="True"
-                                   BackgroundColor="White">
+                                   BackgroundColor="DarkGray">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />

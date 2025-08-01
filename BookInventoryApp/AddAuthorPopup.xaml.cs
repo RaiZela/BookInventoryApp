@@ -13,11 +13,11 @@ public partial class AddAuthorPopup : Popup
         if (author != null && author.Id != Guid.Empty)
         {
             AuthorReverseMap(author, Author);
-            DeleteButton.IsVisible = true;
+            //DeleteButton.IsVisible = true;
         }
         else
         {
-            DeleteButton.IsVisible = false;
+            //DeleteButton.IsVisible = false;
         }
         Name.Text = Author.Name;
         MiddleName.Text = Author.MiddleName;
@@ -39,13 +39,13 @@ public partial class AddAuthorPopup : Popup
             var authors = await _service.SaveAuthorAsync(author);
             if (authors > 0)
             {
-                await AnimateSuccessAsync();
-                await ShowSuccessCheckAsync();
+                //await AnimateSuccessAsync();
+                //await ShowSuccessCheckAsync();
             }
             else
             {
-                await AnimateErrorAsync();
-                await ShowErrorAsync();
+                //await AnimateErrorAsync();
+                //await ShowErrorAsync();
             }
         }
 
@@ -54,13 +54,14 @@ public partial class AddAuthorPopup : Popup
             var authors = await _service.SaveNewAuthorAsync(author);
             if (authors > 0)
             {
-                await AnimateSuccessAsync();
-                await ShowSuccessCheckAsync();
+
+                //await AnimateSuccessAsync();
+                //await ShowSuccessCheckAsync();
             }
             else
             {
-                await AnimateErrorAsync();
-                await ShowErrorAsync();
+                //await AnimateErrorAsync();
+                //await ShowErrorAsync();
             }
         }
 
@@ -89,13 +90,13 @@ public partial class AddAuthorPopup : Popup
 
             if (authors > 0)
             {
-                await AnimateSuccessAsync();
-                await ShowSuccessCheckAsync();
+                //await AnimateSuccessAsync();
+                //await ShowSuccessCheckAsync();
             }
             else
             {
-                await AnimateErrorAsync();
-                await ShowErrorAsync();
+                //await AnimateErrorAsync();
+                //await ShowErrorAsync();
             }
 
         }
@@ -104,65 +105,65 @@ public partial class AddAuthorPopup : Popup
 
 
     }
-    private async Task AnimateSuccessAsync()
-    {
-        await MainLayout.ScaleTo(1.05, 100, Easing.CubicOut);
-        await MainLayout.ScaleTo(1.0, 100, Easing.CubicIn);
-        await MainLayout.FadeTo(0.9, 100);
-        await MainLayout.FadeTo(1.0, 100);
-    }
-    private async Task ShowSuccessCheckAsync()
-    {
-        SuccessOverlay.Opacity = 0;
-        SuccessOverlay.IsVisible = true;
+    //private async Task AnimateSuccessAsync()
+    //{
+    //    await MainLayout.ScaleTo(1.05, 100, Easing.CubicOut);
+    //    await MainLayout.ScaleTo(1.0, 100, Easing.CubicIn);
+    //    await MainLayout.FadeTo(0.9, 100);
+    //    await MainLayout.FadeTo(1.0, 100);
+    //}
+    //private async Task ShowSuccessCheckAsync()
+    //{
+    //    SuccessOverlay.Opacity = 0;
+    //    SuccessOverlay.IsVisible = true;
 
-        SuccessIcon.Opacity = 0;
-        SuccessIcon.Scale = 0.5;
+    //    //SuccessIcon.Opacity = 0;
+    //    //SuccessIcon.Scale = 0.5;
 
-        await Task.WhenAll(
-            SuccessOverlay.FadeTo(1, 150),
-            SuccessIcon.FadeTo(1, 200),
-            SuccessIcon.ScaleTo(1.2, 200, Easing.SpringOut)
-        );
+    //    await Task.WhenAll(
+    //        SuccessOverlay.FadeTo(1, 150),
+    //        SuccessIcon.FadeTo(1, 200),
+    //        SuccessIcon.ScaleTo(1.2, 200, Easing.SpringOut)
+    //    );
 
-        await Task.Delay(1000);
+    //    await Task.Delay(1000);
 
-        await SuccessOverlay.FadeTo(0, 300);
-        SuccessOverlay.IsVisible = false;
-    }
-    private async Task ShowErrorAsync(string message = "Something went wrong")
-    {
-        ErrorMessage.Text = message;
+    //    await SuccessOverlay.FadeTo(0, 300);
+    //    SuccessOverlay.IsVisible = false;
+    //}
+    //private async Task ShowErrorAsync(string message = "Something went wrong")
+    //{
+    //    ErrorMessage.Text = message;
 
-        ErrorOverlay.Opacity = 0;
-        ErrorOverlay.IsVisible = true;
+    //    ErrorOverlay.Opacity = 0;
+    //    ErrorOverlay.IsVisible = true;
 
-        ErrorIcon.Opacity = 0;
-        ErrorIcon.Scale = 0.5;
-        ErrorMessage.Opacity = 0;
-        ErrorMessage.Scale = 0.5;
+    //    ErrorIcon.Opacity = 0;
+    //    ErrorIcon.Scale = 0.5;
+    //    ErrorMessage.Opacity = 0;
+    //    ErrorMessage.Scale = 0.5;
 
-        await Task.WhenAll(
-            ErrorOverlay.FadeTo(1, 150),
-            ErrorIcon.FadeTo(1, 200),
-            ErrorIcon.ScaleTo(1.2, 200, Easing.SpringOut),
-            ErrorMessage.FadeTo(1, 200),
-            ErrorMessage.ScaleTo(1.2, 200, Easing.SpringOut)
-        );
+    //    await Task.WhenAll(
+    //        ErrorOverlay.FadeTo(1, 150),
+    //        ErrorIcon.FadeTo(1, 200),
+    //        ErrorIcon.ScaleTo(1.2, 200, Easing.SpringOut),
+    //        ErrorMessage.FadeTo(1, 200),
+    //        ErrorMessage.ScaleTo(1.2, 200, Easing.SpringOut)
+    //    );
 
-        await Task.Delay(2000);
+    //    await Task.Delay(2000);
 
-        await ErrorOverlay.FadeTo(0, 300);
-        ErrorOverlay.IsVisible = false;
-    }
-    private async Task AnimateErrorAsync()
-    {
-        uint duration = 50;
-        await MainLayout.TranslateTo(-15, 0, duration);
-        await MainLayout.TranslateTo(15, 0, duration);
-        await MainLayout.TranslateTo(-10, 0, duration);
-        await MainLayout.TranslateTo(10, 0, duration);
-        await MainLayout.TranslateTo(0, 0, duration);
-    }
+    //    await ErrorOverlay.FadeTo(0, 300);
+    //    ErrorOverlay.IsVisible = false;
+    //}
+    //private async Task AnimateErrorAsync()
+    //{
+    //    uint duration = 50;
+    //    await MainLayout.TranslateTo(-15, 0, duration);
+    //    await MainLayout.TranslateTo(15, 0, duration);
+    //    await MainLayout.TranslateTo(-10, 0, duration);
+    //    await MainLayout.TranslateTo(10, 0, duration);
+    //    await MainLayout.TranslateTo(0, 0, duration);
+    //}
 
 }

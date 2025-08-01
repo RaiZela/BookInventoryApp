@@ -22,7 +22,7 @@
 
             <Button Text="Add New Author" 
                     Clicked="OnAddAuthorClicked" 
-                    HorizontalOptions="End"/>
+                    HorizontalOptions="End" BackgroundColor="#1da6ca" BorderColor="#1da6ca" TextColor="White"/>
 
             <Label Text="Search Author" 
                    FontSize="Header" 
@@ -55,7 +55,7 @@
                         <Border 
                                Padding="10" 
                                Margin="0,0,0,0" 
-                               BackgroundColor="#362b7d" 
+                               BackgroundColor="#1da6ca" 
                                Opacity="0.7"
                                InputTransparent="False">
                             <Label 

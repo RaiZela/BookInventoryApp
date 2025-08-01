@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BookInventoryApp.FriendLoansPage"
              Title="Loans"
-             BackgroundColor="#f9f9f9">
+             BackgroundColor="#121212">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="25">
@@ -16,14 +16,14 @@
                 <Picker x:Name="ConditionPicker"
                         Title="Select Condition"
                         SelectedIndexChanged="ConditionPicker_SelectedIndexChanged" 
-                        IsVisible="True"/>
+                        IsVisible="True" BackgroundColor="#121212"/>
             </VerticalStackLayout>
             
             <!-- CURRENT LOANS -->
             <Label Text="📘 Currently Active"
                    FontSize="20"
                    FontAttributes="Bold"
-                   TextColor="#333" />
+                   TextColor="GhostWhite" />
 
             <CollectionView x:Name="CurrentLoans"
                             ItemsLayout="VerticalList"
@@ -67,7 +67,7 @@
             <Label Text="📂 History"
                    FontSize="20"
                    FontAttributes="Bold"
-                   TextColor="#333"
+                   TextColor="GhostWhite"
                    Margin="0,20,0,0" />
 
             <CollectionView x:Name="ReturnedLoans"

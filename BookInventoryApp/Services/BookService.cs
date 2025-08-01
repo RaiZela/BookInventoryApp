@@ -242,15 +242,18 @@ public class BookService : IBookService
 
         }
 
+        var pagenr = pageNumber < 1 ? 1 : pageNumber;
+        var pagesz = numberOfBooks < 1 ? 1 : numberOfBooks;
+        var totalIt = await _connection.Table<Book>().CountAsync();
+        var records = booksList;
         return new PaginatedViewModel<BooksDTO>
         {
-            PageNumber = pageNumber < 1 ? 1 : pageNumber,
-            PageSize = numberOfBooks < 1 ? 1 : numberOfBooks,
-            TotalItems = await _connection.Table<Book>().CountAsync(),
-            Records = booksList
+            PageNumber = pagenr,
+            PageSize = pagesz,
+            TotalItems = totalIt,
+            Records = records
         };
     }
-
 
     #region Helpers
     private async Task<List<Guid>> GetBookCategorysIds(Guid bookId)
