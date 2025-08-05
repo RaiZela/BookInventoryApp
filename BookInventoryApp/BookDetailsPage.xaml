@@ -9,7 +9,7 @@
             <VerticalStackLayout Padding="20" Spacing="20">
 
                 <!-- Book Title -->
-                <Frame BorderColor="#1da6ca" BackgroundColor="#1E1E2F" CornerRadius="10" Padding="15">
+                <Frame BorderColor="#1da6ca" BackgroundColor="Black" CornerRadius="10" Padding="15">
                     <Label 
                     x:Name="BookTitleLabel"
                     FontSize="28"
@@ -19,7 +19,7 @@
                     HorizontalTextAlignment="Center" />
                 </Frame>
 
-                <Frame BorderColor="Gray" BackgroundColor="#1E1E2F" CornerRadius="10" Padding="15">
+                <Frame BorderColor="Gray" BackgroundColor="Black" CornerRadius="10" Padding="15">
                     <Grid ColumnSpacing="20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />

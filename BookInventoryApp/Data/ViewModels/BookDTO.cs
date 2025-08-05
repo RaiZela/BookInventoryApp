@@ -10,6 +10,7 @@ public class BookDTO
     public int NrOfCopies { get; set; } = 1;
     public string Description { get; set; }
     public string Adress { get; set; }
+    public string CoverImg { get; set; }
     public IEnumerable<Guid> AuthorIds { get; set; } = new List<Guid>();
     public IEnumerable<Guid> CategoriesIds { get; set; } = new List<Guid>();
     public IEnumerable<Guid> LanguageIds { get; set; } = new List<Guid>();

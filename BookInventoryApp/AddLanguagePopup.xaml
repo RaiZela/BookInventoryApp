@@ -1,46 +1,114 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="BookInventoryApp.AddLanguagePopup">
-    <Frame Padding="20"
-           BackgroundColor="White"
-           CornerRadius="12"
-           WidthRequest="320"
-           HeightRequest="250"
-           HasShadow="True"
-           VerticalOptions="Center"
-           HorizontalOptions="Center" >
+               x:Class="BookInventoryApp.AddLanguagePopup"
+               CanBeDismissedByTappingOutsideOfPopup="True"
+              Size="{OnIdiom Phone='340,400', Tablet='400,650', Desktop='640,720'}" Color="Transparent">
 
-        <VerticalStackLayout Spacing="15">
-            <Label Text="Add New Language"
-                   FontSize="20"
-                   FontAttributes="Bold"
-                   TextColor="Black"
-                   HorizontalOptions="Center"
-                   BackgroundColor="GhostWhite"/>
+    <Border Stroke="#1da6ca" 
+        StrokeThickness="2" 
+        StrokeShape="RoundRectangle 20"     
+        WidthRequest="340" 
+        HeightRequest="400"       
+        BackgroundColor="#0b121d"  >
+        <ScrollView VerticalScrollBarVisibility="Never">
 
-            <Entry x:Name="Code"
+            <VerticalStackLayout  WidthRequest="340" HeightRequest="400" BackgroundColor="Black" Shadow="0 0 12 #1da6ca 1" HorizontalOptions="CenterAndExpand">
+
+                <Label Shadow="0 0 12 #1da6ca 1" Text="📚 Language Details" FontSize="Title" TextColor="#1da6ca" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,10,10"></Label>
+
+                <VerticalStackLayout>
+                    <Label Text="Name" TextColor="#B0BEC5">
+                    </Label>
+
+                    <Border>
+                        <Border.StrokeShape>
+                            <RoundRectangle/>
+                        </Border.StrokeShape>
+                        <Entry x:Name="Code"
                    Placeholder="Enter code"
                    PlaceholderColor="Gray"
-                   TextColor="Black"
-                   BackgroundColor="White" />
+                   TextColor="White"
+                   BackgroundColor="Transparent"
+                               />
+                    </Border>
 
-            <Entry x:Name="Name"
+                </VerticalStackLayout>
+
+                <VerticalStackLayout>
+                    <Label Text="Type" TextColor="#B0BEC5" HorizontalOptions="FillAndExpand"/>
+
+                    <Border>
+                        <Border.StrokeShape>
+                            <RoundRectangle/>
+                        </Border.StrokeShape>
+                        <Entry x:Name="Name"
                    Placeholder="Enter name"
                    PlaceholderColor="Gray"
-                   TextColor="Black"
-                   BackgroundColor="White"
-/>
+                   TextColor="White"
+                   BackgroundColor="Transparent"/>
+                    </Border>
+                </VerticalStackLayout>
 
-            <Button Text="Save"
-                    Clicked="OnSaveClicked"
-                    BackgroundColor="MediumPurple"
-                    TextColor="White"
-                    CornerRadius="8"
-                    FontAttributes="Bold"/>
 
-        </VerticalStackLayout>
+                <VerticalStackLayout>
+                    <HorizontalStackLayout HorizontalOptions="Center">
+                        <Button x:Name="SaveButton" 
+                                Text="Save" 
+                                Clicked="OnSaveClicked" 
+                                BorderColor="#1da6ca" 
+                                BackgroundColor="Transparent"
+                                FontAttributes="Bold"
+                                Padding="5"
+                                Margin="5"
+                                Shadow="0 0 12 #1da6ca 1"
+                                HorizontalOptions="CenterAndExpand"
+                                HeightRequest="40" 
+                                WidthRequest="70"
+                                TextColor="White" IsVisible="True"/>
 
-    </Frame>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <Grid x:Name="SuccessOverlay"
+                      BackgroundColor="#80000000"
+                      IsVisible="False"
+                      Opacity="0"
+                      ZIndex="10"
+                      HorizontalOptions="Fill"
+                      VerticalOptions="Fill"
+                      AbsoluteLayout.LayoutFlags="All"
+                      AbsoluteLayout.LayoutBounds="0,0,1,1">
+                    <Label Text="✅ Author added successfully!"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           BackgroundColor="MediumSeaGreen"
+                           Padding="15"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Opacity="1"/>
+                    <Grid x:Name="ErrorOverlay"
+                          BackgroundColor="#80000000"
+                          IsVisible="False"
+                          Opacity="0"
+                          ZIndex="10"
+                          HorizontalOptions="Fill"
+                          VerticalOptions="Fill"
+                          AbsoluteLayout.LayoutFlags="All"
+                          AbsoluteLayout.LayoutBounds="0,0,1,1">
+                        <Label Text="❌ Failed to add book!"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           BackgroundColor="DarkRed"
+                           Padding="15"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Opacity="1"/>
+                    </Grid>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Border>
 </toolkit:Popup>

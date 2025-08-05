@@ -3,28 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="BookInventoryApp.FriendsPage"
-             Title="Friends"  BackgroundColor="#121212">
+             Title="Friends"
+             BackgroundColor="#121212">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
+        <VerticalStackLayout Padding="20" Spacing="20">
 
-
+            <!-- Search -->
             <SearchBar x:Name="SearchBar"
                        Placeholder="Search friends..."
                        TextChanged="OnSearchTextChanged"
-                       
-                       Margin="0,0,0,10"/>
+                       BackgroundColor="#1e1e1e"
+                       TextColor="White"
+                       PlaceholderColor="#888"
+                       CancelButtonColor="White"
+                       Margin="0,0,0,10" />
 
-
+            <!-- Add Friend Button -->
             <Button Text="Add New Friend"
                     Clicked="OnAddFriendClicked"
                     BackgroundColor="#1da6ca"
                     TextColor="White"
-                    CornerRadius="8"
+                    CornerRadius="12"
                     FontAttributes="Bold"
                     HorizontalOptions="End"
                     WidthRequest="180" />
 
+            <!-- Friends List -->
             <CollectionView x:Name="FriendCollection"
                             Margin="0,10"
                             ItemsLayout="VerticalList"
@@ -32,149 +37,96 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <SwipeView>
+                            <!-- Left Swipe: Delete -->
                             <SwipeView.LeftItems>
                                 <SwipeItems>
-                                    <!-- Delete -->
-                                    <SwipeItem Text="Delete" IconImageSource="delete.png" Invoked="SwipeItem_Invoked" CommandParameter="{Binding .}"   BackgroundColor="#121212"/>
+                                    <SwipeItem Text="Delete"
+                                               IconImageSource="delete.png"
+                                               Invoked="SwipeItem_Invoked"
+                                               CommandParameter="{Binding .}"
+                                               BackgroundColor="#b00020" />
                                 </SwipeItems>
                             </SwipeView.LeftItems>
+
+                            <!-- Right Swipe: Lend / Borrow / View -->
                             <SwipeView.RightItems>
-                                <SwipeItemView Invoked="OnLendBookClicked">
-                                    <Grid Padding="10" WidthRequest="60">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-
-                                        <Label Text="📘"
-                                                   FontSize="20"
-                                                   HorizontalOptions="Center" />
-                                        <Label Text="Lend"
-                                                   Grid.Row="1"
-                                                   FontSize="12"
-                                                   HorizontalOptions="Center" TextColor="White" />
-                                    </Grid>
-
-                                    <SwipeItemView.CommandParameter>
-                                        <Binding />
-                                    </SwipeItemView.CommandParameter>
-                                </SwipeItemView>
-
-                                <SwipeItemView Invoked="OnBorrowBookClicked">
-                                    <Grid Padding="10" WidthRequest="60">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-
-                                        <Label Text="📕"
-                                                   FontSize="20"
-                                                   HorizontalOptions="Center" />
-                                        <Label Text="Borrow Book" TextColor="White"
-                                                   Grid.Row="1"
-                                                   FontSize="12"
-                                                   HorizontalOptions="Center" />
-                                    </Grid>
-
-                                    <SwipeItemView.CommandParameter>
-                                        <Binding />
-                                    </SwipeItemView.CommandParameter>
-                                </SwipeItemView>
-
-                                <SwipeItemView x:Name="ViewLoansSwipe" Invoked="OnViewLoansClicked">
-                                    <Grid Padding="10" WidthRequest="60">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-
-                                        <Label Text="📂"
-                                                   FontSize="20"
-                                                   HorizontalOptions="Center" TextColor="White"/>
-                                        <Label Text="View Loans"
-                                                   Grid.Row="1"
-                                                   FontSize="12"
-                                                   HorizontalOptions="Center" TextColor="White" />
-                                    </Grid>
-                                    <SwipeItemView.CommandParameter>
-                                        <Binding />
-                                    </SwipeItemView.CommandParameter>
-                                </SwipeItemView>
+                                <SwipeItems>
+                                    <SwipeItem Text="Lend"
+                                               BackgroundColor="#4CAF50"
+                                               Clicked="OnLendBookClicked"
+                                               CommandParameter="{Binding .}" />
+                                    <SwipeItem Text="Borrow"
+                                               BackgroundColor="#2196F3"
+                                               Invoked="OnBorrowBookClicked"
+                                               CommandParameter="{Binding .}" />
+                                    <SwipeItem Text="Loans"
+                                               BackgroundColor="#FF9800"
+                                               Invoked="OnViewLoansClicked"
+                                               CommandParameter="{Binding .}" />
+                                </SwipeItems>
                             </SwipeView.RightItems>
-                            <Frame BorderColor="#ccc"
-                                   CornerRadius="8"
-                                   Margin="0,5"
-                                   Padding="10"
-                                   HasShadow="True"
-                                   BackgroundColor="DarkGray">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
 
+                            <!-- Friend Card -->
+                            <Frame CornerRadius="12"
+                                   Padding="15"
+                                   Margin="0,5"
+                                   BackgroundColor="#2a2a2a"
+                                   HasShadow="True"
+                                   BorderColor="#444">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <!-- Left Side: Info -->
                                     <VerticalStackLayout Grid.Column="0"
-                                                         Spacing="5">
+                                                         Spacing="8">
                                         <VerticalStackLayout.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnFriendTapped"
                                                                   CommandParameter="{Binding .}" />
                                         </VerticalStackLayout.GestureRecognizers>
 
-                                        <HorizontalStackLayout>
-                                            <Label Text="Name:"
-                                                   FontAttributes="Bold,Italic"
-                                                   FontSize="16"
-                                                   TextColor="#333"
-                                                   VerticalOptions="Center" />
-  
-                                            <Label  Text="{Binding FullName}"
-                                                   FontSize="16"
-                                                   TextColor="#333"
-                                                   VerticalOptions="Center"
-                                                   Margin="5,0,0,0"/>
-                                        </HorizontalStackLayout>
+                                        <Label Text="{Binding FullName}"
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               TextColor="White" />
+                                        <Label FontSize="14" TextColor="#cccccc">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Nickname: " FontAttributes="Italic" />
+                                                    <Span Text="{Binding Nickname}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
 
-                                        <HorizontalStackLayout>
-                                            <Label Text="Nickname:"
-                                                   FontAttributes="Bold,Italic"
-                                                   FontSize="16"
-                                                   TextColor="#333"
-                                                   VerticalOptions="Center" />
-                                            <Label Text="{Binding Nickname}"
-                                                   FontSize="16"
-                                                   TextColor="#333"
-                                                   VerticalOptions="Center"
-                                                   Margin="5,0,0,0"/>
-                                        </HorizontalStackLayout>
-
-                                        <HorizontalStackLayout>
-                                            <Label Text="Address:"
-                                                   FontAttributes="Bold,Italic"
-                                                   FontSize="16"
-                                                   TextColor="#333"
-                                                   VerticalOptions="Center" />
-                                            <Label Text="{Binding Address}"
-                                                   FontSize="16"
-                                                   TextColor="#333"
-                                                   VerticalOptions="Center"
-                                                   Margin="5,0,0,0"/>
-                                        </HorizontalStackLayout>
+                                        <Label FontSize="14" TextColor="#cccccc">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Address: " FontAttributes="Italic" />
+                                                    <Span Text="{Binding Address}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
                                     </VerticalStackLayout>
 
-                                    <!-- Right-Side Image -->
-                                    <Image Grid.Column="1"
-                                           Source="no_img.jpg"
+                                    <!-- Right Side: Profile Picture -->
+                                    <Frame Grid.Column="1"
+                                           CornerRadius="30"
+                                           Padding="0"
                                            WidthRequest="60"
                                            HeightRequest="60"
-                                           HorizontalOptions="End"
-                                           VerticalOptions="Center"
-                                           Margin="10,0,0,0" />
+                                           HasShadow="False"
+                                           BackgroundColor="Transparent"
+                                           BorderColor="#888">
+                                        <Image Source="no_img.jpg"
+                                               WidthRequest="60"
+                                               HeightRequest="60"
+                                               Aspect="AspectFill"
+                                               Clip="True" />
+                                    </Frame>
                                 </Grid>
                             </Frame>
                         </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

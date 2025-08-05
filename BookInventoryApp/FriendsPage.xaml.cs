@@ -84,7 +84,7 @@ public partial class FriendsPage : ContentPage
 
     private async void OnLendBookClicked(object sender, EventArgs e)
     {
-        if (sender is SwipeItemView item && item.CommandParameter is FriendsDTO friend)
+        if (sender is SwipeItem item && item.CommandParameter is FriendsDTO friend)
         {
             var popup = new LendBorrowPopup(new Friend
             {
@@ -102,7 +102,7 @@ public partial class FriendsPage : ContentPage
 
     private async void OnBorrowBookClicked(object sender, EventArgs e)
     {
-        if (sender is SwipeItemView item && item.CommandParameter is FriendsDTO friend)
+        if (sender is SwipeItem item && item.CommandParameter is FriendsDTO friend)
         {
             var popup = new LendBorrowPopup(new Friend
             {

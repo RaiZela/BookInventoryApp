@@ -47,7 +47,7 @@ public partial class AuthorPage : ContentPage
 
         ResultsCollectionView.ItemsSource = FilteredAuthors;
         ResultsCollectionView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
-        ResultsCollectionView.BackgroundColor = Color.FromArgb("#362b7d");
+        //ResultsCollectionView.BackgroundColor = Color.FromArgb("#1da6ca");
         ResultsCollectionView.Opacity = 0.7;
         ResultsCollectionView.IsVisible = true;
         ResultsCollectionView.Margin = new Thickness(0, 0, 0, 0);

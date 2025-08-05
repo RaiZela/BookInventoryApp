@@ -194,23 +194,23 @@ public partial class LendBorrowPopup : Popup
     }
     private async Task AnimateSuccessAsync()
     {
-        await MainLayout.ScaleTo(1.05, 100, Easing.CubicOut);
-        await MainLayout.ScaleTo(1.0, 100, Easing.CubicIn);
-        await MainLayout.FadeTo(0.9, 100);
-        await MainLayout.FadeTo(1.0, 100);
+        //await MainLayout.ScaleTo(1.05, 100, Easing.CubicOut);
+        //await MainLayout.ScaleTo(1.0, 100, Easing.CubicIn);
+        //await MainLayout.FadeTo(0.9, 100);
+        //await MainLayout.FadeTo(1.0, 100);
     }
     private async Task ShowSuccessCheckAsync()
     {
         SuccessOverlay.Opacity = 0;
         SuccessOverlay.IsVisible = true;
 
-        SuccessIcon.Opacity = 0;
-        SuccessIcon.Scale = 0.5;
+        //SuccessIcon.Opacity = 0;
+        //SuccessIcon.Scale = 0.5;
 
         await Task.WhenAll(
-            SuccessOverlay.FadeTo(1, 150),
-            SuccessIcon.FadeTo(1, 200),
-            SuccessIcon.ScaleTo(1.2, 200, Easing.SpringOut)
+            SuccessOverlay.FadeTo(1, 150)
+        //SuccessIcon.FadeTo(1, 200),
+        //SuccessIcon.ScaleTo(1.2, 200, Easing.SpringOut)
         );
 
         await Task.Delay(1000);
@@ -225,15 +225,15 @@ public partial class LendBorrowPopup : Popup
         ErrorOverlay.Opacity = 0;
         ErrorOverlay.IsVisible = true;
 
-        ErrorIcon.Opacity = 0;
-        ErrorIcon.Scale = 0.5;
+        //ErrorIcon.Opacity = 0;
+        //ErrorIcon.Scale = 0.5;
         ErrorMessage.Opacity = 0;
         ErrorMessage.Scale = 0.5;
 
         await Task.WhenAll(
             ErrorOverlay.FadeTo(1, 150),
-            ErrorIcon.FadeTo(1, 200),
-            ErrorIcon.ScaleTo(1.2, 200, Easing.SpringOut),
+            //ErrorIcon.FadeTo(1, 200),
+            //ErrorIcon.ScaleTo(1.2, 200, Easing.SpringOut),
             ErrorMessage.FadeTo(1, 200),
             ErrorMessage.ScaleTo(1.2, 200, Easing.SpringOut)
         );
@@ -246,11 +246,11 @@ public partial class LendBorrowPopup : Popup
     private async Task AnimateErrorAsync()
     {
         uint duration = 50;
-        await MainLayout.TranslateTo(-15, 0, duration);
-        await MainLayout.TranslateTo(15, 0, duration);
-        await MainLayout.TranslateTo(-10, 0, duration);
-        await MainLayout.TranslateTo(10, 0, duration);
-        await MainLayout.TranslateTo(0, 0, duration);
+        //await MainLayout.TranslateTo(-15, 0, duration);
+        //await MainLayout.TranslateTo(15, 0, duration);
+        //await MainLayout.TranslateTo(-10, 0, duration);
+        //await MainLayout.TranslateTo(10, 0, duration);
+        //await MainLayout.TranslateTo(0, 0, duration);
     }
 
 }

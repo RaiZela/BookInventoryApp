@@ -10,10 +10,10 @@
             StrokeShape="RoundRectangle 20" 
             BackgroundColor="#0b121d"          
             WidthRequest="380" 
-            HeightRequest="600">
+            HeightRequest="680">
         <ScrollView VerticalScrollBarVisibility="Never">
 
-            <VerticalStackLayout  WidthRequest="380" HeightRequest="650" BackgroundColor="Black" Shadow="0 0 12 #1da6ca 1">
+            <VerticalStackLayout  WidthRequest="380" HeightRequest="680" BackgroundColor="Black" Shadow="0 0 12 #1da6ca 1">
 
                 <Label Shadow="0 0 12 #1da6ca 1" Text="📚 Book Details" FontSize="Title" TextColor="#1da6ca" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,10,10"></Label>
 
@@ -32,7 +32,7 @@
                                        BackgroundColor="Transparent"
                                        FontSize="18"
                                        HorizontalOptions="FillAndExpand"
-                                       VerticalOptions="CenterAndExpand"/>
+                                       VerticalOptions="CenterAndExpand" TextChanged="TitleEntry_TextChanged"/>
                         </Border>
 
                     </VerticalStackLayout>
@@ -49,7 +49,7 @@
                                 BackgroundColor="Transparent"
                                 FontSize="18"
                                 HorizontalOptions="FillAndExpand"
-                                VerticalOptions="CenterAndExpand"/>
+                                VerticalOptions="CenterAndExpand" />
                         </Border>
                     </VerticalStackLayout>
 
@@ -195,6 +195,15 @@
                                              HorizontalOptions="Start"
                                              VerticalOptions="Center"
                                              Margin="0,10,0,0"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout x:Name="Step5" IsVisible="False">
+                    <HorizontalStackLayout>
+                        <VerticalStackLayout Padding="20" Spacing="20" HorizontalOptions="Center" IsVisible="True">
+                            <Button Text="Upload Image" Clicked="OnUploadImageClicked" />
+                            <Image x:Name="UploadedImage" HeightRequest="200" />
                         </VerticalStackLayout>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>

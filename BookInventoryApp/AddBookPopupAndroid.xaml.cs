@@ -543,7 +543,10 @@ public partial class BookPopupAndroid : Popup
         }
     }
     int currentStep = 1;
-    const int totalSteps = 4;
+    int totalSteps = 5;
+
+    // Track which handler is attached
+    bool isSaveHandlerAttached = false;
 
     void OnNextClicked(object sender, EventArgs e)
     {
@@ -552,12 +555,8 @@ public partial class BookPopupAndroid : Popup
             currentStep++;
             UpdateStepUI();
         }
-        else
-        {
-            //OnSaveClicked(sender, e); // Optional final action
-            NextButton.IsVisible = false;
-        }
     }
+
 
     void OnBackClicked(object sender, EventArgs e)
     {
@@ -570,25 +569,60 @@ public partial class BookPopupAndroid : Popup
 
     void UpdateStepUI()
     {
-        if (!string.IsNullOrEmpty(TitleEntry.Text))
+        // Show the correct step
+        Step1.IsVisible = currentStep == 1;
+        Step2.IsVisible = currentStep == 2;
+        Step3.IsVisible = currentStep == 3;
+        Step4.IsVisible = currentStep == 4;
+        Step5.IsVisible = currentStep == 5;
+
+        // Update buttons
+        BackButton.IsVisible = currentStep > 1;
+        NextButton.IsVisible = true;
+        NextButton.IsEnabled = true;
+        NextButton.Text = currentStep == totalSteps ? "Save" : "Next";
+
+        // Detach all previous handlers
+        NextButton.Clicked -= OnNextClicked;
+        NextButton.Clicked -= OnSaveClicked;
+
+        // Attach only the correct one
+        if (currentStep == totalSteps)
         {
-            Step1.IsVisible = currentStep == 1;
-            Step2.IsVisible = currentStep == 2;
-            Step3.IsVisible = currentStep == 3;
-            Step4.IsVisible = currentStep == 4;
-            NextButton.IsEnabled = true;
-            BackButton.IsVisible = currentStep > 1;
-            NextButton.Text = currentStep == totalSteps ? "Save" : "Next";
+            NextButton.Clicked += OnSaveClicked;
         }
+        else
+        {
+            NextButton.Clicked += OnNextClicked;
+        }
+    }
 
-        // Update step labels
-        //Step1.TextColor = currentStep >= 1 ? Colors.White : Colors.Gray;
-        //Step2.TextColor = currentStep >= 2 ? Colors.White : Colors.Gray;
-        //Step3.TextColor = currentStep == 3 ? Colors.White : Colors.Gray;
 
-        // Update progress bar
-        //double progressFraction = (double)(currentStep - 1) / (totalSteps - 1);
-        //ProgressBar.WidthRequest = ProgressBackground.Width * progressFraction;
+    private void TitleEntry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        NextButton.IsEnabled = !string.IsNullOrWhiteSpace(TitleEntry.Text);
+    }
+
+    private async void OnUploadImageClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var result = await FilePicker.Default.PickAsync(new PickOptions
+            {
+                PickerTitle = "Select an image",
+                FileTypes = FilePickerFileType.Images
+            });
+
+            if (result != null)
+            {
+                using var stream = await result.OpenReadAsync();
+                UploadedImage.Source = ImageSource.FromStream(() => stream);
+            }
+        }
+        catch (Exception ex)
+        {
+            //await DisplayAlert("Error", $"Something went wrong: {ex.Message}", "OK");
+        }
     }
 
 }

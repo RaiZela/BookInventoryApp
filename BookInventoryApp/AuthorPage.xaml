@@ -41,7 +41,7 @@
               TextColor="Black" 
               PlaceholderColor="Black"
               BackgroundColor="White" 
-              Opacity="0.5" 
+              Opacity="0.7" 
               MinimumHeightRequest="50" 
               Margin="30, 40, 60, 20"/>
 
@@ -52,18 +52,13 @@
                 Margin="60, 5, 70, 20">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Border 
-                               Padding="10" 
-                               Margin="0,0,0,0" 
-                               BackgroundColor="#1da6ca" 
-                               Opacity="0.7"
-                               InputTransparent="False">
-                            <Label 
-                                FontSize="15"
+                        <Label 
+                                   FontSize="15"
+                                   Padding="10" 
+                                   Margin="1"
                                    Text="{Binding FullName}" 
                                    TextColor="GhostWhite"
-                                   InputTransparent="False"/>
-                        </Border>
+                                   InputTransparent="False" BackgroundColor="#1da6ca"/>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

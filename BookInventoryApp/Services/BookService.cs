@@ -58,7 +58,11 @@ public class BookService : IBookService
             Type = book.Type,
             AuthorIds = await _authorService.GetBookAuthorIds(id),
             CategoriesIds = await GetBookCategorysIds(id),
-            LanguageIds = await GetBookLanguageIds(id)
+            LanguageIds = await GetBookLanguageIds(id),
+            CoverImg = book.CoverImg,
+            NrOfCopies = book.NrOfCopies,
+            Description = book.Description,
+            Adress = book.Adress
         };
     }
 
@@ -130,6 +134,9 @@ public class BookService : IBookService
         existingBook.Title = bookObj.Title;
         existingBook.Status = bookObj.Status;
         existingBook.Type = bookObj.Type;
+        existingBook.Status = bookObj.Status;
+        existingBook.NrOfCopies = bookObj.NrOfCopies;
+        existingBook.CoverImg = bookObj.CoverImg;
 
         var bookAuthors = bookObj.AuthorIds.Select(authorId => new BookAuthor
         {

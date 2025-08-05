@@ -25,6 +25,18 @@ public class BookLoanService : IBookLoanService
     }
     public async Task<int> InsertLoanAsync(BookLoan loan)
     {
+        if (loan == null)
+        {
+            throw new ArgumentNullException(nameof(loan), "Loan cannot be null");
+        }
+
+        var book = await _connection.Table<Book>().FirstOrDefaultAsync(b => b.Id == loan.BookId);
+        var friend = await _connection.Table<Friend>().FirstOrDefaultAsync(f => f.Id == loan.FriendId);
+
+        book.Adress = friend.Name + " " + friend.LastName;
+
+        await _connection.UpdateAsync(book);
+
         return await _connection.InsertAsync(loan);
     }
 

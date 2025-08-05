@@ -10,14 +10,14 @@ public partial class FriendPopup : Popup
     {
         InitializeComponent();
         _service = service;
-        if (Friend != null && Friend.Id != Guid.Empty)
-        {
-            DeleteButton.IsVisible = true;
-        }
-        else
-        {
-            DeleteButton.IsVisible = false;
-        }
+        //if (Friend != null && Friend.Id != Guid.Empty)
+        //{
+        //    DeleteButton.IsVisible = true;
+        //}
+        //else
+        //{
+        //    DeleteButton.IsVisible = false;
+        //}
         Name.Text = Friend.Name;
         LastName.Text = Friend.LastName;
         Nickname.Text = Friend.Nickname;
@@ -106,13 +106,13 @@ public partial class FriendPopup : Popup
         SuccessOverlay.Opacity = 0;
         SuccessOverlay.IsVisible = true;
 
-        SuccessIcon.Opacity = 0;
-        SuccessIcon.Scale = 0.5;
+        //SuccessIcon.Opacity = 0;
+        //SuccessIcon.Scale = 0.5;
 
         await Task.WhenAll(
-            SuccessOverlay.FadeTo(1, 150),
-            SuccessIcon.FadeTo(1, 200),
-            SuccessIcon.ScaleTo(1.2, 200, Easing.SpringOut)
+            SuccessOverlay.FadeTo(1, 150)
+        //SuccessIcon.FadeTo(1, 200),
+        //SuccessIcon.ScaleTo(1.2, 200, Easing.SpringOut)
         );
 
         await Task.Delay(1000);
@@ -127,15 +127,15 @@ public partial class FriendPopup : Popup
         ErrorOverlay.Opacity = 0;
         ErrorOverlay.IsVisible = true;
 
-        ErrorIcon.Opacity = 0;
-        ErrorIcon.Scale = 0.5;
+        //ErrorIcon.Opacity = 0;
+        //ErrorIcon.Scale = 0.5;
         ErrorMessage.Opacity = 0;
         ErrorMessage.Scale = 0.5;
 
         await Task.WhenAll(
             ErrorOverlay.FadeTo(1, 150),
-            ErrorIcon.FadeTo(1, 200),
-            ErrorIcon.ScaleTo(1.2, 200, Easing.SpringOut),
+            //ErrorIcon.FadeTo(1, 200),
+            //ErrorIcon.ScaleTo(1.2, 200, Easing.SpringOut),
             ErrorMessage.FadeTo(1, 200),
             ErrorMessage.ScaleTo(1.2, 200, Easing.SpringOut)
         );
