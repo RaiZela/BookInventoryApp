@@ -29,7 +29,6 @@ public partial class FriendsPage : ContentPage
         base.OnAppearing();
         allFriends = await _service.GetFriendsAsync();
         FriendCollection.ItemsSource = allFriends;
-
     }
 
     private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
@@ -51,6 +50,7 @@ public partial class FriendsPage : ContentPage
             var popup = new FriendPopup(_service, friend);
             await this.ShowPopupAsync(popup);
         }
+        FriendCollection.ItemsSource = await _service.GetFriendsAsync();
     }
 
     private async void OnAddFriendClicked(object sender, EventArgs e)
@@ -80,6 +80,7 @@ public partial class FriendsPage : ContentPage
                 await DisplayAlert("Success", "Friend deleted.", "OK");
             }
         }
+        FriendCollection.ItemsSource = await _service.GetFriendsAsync();
     }
 
     private async void OnLendBookClicked(object sender, EventArgs e)
@@ -136,6 +137,4 @@ public partial class FriendsPage : ContentPage
 
         }
     }
-
-
 }

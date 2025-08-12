@@ -2,7 +2,7 @@
 
 public interface ILanguagesService
 {
-    Task<List<Language>> GetLanguagesAsync();
+    Task<List<LanguageDTO>> GetLanguagesAsync();
     Task<Language> GetLanguageAsync(Guid id);
     Task<int> SaveLanguageAsync(Language Language);
     Task<int> DeleteLanguageAsync(Guid id);
@@ -17,8 +17,18 @@ public class LanguagesService : ILanguagesService
     {
         _connection = connection;
     }
-    public Task<List<Language>> GetLanguagesAsync() =>
-         _connection.Table<Language>().ToListAsync();
+    public async Task<List<LanguageDTO>> GetLanguagesAsync()
+    {
+        var languages = await _connection.Table<Language>()
+         .ToListAsync();
+
+        return languages.Select(c => new LanguageDTO
+        {
+            Id = c.Id,
+            Name = c.Name,
+            Code = c.Code
+        }).ToList();
+    }
 
     public Task<Language> GetLanguageAsync(Guid id) =>
          _connection.Table<Language>().FirstOrDefaultAsync(b => b.Id == id);

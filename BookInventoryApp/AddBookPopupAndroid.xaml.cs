@@ -27,7 +27,15 @@ public partial class BookPopupAndroid : Popup
         ILanguagesService languagesService,
         BookDTO book)
     {
-        InitializeComponent();
+        try
+        {
+            InitializeComponent();
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
         _service = service;
         _authorService = authorService;
         _categoriesService = categoriesService;
@@ -65,6 +73,18 @@ public partial class BookPopupAndroid : Popup
         TypeEntry.SelectedItem = BookRecord.Type;
         StatusEntry.SelectedItem = BookRecord.Status;
         TitleEntry.Text = BookRecord.Title;
+        IsReadSwitch.IsToggled = BookRecord.IsRead;
+        NrOfCopiesEntry.Text = BookRecord.NrOfCopies.ToString();
+        DescriptionEntry.Text = BookRecord.Description;
+        AdressEntry.Text = BookRecord.Adress;
+        if (!string.IsNullOrEmpty(BookRecord.CoverImg))
+        {
+            UploadedImage.Source = new FileImageSource { File = BookRecord.CoverImg };
+        }
+        else
+        {
+            UploadedImage.Source = null;
+        }
 
     }
 
@@ -79,6 +99,12 @@ public partial class BookPopupAndroid : Popup
             LanguageIds = SelectedLanguages == null ? new() : SelectedLanguages.Select(l => l.Id).ToList(),
             Status = StatusEntry.SelectedItem is null ? Status.Unread : (Status)StatusEntry.SelectedItem,
             Type = TypeEntry.SelectedItem is null ? BookType.Paperback : (BookType)TypeEntry.SelectedItem,
+            IsRead = IsReadSwitch.IsToggled,
+            NrOfCopies = int.TryParse(NrOfCopiesEntry.Text, out int copies) ? copies : 1,
+            Description = DescriptionEntry.Text,
+            Adress = AdressEntry.Text,
+            CoverImg = UploadedImage.Source is FileImageSource fileImageSource ? fileImageSource.File : null
+
         };
         if (_isUpdate)
         {
@@ -617,6 +643,14 @@ public partial class BookPopupAndroid : Popup
             {
                 using var stream = await result.OpenReadAsync();
                 UploadedImage.Source = ImageSource.FromStream(() => stream);
+                using var memoryStream = new MemoryStream();
+                stream.Position = 0;
+                await stream.CopyToAsync(memoryStream);
+                byte[] imageBytes = memoryStream.ToArray();
+
+                string base64Image = Convert.ToBase64String(imageBytes);
+
+
             }
         }
         catch (Exception ex)

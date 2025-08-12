@@ -20,4 +20,6 @@ public class FriendsDTO
     public Guid? LibraryID { get; set; }
 
     public string FullName => $"{Name} {LastName}".Trim();
+
+    public string Image { get; set; }
 }

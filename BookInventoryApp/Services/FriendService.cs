@@ -3,10 +3,10 @@
 public interface IFriendService
 {
     Task<List<FriendsDTO>> GetFriendsAsync();
-    Task<Friend> GetFriendAsync(Guid id);
-    Task<int> SaveNewFriendAsync(Friend Friend);
+    Task<FriendsDTO> GetFriendAsync(Guid id);
+    Task<int> SaveNewFriendAsync(FriendsDTO Friend);
     Task<int> DeleteFriendAsync(Guid id);
-    Task<int> UpdateFriendAsync(Friend Friend);
+    Task<int> UpdateFriendAsync(FriendsDTO Friend);
 }
 public class FriendService : IFriendService
 {
@@ -29,14 +29,44 @@ public class FriendService : IFriendService
         }).ToList();
     }
 
-    public Task<Friend> GetFriendAsync(Guid id) =>
-         _connection.Table<Friend>().FirstOrDefaultAsync(b => b.Id == id);
+    public async Task<FriendsDTO> GetFriendAsync(Guid id)
+    {
+        var friend = await _connection.Table<Friend>().Where(x => x.Id == id).FirstOrDefaultAsync();
+        return new FriendsDTO
+        {
 
-    public Task<int> SaveNewFriendAsync(Friend Friend) =>
-         _connection.InsertOrReplaceAsync(Friend);
+            Id = friend.Id,
+            Name = friend.Name,
+            LastName = friend.LastName,
+            Nickname = friend.Nickname,
+            Address = friend.Address
+        };
+    }
 
-    public async Task<int> UpdateFriendAsync(Friend Friend) =>
-     await _connection.UpdateAsync(Friend);
+    public Task<int> SaveNewFriendAsync(FriendsDTO Friend) =>
+         _connection.InsertOrReplaceAsync(new Friend
+         {
+             Id = Friend.Id,
+             Name = Friend.Name,
+             LastName = Friend.LastName,
+             Nickname = Friend.Nickname,
+             Address = Friend.Address,
+             Image = Friend.Image
+         });
+
+    public async Task<int> UpdateFriendAsync(FriendsDTO Friend)
+    {
+        var update = await _connection.UpdateAsync(new Friend
+        {
+            Id = Friend.Id,
+            Name = Friend.Name,
+            LastName = Friend.LastName,
+            Nickname = Friend.Nickname,
+            Address = Friend.Address,
+            Image = Friend.Image
+        });
+        return update;
+    }
 
     public async Task<int> DeleteFriendAsync(Guid id)
     {

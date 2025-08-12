@@ -4,14 +4,14 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     x:Class="BookInventoryApp.FriendPopup"
     CanBeDismissedByTappingOutsideOfPopup="True"
-    Color="Transparent">
+    Color="#1E1E1E"  Size="{OnIdiom Phone='380,500', Tablet='400,650', Desktop='640,720'}">
 
     <Border Padding="0"
             HeightRequest="500"
             WidthRequest="380"
             Stroke="#444"
             BackgroundColor="#1E1E1E"
-            StrokeThickness="1">
+            StrokeThickness="1" HorizontalOptions="Center">
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="15"/>
         </Border.StrokeShape>
@@ -26,7 +26,7 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
@@ -98,17 +98,17 @@
                            PlaceholderColor="#aaa"
                            BackgroundColor="Transparent"/>
                 </Frame>
+
             </StackLayout>
 
+
             <!-- Buttons -->
-            <HorizontalStackLayout Grid.Row="2"
-                                   Spacing="20"
+            <HorizontalStackLayout Grid.Row="3"
                                    HorizontalOptions="End"
-                                   Margin="0,30,0,10">
+                                   Margin="0">
                 <Button Text="Save"
                         Clicked="OnSaveClicked"
                         WidthRequest="100"
-                        HeightRequest="45"
                         BackgroundColor="#1da6ca"
                         TextColor="White"
                         CornerRadius="8"

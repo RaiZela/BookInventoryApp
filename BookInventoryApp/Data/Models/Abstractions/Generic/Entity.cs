@@ -12,5 +12,5 @@ public abstract class Entity
 
     }
     [PrimaryKey]
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
 }

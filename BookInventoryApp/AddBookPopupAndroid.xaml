@@ -28,14 +28,50 @@
                                 <RoundRectangle/>
                             </Border.StrokeShape>
                             <Entry x:Name="TitleEntry" 
-                                       Placeholder="Book title" 
-                                       BackgroundColor="Transparent"
-                                       FontSize="18"
-                                       HorizontalOptions="FillAndExpand"
-                                       VerticalOptions="CenterAndExpand" TextChanged="TitleEntry_TextChanged"/>
+                                   Placeholder="Book title" 
+                                   BackgroundColor="Transparent"
+                                   FontSize="18"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="CenterAndExpand" TextChanged="TitleEntry_TextChanged"/>
                         </Border>
 
                     </VerticalStackLayout>
+                    <VerticalStackLayout>
+                        <Label Text="Description" TextColor="#B0BEC5">
+                        </Label>
+
+                        <Border>
+                            <Border.StrokeShape>
+                                <RoundRectangle/>
+                            </Border.StrokeShape>
+                            <Entry x:Name="DescriptionEntry" 
+                                   Placeholder="Description" 
+                                   BackgroundColor="Transparent"
+                                   FontSize="18"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="CenterAndExpand"/>  
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout>
+                        <Label Text="Address" TextColor="#B0BEC5">
+                        </Label>
+
+                        <Border>
+                            <Border.StrokeShape>
+                                <RoundRectangle/>
+                            </Border.StrokeShape>
+                            <Entry x:Name="AdressEntry" 
+                                   Placeholder="Address" 
+                                   BackgroundColor="Transparent"
+                                   FontSize="18"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="CenterAndExpand"/> 
+                        </Border>
+
+                    </VerticalStackLayout>
+
 
                     <VerticalStackLayout>
                         <Label Text="Type" TextColor="#B0BEC5" HorizontalOptions="FillAndExpand"/>
@@ -45,11 +81,11 @@
                                 <RoundRectangle/>
                             </Border.StrokeShape>
                             <Picker x:Name="TypeEntry"
-                                Title="Select book type..."
-                                BackgroundColor="Transparent"
-                                FontSize="18"
-                                HorizontalOptions="FillAndExpand"
-                                VerticalOptions="CenterAndExpand" />
+                                    Title="Select book type..."
+                                    BackgroundColor="Transparent"
+                                    FontSize="18"
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="CenterAndExpand" />
                         </Border>
                     </VerticalStackLayout>
 
@@ -61,31 +97,47 @@
                                 <RoundRectangle/>
                             </Border.StrokeShape>
                             <Picker  x:Name="StatusEntry"  
-                                Title="Select status..."
-                                BackgroundColor="Transparent"
-                                FontSize="18"
-                                HorizontalOptions="FillAndExpand"
-                                VerticalOptions="CenterAndExpand"/>
+                                     Title="Select status..."
+                                     BackgroundColor="Transparent"
+                                     FontSize="18"
+                                     HorizontalOptions="FillAndExpand"
+                                     VerticalOptions="CenterAndExpand"/>
                         </Border>
                     </VerticalStackLayout>
 
                     <VerticalStackLayout>
-                        <Label Text="Number of Copies" TextColor="#B0BEC5" ></Label>
-                        <Border>
-                            <Border.StrokeShape>
-                                <RoundRectangle/>
-                            </Border.StrokeShape>
-                            <Entry 
-                                   TextChanged="Entry_TextChanged" 
-                                   MaximumWidthRequest="50" 
-                                   Background="Transparent"
-                                   TextColor="White">
-                                <Entry.Behaviors>
-                                    <local:PositiveNumberBehavior />
-                                </Entry.Behaviors>
-                            </Entry>
+                        <HorizontalStackLayout>
+                            <Label Text="Number of Copies" TextColor="#B0BEC5" ></Label>
+                            <Border>
+                                <Border.StrokeShape>
+                                    <RoundRectangle/>
+                                </Border.StrokeShape>
+                                <Entry x:Name="NrOfCopiesEntry"
+                                       TextChanged="Entry_TextChanged" 
+                                       MaximumWidthRequest="50" 
+                                       Background="Transparent"
+                                       TextColor="White">
+                                    <Entry.Behaviors>
+                                        <local:PositiveNumberBehavior />
+                                    </Entry.Behaviors>
+                                </Entry>
 
-                        </Border>
+                            </Border>
+
+                            <Label Text="Is Read?" TextColor="#B0BEC5" ></Label>
+                            <Border>
+                                <Border.StrokeShape>
+                                    <RoundRectangle/>
+                                </Border.StrokeShape>
+                                <Switch x:Name="IsReadSwitch"
+                                        MaximumWidthRequest="50" 
+                                        Background="Transparent">
+                                    <Switch.Behaviors>
+                                        <local:PositiveNumberBehavior />
+                                    </Switch.Behaviors>
+                                </Switch>
+                            </Border>
+                        </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </VerticalStackLayout>
                 <VerticalStackLayout x:Name="Step2" IsVisible="False">
@@ -96,31 +148,31 @@
                                     <RoundRectangle/>
                                 </Border.StrokeShape>
                                 <SearchBar x:Name="AuthorsSearch"
-                              Placeholder="Search authors..."
-                              TextChanged="OnSearchTextChanged"
-                              BackgroundColor="Transparent"
-                              TextColor="White"
-                              PlaceholderColor="LightGray"
-                              FontFamily="VictorMono-Regular" 
-                              HeightRequest="45" 
-                              HorizontalOptions="Center"
-                              WidthRequest="{OnIdiom Phone=250, Tablet=350, Desktop=250}"
-                              Margin="0,10,10,10"/>
+                                           Placeholder="Search authors..."
+                                           TextChanged="OnSearchTextChanged"
+                                           BackgroundColor="Transparent"
+                                           TextColor="White"
+                                           PlaceholderColor="LightGray"
+                                           FontFamily="VictorMono-Regular" 
+                                           HeightRequest="45" 
+                                           HorizontalOptions="Center"
+                                           WidthRequest="{OnIdiom Phone=250, Tablet=350, Desktop=250}"
+                                           Margin="0,10,10,10"/> 
                             </Border>
                             <ListView x:Name="FilteredAuthorsView"
-                              IsVisible="True"
-                              ItemSelected="Authors_ItemSelected"
-                              BackgroundColor="#DCD3FF"
-                              HeightRequest="100" 
-                              HorizontalOptions="FillAndExpand"
-                              WidthRequest="{OnIdiom Phone=250, Tablet=300, Desktop=250}"
-                              Margin="5,10,10,10"/>
+                                      IsVisible="True"
+                                      ItemSelected="Authors_ItemSelected"
+                                      BackgroundColor="#DCD3FF"
+                                      HeightRequest="100" 
+                                      HorizontalOptions="FillAndExpand"
+                                      WidthRequest="{OnIdiom Phone=250, Tablet=300, Desktop=250}"
+                                      Margin="5,10,10,10"/>
                             <CollectionView x:Name="SelectedAuthorsView"
-                    ItemsLayout="VerticalList"
-                    BackgroundColor="Transparent"
-                    HorizontalOptions="Start"
-                    VerticalOptions="Center"
-                    Margin="0,10,0,0"/>
+                                            ItemsLayout="VerticalList"
+                                            BackgroundColor="Transparent"
+                                            HorizontalOptions="Start"
+                                            VerticalOptions="Center"
+                                            Margin="0,10,0,0"/> 
 
                         </VerticalStackLayout>
                     </HorizontalStackLayout>
@@ -153,11 +205,11 @@
                                       WidthRequest="{OnIdiom Phone=250, Tablet=300, Desktop=250}"
                                       Margin="0"/>
                             <CollectionView x:Name="SelectedLanguagesView"
-                                           ItemsLayout="VerticalList"
-                                           BackgroundColor="Transparent"
-                                           HorizontalOptions="Start"
-                                           VerticalOptions="Center"
-                                           Margin="0,10,0,0"/>
+                                            ItemsLayout="VerticalList"
+                                            BackgroundColor="Transparent"
+                                            HorizontalOptions="Start"
+                                            VerticalOptions="Center"
+                                            Margin="0,10,0,0"/>
                         </VerticalStackLayout>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
@@ -190,11 +242,11 @@
                                       WidthRequest="{OnIdiom Phone=250, Tablet=300, Desktop=250}"
                                       Margin="5,10,10,10"/>
                             <CollectionView x:Name="SelectedCategoriesView"
-                                             ItemsLayout="VerticalList"
-                                             BackgroundColor="Transparent"
-                                             HorizontalOptions="Start"
-                                             VerticalOptions="Center"
-                                             Margin="0,10,0,0"/>
+                                            ItemsLayout="VerticalList"
+                                            BackgroundColor="Transparent"
+                                            HorizontalOptions="Start"
+                                            VerticalOptions="Center"
+                                            Margin="0,10,0,0"/>
                         </VerticalStackLayout>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
@@ -211,20 +263,38 @@
                 <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
                     <Button x:Name="BackButton" Text="Back" Clicked="OnBackClicked" IsVisible="False" Margin="15"/>
                     <Button x:Name="NextButton" 
-                        Text="Next" 
-                        IsEnabled="False"
-                        Clicked="OnNextClicked" 
-                        BorderColor="#1da6ca" 
-                        BackgroundColor="Transparent"
-                        FontAttributes="Bold"
-                        Padding="5"
-                        Margin="10"
-                        Shadow="0 0 12 #1da6ca 1"
-                        HeightRequest="40" 
-                        WidthRequest="70"
-                        TextColor="White" IsVisible="True"/>
+                            Text="Next" 
+                            IsEnabled="False"
+                            Clicked="OnNextClicked" 
+                            BorderColor="#1da6ca" 
+                            BackgroundColor="Transparent"
+                            FontAttributes="Bold"
+                            Padding="5"
+                            Margin="10"
+                            Shadow="0 0 12 #1da6ca 1"
+                            HeightRequest="40" 
+                            WidthRequest="70"
+                            TextColor="White" IsVisible="True"/>
                 </HorizontalStackLayout>
                 <Grid x:Name="SuccessOverlay"
+                      BackgroundColor="#80000000"
+                      IsVisible="False"
+                      Opacity="0"
+                      ZIndex="10"
+                      HorizontalOptions="Fill"
+                      VerticalOptions="Fill"
+                      AbsoluteLayout.LayoutFlags="All"
+                      AbsoluteLayout.LayoutBounds="0,0,1,1">
+                    <Label Text="✅ Book added successfully!"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           BackgroundColor="MediumSeaGreen"
+                           Padding="15"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Opacity="1"/>
+                    <Grid x:Name="ErrorOverlay"
                           BackgroundColor="#80000000"
                           IsVisible="False"
                           Opacity="0"
@@ -233,24 +303,6 @@
                           VerticalOptions="Fill"
                           AbsoluteLayout.LayoutFlags="All"
                           AbsoluteLayout.LayoutBounds="0,0,1,1">
-                    <Label Text="✅ Book added successfully!"
-                               FontSize="18"
-                               FontAttributes="Bold"
-                               TextColor="White"
-                               BackgroundColor="MediumSeaGreen"
-                               Padding="15"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"
-                               Opacity="1"/>
-                    <Grid x:Name="ErrorOverlay"
-                              BackgroundColor="#80000000"
-                              IsVisible="False"
-                              Opacity="0"
-                              ZIndex="10"
-                              HorizontalOptions="Fill"
-                              VerticalOptions="Fill"
-                              AbsoluteLayout.LayoutFlags="All"
-                              AbsoluteLayout.LayoutBounds="0,0,1,1">
                         <Label Text="❌ Failed to add book!"
                                FontSize="18"
                                FontAttributes="Bold"

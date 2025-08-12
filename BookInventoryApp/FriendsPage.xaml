@@ -57,11 +57,11 @@
                                                CommandParameter="{Binding .}" />
                                     <SwipeItem Text="Borrow"
                                                BackgroundColor="#2196F3"
-                                               Invoked="OnBorrowBookClicked"
+                                               Clicked="OnBorrowBookClicked"
                                                CommandParameter="{Binding .}" />
                                     <SwipeItem Text="Loans"
                                                BackgroundColor="#FF9800"
-                                               Invoked="OnViewLoansClicked"
+                                               Clicked="OnViewLoansClicked"
                                                CommandParameter="{Binding .}" />
                                 </SwipeItems>
                             </SwipeView.RightItems>
@@ -107,18 +107,21 @@
 
                                     <!-- Right Side: Profile Picture -->
                                     <Frame Grid.Column="1"
-                                           CornerRadius="30"
-                                           Padding="0"
-                                           WidthRequest="60"
-                                           HeightRequest="60"
-                                           HasShadow="False"
-                                           BackgroundColor="Transparent"
-                                           BorderColor="#888">
-                                        <Image Source="no_img.jpg"
-                                               WidthRequest="60"
-                                               HeightRequest="60"
-                                               Aspect="AspectFill"
-                                               Clip="True" />
+                                                WidthRequest="60"
+                                                HeightRequest="60"
+                                                CornerRadius="30"
+                                                BackgroundColor="Gray"
+                                                Padding="0"
+                                                HasShadow="False"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center">       
+                                        <Label
+                                                Text="{Binding Name}"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center"
+                                                TextColor="White"
+                                                FontAttributes="Bold"
+                                                FontSize="20" />
                                     </Frame>
                                 </Grid>
                             </Frame>

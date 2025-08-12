@@ -14,6 +14,7 @@ public class Friend : Entity
 
     [StringLength(200)]
     public string Address { get; set; }
+    public string Image { get; set; }
 
     //[StringLength(100)]
     //public Guid? LibraryID { get; set; }

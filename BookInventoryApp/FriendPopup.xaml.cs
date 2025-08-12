@@ -5,36 +5,24 @@ namespace BookInventoryApp;
 public partial class FriendPopup : Popup
 {
     IFriendService _service;
-    Friend Friend = new();
-    public FriendPopup(IFriendService service, FriendsDTO Friend)
+    FriendsDTO Friend = new();
+    public FriendPopup(IFriendService service, FriendsDTO friend)
     {
+        Friend = friend;
         InitializeComponent();
         _service = service;
-        //if (Friend != null && Friend.Id != Guid.Empty)
-        //{
-        //    DeleteButton.IsVisible = true;
-        //}
-        //else
-        //{
-        //    DeleteButton.IsVisible = false;
-        //}
-        Name.Text = Friend.Name;
-        LastName.Text = Friend.LastName;
-        Nickname.Text = Friend.Nickname;
-        Address.Text = Friend.Address;
-        Title.Text = Friend.FullName;
+        Name.Text = friend.Name;
+        LastName.Text = friend.LastName;
+        Nickname.Text = friend.Nickname;
+        Address.Text = friend.Address;
+        Title.Text = friend.FullName;
     }
     private async void OnSaveClicked(object sender, EventArgs e)
     {
-        Friend = new Friend
-        {
-            Id = Friend.Id,
-            Name = Name.Text,
-            LastName = LastName.Text,
-            Nickname = Nickname.Text,
-            Address = Address.Text
-        };
-
+        Friend.Name = Name.Text;
+        Friend.LastName = LastName.Text;
+        Friend.Nickname = Nickname.Text;
+        Friend.Address = Address.Text;
         var FriendCheck = await _service.GetFriendAsync(Friend.Id);
         if (FriendCheck is not null)
         {
@@ -53,6 +41,7 @@ public partial class FriendPopup : Popup
 
         else
         {
+            Friend.Id = Guid.NewGuid();
             var Friends = await _service.SaveNewFriendAsync(Friend);
             if (Friends > 0)
             {
@@ -67,6 +56,7 @@ public partial class FriendPopup : Popup
         }
 
         Close();
+
     }
     private async void DeleteButton_Clicked(object sender, EventArgs e)
     {
@@ -154,5 +144,4 @@ public partial class FriendPopup : Popup
         await MainLayout.TranslateTo(10, 0, duration);
         await MainLayout.TranslateTo(0, 0, duration);
     }
-
 }
