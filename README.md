@@ -74,7 +74,9 @@ dotnet run
 
 - Tables include: Books, Users, Friends
 
-Project Structure
+## Project Structure
+
+```bash
 BookInventoryApp/
 │
 ├─ App.xaml.cs           # App entry point
@@ -85,6 +87,7 @@ BookInventoryApp/
 ├─ Services/             # SQLite service, Lending service, etc.
 ├─ Resources/            # Images, fonts, styles
 └─ Database/             # SQLite setup & migrations
+```
 
 ## Usage
 
