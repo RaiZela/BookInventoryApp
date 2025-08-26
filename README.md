@@ -109,4 +109,4 @@ BookInventoryApp/
 
 ## License
 
-MIT License © [Your Name]
+- MIT License © [Your Name]
